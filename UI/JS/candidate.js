@@ -24,6 +24,17 @@ runButton.onclick =()=>{
 	run.className ="layout_block";
 	petition.className ="layout_none";
 }
+/*  Trigger event when run button is clicked,
+    Display only petition div, hide others.
+    change style of petition button to active.
+*/
+petitionButton.onclick =()=>{
+	petitionButton.className ="button_active3";
+	runButton.className ="button_login3";
+	run.className ="layout_none";
+	petition.className ="layout_block";
+
+}
 
 //  Center all paragragphs
 let par = document.querySelectorAll("p");
