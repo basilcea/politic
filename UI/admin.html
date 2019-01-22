@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Politico- Your right to choose</title>
+		<meta charset="UTF-8">
+		<meta name="author" content="Cea">
+		<meta name="viewport" content ="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href ="./CSS/card.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/layout.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/background.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/button.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/text.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/form.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/nav.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/others.css">
+	</head>
+	<body>
+		<div class="layout_large background_body">
+			<div class="layout_header">
+				<img class="others_logo" src="STATIC/logo.png" alt="logo"/>
+			</div>
+			<div class="layout_nav">
+				<ul class="nav_tabs">
+					<li class="nav_horizontal">
+						<a class="nav_menuButton" href="home.html">Home</a>
+					</li>
+					<li class="nav_horizontal">
+							<a class="nav_menuButton" href="profile.html">Your Profile</a>
+					</li>
+					<li class="nav_horizontal">
+						<a class="nav_active" href="admin.html">Admin</a>
+					</li>
+					<li class="nav_horizontal">
+						<a class="nav_menuButton" href="candidate.html">Candidacy</a>
+					</li>
+				</ul>
+			</div>
+			<div class="layout_navVert">
+				<ul class="nav_tabs">
+					<li class="nav_horizontal">
+						<a class="nav_menuButton" href="index.html">Logout</a>
+					</li>
+				</ul>
+			</div>
+			<div class="layout_centered1 card_party">
+				<button type="button" href="admin.html#create">Create Party</button>
+				<button type="button" href="admin.html#edit">Edit Party</button>
+				<button type="button" href="admin.html#delete">Delete Party</button>
+				<button type="button" href="admin.html#office">Create Office</button>
+				<div id="create">
+					<form id="createParty">
+							<p>Create a Political Party</p>
+							<div class="layout_left">
+								<img  id ="uploaded" class="others_img" src="STATIC/logoPlaceholder.jpg" alt="avatar">
+								<br>
+								<button type="button" class="button_btn">Browse Logo</button>
+								<span class="button_upload">Upload Logo</span>
+							</div>
+							<input type ="file" class="layout_none" id="realInput" name="logoFile"  accept="STATIC/*" required>
+							<input type="text" class="form_halfed" placeholder="Party Name" required>
+							<textarea class="layout_right others_textArea" name="Address" placeholder="Headquater Address" rows=5 cols=10 required></textarea>
+							<input type="submit" value="Submit">
+					</form>
+				</div>
+				<div id="edit">
+					<form id="editParty">
+						<p>Edit Details of a Political Party</p>
+						<select id="candidatePart" name="party" form="editParty">
+						</select>
+						Edit Details
+						<div class="layout_left">
+							<img  id ="uploaded" class="others_img" src="STATIC/logoPlaceholder.jpg" alt="logo">
+							<br>
+							<button type="button" class="button_btn">Browse Logo</button>
+							<span class="button_upload">Upload Logo</span>
+							</div>
+						<input type ="file" class="layout_none" id="realInput" name="logoFile"  accept="STATIC/*" required>
+						<input type="text" class="form_halfed" placeholder="Party Name" required>
+						<textarea class="layout_right others_textArea" name="Address" placeholder="Headquaters Address" rows=5 cols=10 required></textarea>
+						<input type="submit" value="Submit">
+					</form>
+				</div>
+				<div id="delete">
+					<form>
+							<select id="candidateParty" name="party" form="editParty">
+							</select>
+							<p>Deleting the political party is irrevocable as it is completely off our database.</p>
+						<input type="checkbox" name="Agreement" value="delete" required> Yes, I want to delete this political party
+						<input type="submit" value="Delete">
+					</form>
+				</div>
+				<div id="office">
+					<p>Create Political Office</p>
+					<form>
+						<select id="offices">
+							<option value="" disabled selected>-- Select Type Of Office --</option>
+							<option value="Federal">Federal</option>
+							<option value="Legislative">Legislative</option>
+							<option value="State">State</option>
+							<option value="Local Government">Local Government </option>
+						</select>
+						<input type="text" name="officeName" placeholder="Name of Office">
+						<input type="submit" value="submit">
+					</form>
+				</div>
+			</div>
+		</div>
+		<footer class="background_footer"></footer>
+		<script src="./JS/admin.js"></script>
+		<script src="./JS/data.js"></script>
+	</body>
+</html>
