@@ -11,20 +11,31 @@ const loginButton = buttons[1];
 const resetButton = buttons[2];
 
 /*  Assign css classes to  each button to design the buttons
-    Display signup div as default div, hide others.
+    Display Login div as default div, hide others.
 */
 
-signupButton.className = "button_active";
-loginButton.className = "button_login";
+signupButton.className = "button_login";
+loginButton.className = "button_active";
 resetButton.className = "button_login";
-login.className = "layout_none";
+signup.className = "layout_none";
 reset.className = "layout_none";
 
-/*  Trigger event when sign button is clicked,
-    Display only signup div, hide others.
-    change style of sign button to active.
+/*  Trigger event when login button is clicked,
+    Display only login div, hide others.
+    change style of ogin button to active.
 */
-
+loginButton.onclick =()=>{
+	loginButton.className ="button_active";
+	signupButton.className ="button_login";
+	resetButton.className = "button_login";
+	login.className = "layout_block";
+	signup.className = "layout_none";
+	reset.className = "layout_none";
+}
+/*  Trigger event when signup button is clicked.
+    Display only signup div, hide others.
+    change style of signup button to active.
+*/
 signupButton.onclick =()=>{
 	signupButton.className ="button_active";
 	loginButton.className ="button_login";
@@ -33,6 +44,10 @@ signupButton.onclick =()=>{
 	login.className = "layout_none";
 	reset.className = "layout_none";
 }
+/* Trigger event when reset button is clicked,
+   Display only reset div, hide others.
+   change style of reset button to active.
+*/
 
 //  Center all paragragphs
 let par = document.querySelectorAll("p");
@@ -42,13 +57,16 @@ for (let i=0; i<par.length; i++){
 
 //  Get all forms
 let form1 =document.getElementById("form1");
+let form2 =document.getElementById("form2");
 
 //  Get all submit buttons in the page
 let signin =document.getElementById("signedin");
+let enter =document.getElementById("enter");
 
 
 //  Get all requires form inputs
 let signupdetails = form1.querySelectorAll("[required]");
+let enterdetails = form2.querySelectorAll("[required]");
 
 
 /*  Ensure all required documents are inputted before submitting.
@@ -59,3 +77,9 @@ for(i=0;i<signupdetails[i].length;i++){
 		signin.disabled=false;
 	}
 }
+for(i=0;i<enterdetails[i].length;i++){
+  if(enterdetails[i].value !==""){
+		enter.disabled=false;
+  }
+}
+
