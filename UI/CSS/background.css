@@ -1,0 +1,12 @@
+.background_banner{
+	min-height:100%;
+	background-image:url('../STATIC/banner.jpg');
+	background-size:cover;
+}
+.background_body{
+	background-color:gainsboro;
+}
+.background_footer{
+	background-color:#28495b;
+	height:80px;
+}

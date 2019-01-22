@@ -1,0 +1,36 @@
+.others_img{
+    width:15vw;
+    max-height:200px;
+}
+.others_img2{
+	width:60%;;
+	height:8vw;
+	display:block;
+	padding:5% 5%;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.others_img2:hover{
+  background-color:#28495b;
+}
+.others_logo{
+	width:200px;
+	height:40px;
+}
+.others_textArea{
+	width:48%;
+	margin:2%;
+	outline:none;
+	border:none;
+}
+.others_textArea2{
+	width:104%;
+	margin:2%;
+	outline:none;
+	border:none;
+}
+.others_profile{
+	text-align:left;
+	font-size:18px;
+	font-weight:normal;
+	padding-top:10%;
+}
