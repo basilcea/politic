@@ -48,7 +48,14 @@ signupButton.onclick =()=>{
    Display only reset div, hide others.
    change style of reset button to active.
 */
-
+resetButton.onclick =()=>{
+	resetButton.className ="button_active";
+	loginButton.className ="button_login";
+	signupButton.className = "button_login";
+	reset.className = "layout_block";
+	login.className = "layout_none";
+	signup.className = "layout_none";
+}
 //  Center all paragragphs
 let par = document.querySelectorAll("p");
 for (let i=0; i<par.length; i++){
@@ -58,16 +65,17 @@ for (let i=0; i<par.length; i++){
 //  Get all forms
 let form1 =document.getElementById("form1");
 let form2 =document.getElementById("form2");
+let form3 =document.getElementById("form3");
 
 //  Get all submit buttons in the page
 let signin =document.getElementById("signedin");
 let enter =document.getElementById("enter");
-
+let reseted =document.getElementById("reseted");
 
 //  Get all requires form inputs
 let signupdetails = form1.querySelectorAll("[required]");
 let enterdetails = form2.querySelectorAll("[required]");
-
+let resetdetails = form3.querySelectorAll("[required]");
 
 /*  Ensure all required documents are inputted before submitting.
     Otherwise disable form submit button
@@ -82,4 +90,8 @@ for(i=0;i<enterdetails[i].length;i++){
 		enter.disabled=false;
   }
 }
-
+for(i=0;i<resetdetails[i].length;i++){
+	if(resetdetails[i].value !==""){
+		reseted.disabled=false;
+  }
+}
