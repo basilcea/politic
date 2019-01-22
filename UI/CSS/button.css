@@ -1,0 +1,66 @@
+.button_active,.button_active2 ,.button_active3 {
+	background-color:#d92121;
+	outline:none;
+	padding:1vh 2vw;
+	text-decoration:none;
+	border:none;
+	font-size:16px;
+	color:white;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.button_active{
+  width:32.65%
+}
+.button_active:hover{
+  background-color:#28495b;
+}
+.button_active2{
+  width:24.65%;
+}
+.button_active3{
+  width:49.65%;
+}
+.button_login,.button_login2 ,.button_login3 {
+	margin:0;
+	padding:1vh 2vw;
+	background-color:#28495b;
+	color: white;
+	font-size:16px;
+	border:none;
+	outline:none;
+}
+.button_login{
+	width:32.65%;
+}
+.button_login2{
+	width:24.65%;
+}
+.button_login3{
+	width:49.65%;
+}
+.button_login:hover,.button_login2:hover,.button_login3:hover{
+	background-color:#d92121;
+
+}
+.button_btn {
+	background-color:#28495b;
+	color: #fff;
+	min-height: 35px;
+	padding: 10px;
+	border: none;
+	outline:none;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+.button_btn:hover {
+	background-color:#d92121;
+}
+.button_upload{
+	color: #fff;
+	min-height: 30px;
+	padding:0.7vw 1vw;
+	background-color: gainsboro;
+	font-size:0.85em;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px
+	}

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Politico- Your right to choose</title>
+		<meta charset="UTF-8">
+		<meta name="description" content="Question and Answer Forum">
+		<meta name="keywords" content="ask, question, answer">
+		<meta name="author" content="Cea">
+		<meta name="viewport" content ="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href ="./CSS/card.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/layout.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/background.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/button.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/text.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/form.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/nav.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/others.css">
+	</head>
+	<body>
+		<div class="layout_large background_body">
+			<div class="layout_header">
+				<img class="others_logo" src="STATIC/logo.png" alt="logo"/>
+			</div>
+			<div class="layout_nav">
+				<ul class="nav_tabs">
+					<li class="nav_horizontal">
+						<a class="nav_menuButton" href="home.html">Home</a>
+					</li>
+					<li class="nav_horizontal">
+							<a class="nav_active" href="profile.html">Your Profile</a>
+					</li>
+					<li class="nav_horizontal">
+						<a class="nav_menubutton" href="admin.html">Admin</a>
+					</li>
+					<li class="nav_horizontal">
+						<a class="nav_menuButton" href="candidate.html">Candidacy</a>
+					</li>
+				</ul>
+			</div>
+			<div class="layout_navVert">
+				<ul class="nav_tabs">
+					<li class="nav_horizontal">
+						<a class="nav_menuButton" href="index.html">Logout</a>
+				</ul>
+			</div>
+			<div class="layout_centered1 card_party">
+				<button type="button">View Profile</button>
+				<button type="button">Edit Profile</button>
+				<div id="run">
+					<form>
+						<p class="text_centered">View Profile</p>
+						<div class="layout_right">
+						<img  id ="uploaded" class="others_img" src="STATIC/avatar.png" alt="logo">
+						</div>
+						<div class="others_profile">
+						<p>First Name:<span class="text_styled">Ogbonna</span></p>
+						<p>Last Name:<span class="text_styled">Basil</span></p>
+						<p>Other Name:<span class="text_styled">Cea</span></p>
+						<p>Email:<span class="text_styled "> basilcea@yahoo.co.uk</span></p>
+						<p>Phone Number: <span class="text_styled ">+9 (0) 2346790</span></p>
+						</div>
+					</form>
+					<div class="layout_activity">
+						<p class="text_centered">Vote Activites</p>
+							Below is a list of all your standing votes in the present election.
+								<table id="voteActivity">
+									<tr class="layout_th">
+										<th>Type of Office</th>
+										<th>Name of Office</th>
+										<th>Candidate</th>
+									</tr>
+								</table>
+						</div>
+				</div>
+				<div id="petition">
+					<form>
+						<p class="text_centered">Edit Profile</p>
+						<div class="layout_left">
+							<img  id ="pix" class="others_img" src="STATIC/avatar.png" alt="logo">
+							<br><br>
+							<button type="button" class="button_btn">Browse Logo</button>
+							<span class="button_upload">Upload Logo</span>
+						</div>
+						<input type ="file" class="layout_none" id="realInput" name="profileFile"  accept="STATIC/*">
+						<input type="text" class="form_halfed" placeholder="First Name">
+						<input type="text" class="form_halfed" placeholder="Last Name">
+						<input type="text" class="form_halfed" placeholder="Other Name">
+						<input type="email" class="form_halfed" placeholder="Email">
+						<input type="text" class="form_halfed" placeholder="Phone Number">
+						<input type="submit" value="Submit">
+					</form>
+				</div>
+			</div>
+		</div>
+		<footer class="background_footer"></footer>
+		<script src="./JS/profile.js"></script>
+	</body>
+</html>
