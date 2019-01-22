@@ -52,6 +52,17 @@ deletedButton.onclick =()=>{
 
 }
 
+createdButton.onclick =()=>{
+	deletedButton.className ="button_login2";
+	createButton.className ="button_login2";
+	editButton.className = "button_login2";
+	createdButton.className = "button_active2";
+	deletedParty.className = "layout_none";
+	createParty.className = "layout_none";
+	editParty.className = "layout_none";
+	createOffice.className ="layout_block";
+
+}
 let par = document.querySelectorAll("p");
 for (let i=0; i<par.length; i++){
 	par[i].className ="text_centered";
