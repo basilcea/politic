@@ -1,6 +1,8 @@
 import users from "./user" ;
 import offices from "./office" ;
-import parties from "./party" ;
+import parties from "../party" ;
+
+ var m =
 
 const candidates =[
   {
