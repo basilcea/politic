@@ -64,32 +64,35 @@ class partyController{
   static getParty(req, res) {
     //force all id string to integer
     const id = parseInt(req.params.id, 10);
-
+    let partyFound;
     parties.filter((party) => {
       if (party.id === id) {
-          return res.status(200).send({
-            "status": 200,
-            "data": [party],
-            "message":"Political party retrieved succesfully"
-          });
+        partyFound = party
+        return res.status(200).send({
+          "status": 200,
+          "data": [party],
+          "message":"Political party retrieved succesfully"
+        });
       }
     });
-    res.status(404).send({
-      "status": 404,
-      "error": 'Party does not exist',
-    });
-    res.status(500).send({
+    if(!partyFound){
+      res.status(404).send({
+        "status": 404,
+        "error": 'Party Not Found',
+      })
+    }
+    return res.status(500).send({
       "status": 500,
       "error": 'Server Error',
     });
 
   }
   static deleteParty(req,res){
-
     const id = parseInt(req.params.id, 10);
-
+    let partyFound;
     parties.filter((party, index) => {
       if (party.id === id) {
+        partyFound = party
         parties.splice(index,1);
         return res.status(200).send({
           "status": 200,
@@ -99,16 +102,42 @@ class partyController{
         });
       }
     });
-    res.status(404).send({
-      "status": 404,
-      "error" : "party does not exist",
-    });
-    res.status(500).send({
+    if(!partyFound){
+      res.status(404).send({
+        "status": 404,
+        "error" : "party does not exist",
+      });
+    }
+    return res.status(500).send({
       "status": 500,
       "error": 'Server Error',
     });
   };
 
+  static editPartyName (req,res){
+    const id = parseInt(req.params.id,10);
+    let partyFound;
+    parties.filter((party, index) => {
+      if(party.id === id){
+        partyFound = party;
+        partyFound.name = req.body.name || partyFound.name
+        return res.status(201).send({
+          success: 'true',
+          message: 'todo patched',
+          partyFound
+        })
+      }
+    })
+    if (!partyFound) {
+      return res.status(404).send({
+        "status": 404,
+        "error": 'Party not found',
+      });
+    }
 
+  }
 }
+
+
+
 export default partyController ;
