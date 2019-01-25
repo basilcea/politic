@@ -1,6 +1,7 @@
 import parties from "../models/party";
 
 class partyController{
+
   static createParty(req,res){
     //create a political party
 
@@ -39,6 +40,7 @@ class partyController{
       'error':"Something Failed"
     });
   }
+
   static getAllParties(req,res){
     if(parties){
        return res.status(200).send({
@@ -58,6 +60,7 @@ class partyController{
       "error":"parties can not be gotten, Try again"
     })
   }
+
   static getParty(req, res) {
     //force all id string to integer
     const id = parseInt(req.params.id, 10);
@@ -81,6 +84,30 @@ class partyController{
     });
 
   }
+  static deleteParty(req,res){
+
+    const id = parseInt(req.params.id, 10);
+
+    parties.filter((party, index) => {
+      if (party.id === id) {
+        parties.splice(index,1);
+        return res.status(200).send({
+          "status": 200,
+          "data": [{
+            "message":"question deleted successfully"
+          }]
+        });
+      }
+    });
+    res.status(404).send({
+      "status": 404,
+      "error" : "party does not exist",
+    });
+    res.status(500).send({
+      "status": 500,
+      "error": 'Server Error',
+    });
+  };
 
 
 }
