@@ -6,6 +6,7 @@ const router = express.Router();
 
 
 router.post('/parties', partyController.createParty);
+router.get('/parties', partyController.getAllParties)
 
 
 

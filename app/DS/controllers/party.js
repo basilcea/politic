@@ -35,6 +35,26 @@ class partyController{
       'error':"Something Failed"
     });
   }
+  static getAllParties(req,res){
+    if(parties){
+       return res.status(200).send({
+        "status": 200,
+        "data" :[parties],
+        "message": 'questions retrieved successfully'
+      });
+    }
+    else if (!parties) {
+      return res.status(404).send({
+        "status":404,
+        "error": 'questions not found',
+      })
+    };
+    return res.status(500).send({
+      "status":500,
+      "error":"question can not be gotten, Try again",
+    })
+  }
+
 
 }
 export default partyController ;
