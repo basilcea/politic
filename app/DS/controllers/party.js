@@ -2,16 +2,19 @@ import parties from "../models/party";
 
 class partyController{
   static createParty(req,res){
-    //create a political
+    //create a political party
+
+    // check if name is provided
     if (!req.body.name) {
-      return res.status(400).send({
-        "status":400 ,
+      return res.status(412).send({
+        "status":412 ,
         "error": " name is required"
       });
     }
+    // check if headquaters address is provided
     if (!req.body.hqAddress){
-      return res.status(400).send({
-        "status": 400,
+      return res.status(412).send({
+        "status": 412,
         "error": "Headquaters's address is required"
       });
     }
@@ -22,6 +25,7 @@ class partyController{
       "hqAddress" : req.body.hqAddress,
       "logoUrl": req.body.logoUrl
     }
+    // add party details to the data structure
     parties.push(party);
     if(party){
       return res.status(201).send({
@@ -51,8 +55,31 @@ class partyController{
     };
     return res.status(500).send({
       "status":500,
-      "error":"parties can not be gotten, Try again",
+      "error":"parties can not be gotten, Try again"
     })
+  }
+  static getParty(req, res) {
+    //force all id string to integer
+    const id = parseInt(req.params.id, 10);
+
+    parties.filter((party) => {
+      if (party.id === id) {
+          return res.status(200).send({
+            "status": 200,
+            "data": [party],
+            "message":"Political party retrieved succesfully"
+          });
+      }
+    });
+    res.status(404).send({
+      "status": 404,
+      "error": 'Party does not exist',
+    });
+    res.status(500).send({
+      "status": 500,
+      "error": 'Server Error',
+    });
+
   }
 
 
