@@ -16,5 +16,6 @@ router.patch('/parties/:id/name', partyController.editPartyName);
 // office routes
 
 router.post('/offices', officeController.createOffice);
+router.get('/offices', officeController.getAllOffices);
 
 export default router;

@@ -52,7 +52,7 @@ class partyController{
     else if (!parties) {
       return res.status(400).send({
         "status":400,
-        "error": 'parties not found',
+        "error": 'parties does not exist',
       })
     };
     return res.status(500).send({

@@ -31,6 +31,27 @@ class officeController{
       'error':"Something Failed"
     });
   };
+
+  static getAllOffices(req,res){
+    if(offices){
+       return res.status(200).send({
+        "status": 200,
+        "data" :[offices],
+        "message": 'offices retrieved successfully'
+      });
+    }
+    else if (!offices) {
+      return res.status(400).send({
+        "status":400,
+        "error": 'offices does not exist',
+      })
+    };
+    return res.status(500).send({
+      "status":500,
+      "error":"offices can not be gotten, Try again"
+    })
+  }
+
 }
 
 
