@@ -57,7 +57,7 @@
 }
 .button_upload{
 	color: #fff;
-	min-height: 30px;
+  min-height: 30px;
 	padding:0.7vw 1vw;
 	background-color: gainsboro;
 	font-size:0.85em;

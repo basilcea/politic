@@ -1,6 +1,6 @@
 .others_img{
     width:15vw;
-    max-height:200px;
+    min-height:13vw;
 }
 .others_img2{
 	width:60%;;
@@ -17,13 +17,15 @@
 	height:40px;
 }
 .others_textArea{
-	width:48%;
-	margin:2%;
+	width:49.5%;
+  margin-top:2%;
+  margin-bottom:2%;
+  margin-right:0;
 	outline:none;
 	border:none;
 }
 .others_textArea2{
-	width:104%;
+	width:100%;
 	margin:2%;
 	outline:none;
 	border:none;
@@ -33,4 +35,7 @@
 	font-size:18px;
 	font-weight:normal;
 	padding-top:10%;
+}
+.others_fix{
+  width:98%
 }
