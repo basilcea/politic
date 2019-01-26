@@ -57,7 +57,8 @@
 								<span class="button_upload">Upload Logo</span>
 							</div>
 							<input type ="file" class="layout_none" id="realInput" name="logoFile"  accept="STATIC/*" required>
-							<input type="text" class="form_halfed" placeholder="Party Name" required>
+              <input type="text" class="form_halfed" placeholder="Party Name" required>
+              <input type="text" class="form_halfed" placeholder="AKA">
 							<textarea class="layout_right others_textArea" name="Address" placeholder="Headquater Address" rows=5 cols=10 required></textarea>
 							<input type="submit" value="Submit">
 					</form>
@@ -65,9 +66,8 @@
 				<div id="edit">
 					<form id="editParty">
 						<p>Edit Details of a Political Party</p>
-						<select id="candidatePart" name="party" form="editParty">
+						<select id="candidateParty" name="party" form="editParty" class="others_fix">
 						</select>
-						Edit Details
 						<div class="layout_left">
 							<img  id ="uploaded" class="others_img" src="STATIC/logoPlaceholder.jpg" alt="logo">
 							<br>
@@ -75,14 +75,15 @@
 							<span class="button_upload">Upload Logo</span>
 							</div>
 						<input type ="file" class="layout_none" id="realInput" name="logoFile"  accept="STATIC/*" required>
-						<input type="text" class="form_halfed" placeholder="Party Name" required>
-						<textarea class="layout_right others_textArea" name="Address" placeholder="Headquaters Address" rows=5 cols=10 required></textarea>
+            <input type="text" id="partName" class="form_halfed" placeholder="Party Name" required>
+            <input type="text" class="form_halfed" placeholder="AKA">
+						<textarea class= "layout_right others_textArea" name="Address" placeholder="Headquaters Address" rows=5 cols=10 required></textarea>
 						<input type="submit" value="Submit">
 					</form>
 				</div>
 				<div id="delete">
-					<form>
-							<select id="candidateParty" name="party" form="editParty">
+					<form id="deleteParty">
+							<select id="candidatePart" name="party" form="deleteParty" class="others_fix">
 							</select>
 							<p>Deleting the political party is irrevocable as it is completely off our database.</p>
 						<input type="checkbox" name="Agreement" value="delete" required> Yes, I want to delete this political party
