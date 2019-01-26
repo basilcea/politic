@@ -125,3 +125,10 @@ realInput.addEventListener('change', () => {
   };
   reader.readAsDataURL(event.target.files[0]);
 });
+
+
+
+
+
+
+

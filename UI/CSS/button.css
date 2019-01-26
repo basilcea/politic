@@ -56,27 +56,12 @@
 .button_btn:hover {
 	background-color:#d92121;
 }
-
-@media screen and (max-width: 600px){
-  .button_login , .button_active{
-    display:none;
-  }
-  .button_small{
-    width:20%;
-  }
-  .button_btn{
-    width:30vw;
-  }
-  .button_active2,.button_login2{
-    font-size:2.8vw;
-    width:24%;
-  }
-}
-@media screen and (min-width:601px) and (max-width:1040px){
-  .button_btn{
-    width:20vw;
-  }
-  .button_active,.button_active2 ,.button_active3,.button_login,.button_login2,.button_login3{
-    font-size:12px;
-  }
-}
+.button_upload{
+	color: #fff;
+  min-height: 30px;
+	padding:0.7vw 1vw;
+	background-color: gainsboro;
+	font-size:0.85em;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px
+	}

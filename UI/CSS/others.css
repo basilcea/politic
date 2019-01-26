@@ -18,11 +18,10 @@
 }
 
 .others_textArea{
-  width:53%;
-  float:right;
+	width:49.5%;
   margin-top:2%;
   margin-bottom:2%;
-  margin-left:2%;
+  margin-right:0;
 	outline:none;
 	border:none;
 }
@@ -39,59 +38,5 @@
 	padding-top:10%;
 }
 .others_fix{
-  width:98%;
-}
-.others_fullName{
-  display:none;
-}
-#vote
-{
-  height:30px;
-  margin:3% 22%;
-  width: 54%;
-  outline: none;
-  border:none;
-}
-#vote:hover
-{
-  background-color:#d92121
-}
-
-@media screen and (max-width: 600px){
-  .others_logo{
-    width:32vw;
-    height:8vw;
-  }
-  .others_img3{
-    width:50%;
-    padding:10%;
-    margin-left:10%;
-  }
-  .others_profile{
-    padding-left:5vw;
-  }
-  .others_img{
-    width:30vw
-  }
-  .others_textArea{
-    float:none;
-    margin-left:2%;
-    width:104%;
-  }
-  .others_full{
-    display:block;
-    padding-right:40vw;
-
-  }
-}
-@media screen and (max-width: 1040px) and (min-width:601px){
-  .others_img{
-    width:20vw
-  }
-  .others_textArea{
-    float:none;
-    margin-left:2%;
-    width:104%;
-  }
-
+  width:98%
 }

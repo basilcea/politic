@@ -1469,16 +1469,16 @@ const Parties = [
 
 /** Create options for datalist or select list with the first option disabled, serving as placeholder */
 
-const createOptions = (element, values) => {
-  const options = document.createElement('option');
-  options.value = values[0];
-  options.text = values[0];
-  element.add(options);
-  options.disabled = true;
-  for (let i = 1; i < values.length; i++) {
-    const options = document.createElement('option');
-    options.value = values[i];
-    options.text = values[i];
+let createOptions =(element,values) =>{
+  let options=document.createElement("option");
+	options.value =values[0];
+	options.text = values[0];
+	element.add(options);
+	options.disabled=true;
+	for(let i=1; i<values.length;i++){
+    let options=document.createElement("option");
+    options.value =values[i];
+		options.text = values[i];
     element.add(options);
   }
 };
@@ -1488,27 +1488,87 @@ const searchList = document.getElementById('searchList');
 if (searchList) {
   createOptions(searchList, merged);
 }
+//	Create options of all political offices
+let merged = offices[0].Office.concat(offices[1].Office, offices[2].Office, offices[3].Office, offices[4].Office);
+let searchList = document.getElementById("searchList")
+if(searchList){
+  createOptions(searchList,merged)
+}
 
-const searchList2 = document.getElementById('pList');
-if (searchList2) {
-  createOptions(searchList2, merged);
+let searchList2 = document.getElementById('pList')
+if (searchList2){
+  createOptions(searchList2, merged)
+}
+let partyList1 = document.getElementById("candidateParty")
+let partName = (partyList1, document.getElementById("partName"))
+
+if (partyList1){
+  createOptions(partyList1, Parties)
+  partyList1.onclick =()=>{
+    partName.placeholder = partyList1.value
+
+  }
+}
+let partyList2 = document.getElementById("candidatePart")
+let partyList3 = document.getElementById("candidatePart1")
+if (partyList2){
+  createOptions(partyList2, Parties)
+}
+if (partyList3){
+  createOptions(partyList3, Parties)
+}
+
+
+
+//	 Create options of all types of  political offices
+let selectType = document.getElementById("selectType");
+let officeList = offices[0].Type.concat(offices[1].Type, offices[2].Type, offices[3].Type ,offices[4].Type);
+if(selectType){
+  createOptions(selectType, officeList )};
+
+let selectOffice = document.getElementById("selectOffice");
+// 	Trigger event when type of office is selected
+if(selectType){
+  selectType.onclick =()=>{
+    // Remove all previous options
+    selectOffice.options.length =0;
+    selectCandidate.options.length=0;
+    for(let i=0;i<offices.length;i++){
+      // 	Check if a type of office is selected
+      if(selectType.value===offices[i].Type[0]){
+        //	Then create and display name of offices options for that particular type
+        for (let j=0;j< offices[i].Office.length;j++){
+          let options=document.createElement("option");
+          options.value =offices[i].Office[j];
+          options.text = offices[i].Office[j];
+          selectOffice.add(options);
+        }
+      }
+    }
+  }
 }
 const partyList1 = document.getElementById('candidateParty');
 const partName = (partyList1, document.getElementById('partName'));
 
-if (partyList1) {
-  createOptions(partyList1, Parties);
-  partyList1.onclick = () => {
-    partName.placeholder = partyList1.value;
-  };
-}
-const partyList2 = document.getElementById('candidatePart');
-const partyList3 = document.getElementById('candidatePart1');
-if (partyList2) {
-  createOptions(partyList2, Parties);
-}
-if (partyList3) {
-  createOptions(partyList3, Parties);
+let selectCandidate =document.getElementById("selectCandidate")
+if(selectCandidate){
+  selectOffice.onclick =()=>{
+      // Remove all previous options
+    selectCandidate.options.length=0;
+    for(let i=0;i<Candidacy.length;i++){
+      //	Check if an office is selected
+      if(selectOffice.value === Candidacy[i].Office){
+        // 	then create and display candidate options for that office
+        selectCandidate.options.length=0
+        for(let j=0; j< Candidacy[i].Candidates.length;j++){
+          let options=document.createElement("option");
+          options.value =Candidacy[i].Candidates[j];
+          options.text = Candidacy[i].Candidates[j];
+          selectCandidate.add(options);
+        }
+      }
+    }
+  }
 }
 
 /** Create options of all types of  political offices */
