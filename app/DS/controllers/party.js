@@ -1,10 +1,10 @@
 import parties from "../models/party";
 
 class partyController{
-  static createParty(req ,res) {
-  //create a political party
+  static createParty(req,res){
+    //create a political party
 
-  // check if name is provided
+    // check if name is provided
     if (!req.body.name) {
       return res.status(412).send({
         "status":412,
@@ -25,7 +25,7 @@ class partyController{
       "hqAddress" : req.body.hqAddress,
       "logoUrl": req.body.logoUrl
     }
-  // add party details to the data structure
+    // add party details to the data structure
     parties.push(party);
     return res.status(201).send({
       "status": 201,
@@ -45,7 +45,7 @@ class partyController{
     else if (!parties) {
       return res.status(400).send({
         "status":400,
-        "error": 'parties does not exist'
+        "error": 'parties does not exist',
       })
     };
   }
