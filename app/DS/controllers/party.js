@@ -8,7 +8,7 @@ class partyController{
     // check if name is provided
     if (!req.body.name) {
       return res.status(412).send({
-        "status":412 ,
+        "status":412,
         "error": " name is required"
       });
     }
@@ -28,86 +28,72 @@ class partyController{
     }
     // add party details to the data structure
     parties.push(party);
-    if(party){
-      return res.status(201).send({
-        "status": 201,
-        "data": [party],
-        "message":"You have added a political party"
-      });
-    }
-    return res.status(500).send({
-      "status": 500,
-      'error':"Something Failed"
+    return res.status(201).send({
+      "status": 201,
+      "data": party,
+      "message":"You have added a political party"
     });
   }
 
   static getAllParties(req,res){
     if(parties){
-       return res.status(200).send({
+      return res.status(200).send({
         "status": 200,
-        "data" :[parties],
+        "data" :parties,
         "message": 'parties retrieved successfully'
       });
     }
     else if (!parties) {
       return res.status(400).send({
         "status":400,
-        "error": 'parties not found',
+        "error": 'parties does not exist',
       })
     };
-    return res.status(500).send({
-      "status":500,
-      "error":"parties can not be gotten, Try again"
-    })
   }
 
   static getParty(req, res) {
     //force all id string to integer
     const id = parseInt(req.params.id, 10);
-
+    let partyFound;
     parties.filter((party) => {
       if (party.id === id) {
-          return res.status(200).send({
-            "status": 200,
-            "data": [party],
-            "message":"Political party retrieved succesfully"
-          });
-      }
-    });
-    res.status(404).send({
-      "status": 404,
-      "error": 'Party does not exist',
-    });
-    res.status(500).send({
-      "status": 500,
-      "error": 'Server Error',
-    });
-
-  }
-  static deleteParty(req,res){
-
-    const id = parseInt(req.params.id, 10);
-
-    parties.filter((party, index) => {
-      if (party.id === id) {
-        parties.splice(index,1);
+        partyFound = party
         return res.status(200).send({
           "status": 200,
-          "data": [{
-            "message":"question deleted successfully"
-          }]
+          "data": party,
+          "message":"Political party retrieved succesfully"
         });
       }
     });
-    res.status(404).send({
-      "status": 404,
-      "error" : "party does not exist",
+    if(!partyFound){
+      return res.status(404).send({
+        "status": 404,
+        "error": 'Party Not Found',
+      })
+    }
+  }
+  static deleteParty(req,res){
+    const id = parseInt(req.params.id, 10);
+    let partyFound;
+    parties.filter((party, index) => {
+      if (party.id === id) {
+        partyFound = party
+        parties.splice(index,1);
+        return res.status(200).send({
+          "status": 200,
+          "data": {
+            "message":"party deleted successfully"
+          }
+        });
+      }
     });
-    res.status(500).send({
-      "status": 500,
-      "error": 'Server Error',
-    });
-  };
+    if(!partyFound){
+      return res.status(404).send({
+        "status": 404,
+        "error" : "party does not exist",
+      });
+    }
+    };
 
 
 }
