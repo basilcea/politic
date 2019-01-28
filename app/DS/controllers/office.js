@@ -12,6 +12,12 @@ class officeController{
         "error": "type of office is required"
       });
     }
+    if (!req.body.name) {
+      return res.status(412).send({
+        "status":412 ,
+        "error": "name of office is required"
+      });
+    }
     const office = {
       "id": offices.length + 1,
       "type": req.body.type ,
@@ -22,14 +28,10 @@ class officeController{
     if(office){
       return res.status(201).send({
         "status": 201,
-        "data": [office],
+        "data": office,
         "message":"You have added a political office"
       });
     }
-    return res.status(500).send({
-      "status": 500,
-      'error':"Something Failed"
-    });
   };
 
   static getAllOffices(req,res){
