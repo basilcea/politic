@@ -38,7 +38,7 @@ class officeController{
     if(offices){
        return res.status(200).send({
         "status": 200,
-        "data" :[offices],
+        "data" :offices,
         "message": 'offices retrieved successfully'
       });
     }
@@ -48,38 +48,7 @@ class officeController{
         "error": 'offices does not exist',
       })
     };
-    return res.status(500).send({
-      "status":500,
-      "error":"offices can not be gotten, Try again"
-    })
   };
-
-  static getOffice(req, res) {
-    //force all id string to integer
-    const id = parseInt(req.params.id, 10);
-    let officeFound;
-    offices.filter((office) => {
-      if (office.id === id) {
-        officeFound = office
-        return res.status(200).send({
-          "status": 200,
-          "data": [office],
-          "message":"Political office retrieved succesfully"
-        });
-      }
-    });
-    if(!officeFound){
-      res.status(404).send({
-        "status": 404,
-        "error": 'Office Not Found',
-      })
-    }
-    return res.status(500).send({
-      "status": 500,
-      "error": 'Server Error',
-    });
-
-  }
 
 }
 
