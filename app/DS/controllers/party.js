@@ -92,6 +92,32 @@ class partyController{
         "error" : "party does not exist",
       });
     }
+  };
+
+  static editPartyName (req,res){
+    const id = parseInt(req.params.id,10);
+    let partyFound;
+    parties.filter((party, index) => {
+      if(party.id === id){
+        partyFound = party;
+        partyFound.name = req.body.name || partyFound.name
+        return res.status(201).send({
+          'status': 201,
+          'data': {
+            'id': partyFound.id,
+            'name': partyFound.name
+          },
+          "party": partyFound,
+          'message':'Party Name edited'
+        })
+      }
+    })
+    if (!partyFound) {
+      return res.status(404).send({
+        "status": 404,
+        "error" : "party does not exist",
+      });
+    }
     };
 
 
