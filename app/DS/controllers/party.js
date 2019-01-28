@@ -3,12 +3,12 @@ import parties from "../models/party";
 class partyController{
 
   static createParty(req,res){
-    //create a political party
+  //create a political party
 
-    // check if name is provided
+  // check if name is provided
     if (!req.body.name) {
       return res.status(412).send({
-        "status":412 ,
+        "status":412,
         "error": " name is required"
       });
     }
@@ -28,16 +28,10 @@ class partyController{
     }
     // add party details to the data structure
     parties.push(party);
-    if(party){
-      return res.status(201).send({
-        "status": 201,
-        "data": [party],
-        "message":"You have added a political party"
-      });
-    }
-    return res.status(500).send({
-      "status": 500,
-      'error':"Something Failed"
+    return res.status(201).send({
+      "status": 201,
+      "data": party,
+      "message":"You have added a political party"
     });
   }
 
