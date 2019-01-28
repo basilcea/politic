@@ -8,7 +8,7 @@ class partyController{
     // check if name is provided
     if (!req.body.name) {
       return res.status(412).send({
-        "status":412 ,
+        "status":412,
         "error": " name is required"
       });
     }
@@ -28,24 +28,18 @@ class partyController{
     }
     // add party details to the data structure
     parties.push(party);
-    if(party){
       return res.status(201).send({
         "status": 201,
-        "data": [party],
+        "data": party,
         "message":"You have added a political party"
       });
-    }
-    return res.status(500).send({
-      "status": 500,
-      'error':"Something Failed"
-    });
   }
 
   static getAllParties(req,res){
     if(parties){
        return res.status(200).send({
         "status": 200,
-        "data" :[parties],
+        "data" :parties,
         "message": 'parties retrieved successfully'
       });
     }
@@ -55,10 +49,6 @@ class partyController{
         "error": 'parties does not exist',
       })
     };
-    return res.status(500).send({
-      "status":500,
-      "error":"parties can not be gotten, Try again"
-    })
   }
 
   static getParty(req, res) {
@@ -70,7 +60,7 @@ class partyController{
         partyFound = party
         return res.status(200).send({
           "status": 200,
-          "data": [party],
+          "data": party,
           "message":"Political party retrieved succesfully"
         });
       }
@@ -81,11 +71,6 @@ class partyController{
         "error": 'Party Not Found',
       })
     }
-    return res.status(500).send({
-      "status": 500,
-      "error": 'Server Error',
-    });
-
   }
   static deleteParty(req,res){
     const id = parseInt(req.params.id, 10);
@@ -96,9 +81,9 @@ class partyController{
         parties.splice(index,1);
         return res.status(200).send({
           "status": 200,
-          "data": [{
-            "message":"question deleted successfully"
-          }]
+          "data": {
+            "message":"party deleted successfully"
+          }
         });
       }
     });
@@ -108,10 +93,6 @@ class partyController{
         "error" : "party does not exist",
       });
     }
-    return res.status(500).send({
-      "status": 500,
-      "error": 'Server Error',
-    });
   };
 
   static editPartyName (req,res){
@@ -122,9 +103,13 @@ class partyController{
         partyFound = party;
         partyFound.name = req.body.name || partyFound.name
         return res.status(201).send({
-          success: 'true',
-          message: 'todo patched',
-          partyFound
+          'status': 201,
+          'data': {
+            'id': partyFound.id,
+            'name': partyFound.name
+          },
+          "party": partyFound,
+          'message':'Party Name edited'
         })
       }
     })

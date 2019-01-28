@@ -12,6 +12,12 @@ class officeController{
         "error": "type of office is required"
       });
     }
+    if (!req.body.name) {
+      return res.status(412).send({
+        "status":412 ,
+        "error": "name of office is required"
+      });
+    }
     const office = {
       "id": offices.length + 1,
       "type": req.body.type ,
@@ -22,21 +28,17 @@ class officeController{
     if(office){
       return res.status(201).send({
         "status": 201,
-        "data": [office],
+        "data": office,
         "message":"You have added a political office"
       });
     }
-    return res.status(500).send({
-      "status": 500,
-      'error':"Something Failed"
-    });
   };
 
   static getAllOffices(req,res){
     if(offices){
        return res.status(200).send({
         "status": 200,
-        "data" :[offices],
+        "data" :offices,
         "message": 'offices retrieved successfully'
       });
     }
@@ -46,10 +48,6 @@ class officeController{
         "error": 'offices does not exist',
       })
     };
-    return res.status(500).send({
-      "status":500,
-      "error":"offices can not be gotten, Try again"
-    })
   };
 
   static getOffice(req, res) {
@@ -61,7 +59,7 @@ class officeController{
         officeFound = office
         return res.status(200).send({
           "status": 200,
-          "data": [office],
+          "data": office,
           "message":"Political office retrieved succesfully"
         });
       }
@@ -72,11 +70,6 @@ class officeController{
         "error": 'Office Not Found',
       })
     }
-    return res.status(500).send({
-      "status": 500,
-      "error": 'Server Error',
-    });
-
   }
 
 }
