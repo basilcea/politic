@@ -27,11 +27,11 @@ class partyController{
     }
     // add party details to the data structure
     parties.push(party);
-    return res.status(201).send({
-      "status": 201,
-      "data": party,
-      "message":"You have added a political party"
-    });
+      return res.status(201).send({
+        "status": 201,
+        "data": party,
+        "message":"You have added a political party"
+      });
   }
 
   static getAllParties(req,res){
