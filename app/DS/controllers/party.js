@@ -2,16 +2,19 @@ import parties from "../models/party";
 
 class partyController{
   static createParty(req,res){
-    //create a political
+  //create a political party
+
+  // check if name is provided
     if (!req.body.name) {
-      return res.status(400).send({
-        "status":400 ,
+      return res.status(412).send({
+        "status":412,
         "error": " name is required"
       });
     }
+    // check if headquaters address is provided
     if (!req.body.hqAddress){
-      return res.status(400).send({
-        "status": 400,
+      return res.status(412).send({
+        "status": 412,
         "error": "Headquaters's address is required"
       });
     }
@@ -22,17 +25,12 @@ class partyController{
       "hqAddress" : req.body.hqAddress,
       "logoUrl": req.body.logoUrl
     }
+    // add party details to the data structure
     parties.push(party);
-    if(party){
-      return res.status(201).send({
-        "status": 201,
-        "data": [party],
-        "message":"You have added a political party"
-      });
-    }
-    return res.status(500).send({
-      "status": 500,
-      'error':"Something Failed"
+    return res.status(201).send({
+      "status": 201,
+      "data": party,
+      "message":"You have added a political party"
     });
   }
 
