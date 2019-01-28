@@ -50,6 +50,28 @@ class officeController{
     };
   };
 
+  static getOffice(req, res) {
+    //force all id string to integer
+    const id = parseInt(req.params.id, 10);
+    let officeFound;
+    offices.filter((office) => {
+      if (office.id === id) {
+        officeFound = office
+        return res.status(200).send({
+          "status": 200,
+          "data": office,
+          "message":"Political office retrieved succesfully"
+        });
+      }
+    });
+    if(!officeFound){
+      res.status(404).send({
+        "status": 404,
+        "error": 'Office Not Found',
+      })
+    }
+  }
+
 }
 
 
