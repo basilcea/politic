@@ -36,7 +36,7 @@ class partyController{
 
   static getAllParties(req,res){
     if(parties){
-        return res.status(200).send({
+      return res.status(200).send({
         "status": 200,
         "data" :parties,
         "message": 'parties retrieved successfully'
@@ -71,8 +71,28 @@ class partyController{
       })
     }
   }
-}
-
+  static deleteParty(req,res){
+    const id = parseInt(req.params.id, 10);
+    let partyFound;
+    parties.filter((party, index) => {
+      if (party.id === id) {
+        partyFound = party
+        parties.splice(index,1);
+        return res.status(200).send({
+          "status": 200,
+          "data": {
+            "message":"party deleted successfully"
+          }
+        });
+      }
+    });
+    if(!partyFound){
+      return res.status(404).send({
+        "status": 404,
+        "error" : "party does not exist",
+      });
+    }
+    };
 
 
 export default partyController ;
