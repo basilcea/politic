@@ -46,5 +46,20 @@ select{
   margin-top:2%;
   margin-left:2%;
   margin-right:5%;
-	height:2.5vw;
+	height:25px;
+}
+
+@media screen and (max-width:600px){
+  form{
+    padding:5% 7%;
+    width:80%;
+  }
+
+}
+@media screen and (max-width: 1040px){
+  .form_halfed{
+    float:none;
+    width:100%
+  }
+
 }

@@ -4,10 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "test": "mocha test --require @babel/register ",
     "babel-node": "babel-node --presets=/*a*/ --ignore='foo|bar|baz'",
     "eslint ": "./node_modules/.bin/eslint --init ",
     "start": "node_modules/.bin/nodemon app/server.js --exec babel-node --"
+=======
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "babel-node": "babel-node --presets=/*a*/ --ignore='foo|bar|baz'",
+    "start": "nodemon --exec npm run babel-node -- path/to/script.js"
+>>>>>>> feat(UI): fix responsiveness of UI
   },
   "repository": {
     "type": "git",
@@ -22,6 +28,7 @@
   "homepage": "https://github.com/basilcea/politico#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
+<<<<<<< HEAD
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
     "dotenv": "^6.2.0",
@@ -40,6 +47,14 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.15.0",
+=======
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/preset-env": "^7.3.1",
+>>>>>>> feat(UI): fix responsiveness of UI
     "nodemon": "^1.18.9"
   }
 }

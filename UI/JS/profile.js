@@ -54,13 +54,13 @@ const realInput = document.getElementById('realInput');
 uploadButton.addEventListener('click', () => {
   realInput.click();
 });
-realInput.addEventListener('change', () => {
-  const reader = new FileReader();
-  reader.onload = () => {
-    const previewed = document.getElementById('pix');
-    previewed.src = reader.result;
-  };
-  reader.readAsDataURL(event.target.files[0]);
+realInput.addEventListener("change", () => {
+  let reader = new FileReader();
+  reader.onload =()=>{
+		let previewed= document.getElementById("pix");
+		previewed.src= reader.result;
+    }
+  reader.readAsDataURL(event.target.files[0])
 });
 /** Seed data structure for front end */
 const info = [

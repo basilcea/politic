@@ -56,12 +56,33 @@
 .button_btn:hover {
 	background-color:#d92121;
 }
-.button_upload{
-	color: #fff;
-  min-height: 30px;
-	padding:0.7vw 1vw;
-	background-color: gainsboro;
-	font-size:0.85em;
-	border-top-right-radius: 5px;
-	border-bottom-right-radius: 5px
-	}
+.button_full{
+  background-color:#28495b;
+}
+
+  @media screen and (max-width: 600px){
+    .button_login{
+      display:none;
+    }
+    .button_active ,.button_full{
+      width:78%;
+    }
+    .button_small{
+      width:20%;
+    }
+    .button_btn{
+      width:30vw;
+    }
+    .button_active,.button_active2 ,.button_active3,.button_login,.button_login2,.button_login3{
+      font-size:2.7vw;
+    }
+  }
+  @media screen and (max-width: 1040px){
+    .button_btn{
+      width:20vw;
+    }
+    .button_active,.button_active2 ,.button_active3,.button_login,.button_login2,.button_login3{
+      font-size:12px;
+    }
+
+  }
