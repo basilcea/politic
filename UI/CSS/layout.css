@@ -109,3 +109,44 @@ background-color:lightgrey;
 .layout_td{
 	width:30%;
 }
+@media screen and (max-width: 600px){
+  .layout_party{
+    grid-area:4/1/5/7;
+    margin:1% 5%;
+  }
+  .layout_vote{
+    grid-area:5/1/6/7;
+    margin:1% 5%;
+  }
+  .layout_header{
+    grid-area:1/1/2/4;
+    margin:0;
+  }
+  .layout_nav{
+    grid-area:1/4/2/7;
+
+  }
+  .layout_navVert{
+    display:none;
+
+  }
+  .layout_right ,.layout_left{
+    float:none;
+    display:block;
+    padding-left:40%
+  }
+  .layout_centered1{
+    grid-area: 3/1/4/7;
+  }
+  .layout_th{
+    font-size:3.5vw
+  }
+  .layout_activity{
+    padding:2% 1%;
+  }
+}
+@media screen and (max-width: 1040px){
+  .layout_left{
+    padding-left:30%
+  }
+}

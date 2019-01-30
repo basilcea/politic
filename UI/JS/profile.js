@@ -34,12 +34,6 @@ uploadButton.addEventListener("click", () => {
 
 });
 realInput.addEventListener("change", () => {
-  const name = realInput.value.split(/\\|\//).pop();
-  const truncated = name.length > 10
-	? name.substr(name.length - 10)
-	: name;
-
-  fileInfo.innerHTML = truncated;
   let reader = new FileReader();
   reader.onload =()=>{
 		let previewed= document.getElementById("pix");

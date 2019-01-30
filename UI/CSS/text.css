@@ -6,6 +6,11 @@ body{
 	font-size:20px;
 	font-weight:bolder;
 }
+.text_small{
+  font-size:16px;
+  color:#28495b;
+  text-align:center;
+}
 .text_styled{
 	font-size:16px;
 	padding:2%;
