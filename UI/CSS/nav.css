@@ -35,46 +35,28 @@ a{
 	border-bottom:2px solid #d92121;
 	border-radius:5px;
 }
-
-.nav_headButton{
-	float:left;
-	text-decoration:none;
-	composes: white from ".nav_/color.nav_css";
-	padding-right:1.nav_5vw;
-}
-.nav_headButton:hover{
-	color:#ef7c0b;
-}
-.nav_topMenu{
-	composes:tabs;
-	float:right;
-
-}
-.nav_footerButton{
-	display:inline-block;
-	text-decoration:none;
-	float:left;
-	padding:1vh 2vw;
-	composes: light from ".nav_/color.nav_css";
-}
-.nav_footerButton:hover{
-	color:#ef7c0b;
-
-}
-.nav_footer{
-	composes:tabs;
-	float:none;
-}
 .nav_icon{
 	display:none;
 }
+.nav_vertical{
+  display:none;
+}
 @media screen and (max-width: 600px) {
-	.nav_tabs > .nav_horizontal:not(:first-child):not(:nth-child(2)) {
+	.nav_tabs > .nav_horizontal:not(:nth-child(5)) {
 		display: none;
 	}
 	.nav_tabs {
-		float:right;
-	}
+    display:block;
+  }
+  .nav_menuButton{
+    padding:1vw 6vw;
+    margin:0vw 2vw;
+  }
+  .nav_vertical{
+    display:block;
+    float:left;
+    width:100%
+  }
 
 	.nav_icon {
 	background:initial;

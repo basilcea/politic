@@ -2,13 +2,19 @@
 const login = document.getElementById("login");
 const signup = document.getElementById("signup");
 const reset =  document.getElementById("reset");
+const icon =  document.getElementById("hamburger");
+const loginLink = document.getElementById('loginLink')
+const backLink = document.getElementById('backLink')
+const signupLink = document.getElementById('signupLink')
+const resetLink = document.getElementById('resetLink')
+
 
 //  Get all buttons on the page
 
 const buttons = document.querySelectorAll("button");
 const signupButton = buttons[0];
 const loginButton = buttons[1];
-const resetButton = buttons[2];
+
 
 /*  Assign css classes to  each button to design the buttons
     Display Login div as default div, hide others.
@@ -16,9 +22,9 @@ const resetButton = buttons[2];
 
 signupButton.className = "button_login";
 loginButton.className = "button_active";
-resetButton.className = "button_login";
 signup.className = "layout_none";
 reset.className = "layout_none";
+
 
 /*  Trigger event when login button is clicked,
     Display only login div, hide others.
@@ -27,10 +33,10 @@ reset.className = "layout_none";
 loginButton.onclick =()=>{
 	loginButton.className ="button_active";
 	signupButton.className ="button_login";
-	resetButton.className = "button_login";
 	login.className = "layout_block";
 	signup.className = "layout_none";
 	reset.className = "layout_none";
+  icon.className ="background_icon"
 }
 /*  Trigger event when signup button is clicked.
     Display only signup div, hide others.
@@ -39,29 +45,47 @@ loginButton.onclick =()=>{
 signupButton.onclick =()=>{
 	signupButton.className ="button_active";
 	loginButton.className ="button_login";
-	resetButton.className = "button_login";
 	signup.className = "layout_block";
 	login.className = "layout_none";
 	reset.className = "layout_none";
+  icon.className ="background_icon"
 }
-/* Trigger event when reset button is clicked,
-   Display only reset div, hide others.
-   change style of reset button to active.
-*/
-resetButton.onclick =()=>{
-	resetButton.className ="button_active";
-	loginButton.className ="button_login";
-	signupButton.className = "button_login";
-	reset.className = "layout_block";
-	login.className = "layout_none";
+resetLink.onclick =()=>{
+	signupButton.className ="button_login";
+	loginButton.className ="button_active";
 	signup.className = "layout_none";
+	login.className = "layout_none";
+	reset.className = "layout_block";
+  icon.className ="background_icon"
 }
-//  Center all paragragphs
-let par = document.querySelectorAll("p");
-for (let i=0; i<par.length; i++){
-  par[i].className ="text_centered";
+backLink.onclick =()=>{
+  loginButton.onclick()
 }
+loginLink.onclick =()=>{
+  loginButton.onclick()
+}
+signupLink.onclick =()=>{
+  signupButton.onclick()
+}
+icon.onclick =()=>{
+  if(icon.className === "background_icon"){
+    icon.parentNode.insertBefore(icon,loginButton)
+    icon.className='background_icon1';
+    if(signupButton.className ==='button_active'){
+      loginButton.className='button_full'
+    }
+    else{signupButton.className ='button_full'}
 
+  }
+  else{
+    icon.className='background_icon'
+    if(signupButton.className==="button_active"){
+      loginButton.className='button_login'
+    }
+    else{signupButton.className ='button_login'}
+
+  }
+}
 //  Get all forms
 let form1 =document.getElementById("form1");
 let form2 =document.getElementById("form2");
