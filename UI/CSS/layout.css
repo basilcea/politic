@@ -136,7 +136,7 @@ tr:hover{
   .layout_right ,.layout_left{
     float:none;
     display:block;
-    padding-left:40%
+    padding-left:33%
   }
   .layout_centered1{
     grid-area: 3/1/4/7;
@@ -148,7 +148,7 @@ tr:hover{
     padding:2% 1%;
   }
 }
-@media screen and (max-width: 1040px){
+@media screen and (max-width: 1040px) and (min-width:601px){
   .layout_left{
     padding-left:30%
   }

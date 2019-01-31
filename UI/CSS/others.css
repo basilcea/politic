@@ -67,7 +67,7 @@
   }
 
 }
-@media screen and (max-width: 1040px){
+@media screen and (max-width: 1040px) and (min-width:601px){
   .others_img{
     width:20vw
   }
