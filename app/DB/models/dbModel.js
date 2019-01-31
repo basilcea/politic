@@ -80,15 +80,15 @@ import client from '../connect';
     }
 
   };
- export const dropOfficeTable = async function(){
-    try{
-      await client.query(`DROP TABLE IF EXISTS offices CASCADE`)
-      console.log('offices table deleted')
-    }catch(err){
-      console.log(err)
-    }
+  export const dropOfficeTable = async function(){
+      try{
+        await client.query(`DROP TABLE IF EXISTS offices CASCADE`)
+        console.log('offices table deleted')
+      }catch(err){
+        console.log(err)
+      }
 
-  }
+    }
    export const createOfficeTable = async function(){
     try{
       await client.query(`
@@ -105,7 +105,7 @@ import client from '../connect';
     ;
   }
 
-export const dropCandidateTable = async function(){
+  export const dropCandidateTable = async function(){
     try{
       await client.query(`DROP TABLE IF EXISTS candidates CASCADE`)
       console.log('candidates table deleted')
@@ -114,7 +114,7 @@ export const dropCandidateTable = async function(){
     }
 
   }
- export const createCandidateTable = async function(){
+  export const createCandidateTable = async function(){
     try{
       await client.query(`
         CREATE TABLE IF NOT EXISTS candidates(
@@ -131,7 +131,7 @@ export const dropCandidateTable = async function(){
     ;
   }
 
-export const dropPetitionTable = async function(){
+  export const dropPetitionTable = async function(){
     try{
       await client.query(`DROP TABLE IF EXISTS petitions`)
       console.log('offices table deleted')
@@ -140,7 +140,7 @@ export const dropPetitionTable = async function(){
     }
 
   }
-export const createPetitionTable = async function(){
+  export const createPetitionTable = async function(){
     try{
       await client.query(`
         CREATE TABLE IF NOT EXISTS offices(
@@ -155,10 +155,9 @@ export const createPetitionTable = async function(){
       console.log('offices table created')
     }catch(err){
       console.log(err)
-    }
-    ;
+    };
   }
-   export const dropAllTables = async function(){
+  export const dropAllTables = async function(){
     try{
       await dropUserTable()
       await dropPartyTable()
@@ -170,9 +169,8 @@ export const createPetitionTable = async function(){
     }catch(err){
       console.log(err)
     }
-
   }
-   export const createAllTables =  async function(){
+  export const createAllTables =  async function(){
     try{
       await createUserTable()
       await createPartyTable()
