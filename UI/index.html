@@ -11,23 +11,24 @@
 		<link rel="stylesheet" type="text/css" href ="./CSS/button.css">
 		<link rel="stylesheet" type="text/css" href ="./CSS/text.css">
 		<link rel="stylesheet" type="text/css" href ="./CSS/form.css">
-		<link rel="stylesheet" type="text/css" href ="./CSS/nav.css">
+    <link rel="stylesheet" type="text/css" href ="./CSS/nav.css">
+    <link rel="stylesheet" type="text/css" href ="./CSS/others.css">
 	</head>
 	<body>
 		<div class="background_banner">
 			<div class="layout_fix">
-				<img src="STATIC/logo.png" alt="logo">
+				<img class="others_img3" src="STATIC/logo.png" alt="logo">
 			</div>
 			<div class="card_login">
 				<button type="button" >Sign Up</button>
 				<button type="button">Login</button>
-				<button type="button" >Reset Password</button>
+				<a href="javascript:void(0)" class="background_icon" id='hamburger'></a>
 
 				<!--Sign Up form-->
 
 				<div id="signup">
 					<form id="form1">
-						<p>Sign up on Politico</p>
+						<p class='text_centered'>Sign up on Politico</p>
 						<input type="text" placeholder="First Name" required>
 						<input type="text" placeholder="Last Name" required>
 						<input type="text" placeholder="Other Names">
@@ -40,8 +41,9 @@
 							<option value ="" disabled selected>-- Register as --</option>
 							<option value="voter"> Voter </option>
 							<option value="politician">Politician  </option>
-						</select>
-						<input type="submit" id="signedin" value="Sign Up">
+            </select>
+            <input type="submit" id="signedin" value="Sign Up">
+            <p class="text_small"><a id="loginLink" href="">Already have an account? Login</a></p>
 					</form>
 				</div>
 
@@ -49,10 +51,12 @@
 
 				<div id="login">
 					<form id="form2">
-						<p>Login with Email</p>
+						<p class='text_centered'>Login with Email</p>
 						<input type="email" placeholder="Email" required>
-						<input type="password" placeholder="Password" required>
-						<input type="submit" id="enter" value="Login">
+            <input type="password" placeholder="Password" required>
+            <p class="text_small"><a id="resetLink" href="#reset">Forgot Password?</a></p>
+            <input type="submit" id="enter" value="Login">
+            <p class="text_small"><a id="signupLink" href="#signup">Don't have an account? Sign up</a></p>
 					</form>
 				</div>
 
@@ -60,13 +64,15 @@
 
 				<div id="reset">
 					<form id="form3">
-						<p>Enter your registered email address and a reset link will be sent</p>
+						<p class='text_centered'>Enter your registered email address and a reset link will be sent</p>
 						<input type="email" placeholder="email" required>
 						<input type="submit"  id="reseted" value="Submit" >
-					</form>
+          </form>
+            <p class="text_small"><a id="backLink" href="#login">Go back to Login </a></p>
 				</div>
 			</div>
-			<a class="nav_active" href="home.html">Go to Home</a>
+      <p class="text_centered"><a class="nav_active" href="home.html">Go to Home</a></p>
+      <br>
 		</div>
 		<script src="./JS/index.js"></script>
   </body>

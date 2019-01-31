@@ -3,7 +3,7 @@
     min-height:13vw;
 }
 .others_img2{
-	width:60%;;
+	width:60%;
 	height:8vw;
 	display:block;
 	padding:5% 5%;
@@ -13,14 +13,16 @@
   background-color:#28495b;
 }
 .others_logo{
-	width:200px;
-	height:40px;
+  width:95%;
+	height:50%;
 }
+
 .others_textArea{
-	width:49.5%;
+  width:53%;
+  float:right;
   margin-top:2%;
   margin-bottom:2%;
-  margin-right:0;
+  margin-left:2%;
 	outline:none;
 	border:none;
 }
@@ -38,4 +40,41 @@
 }
 .others_fix{
   width:98%
+}
+.others_fullName{
+  display:none;
+}
+@media screen and (max-width: 600px){
+  .others_logo{
+    width:32vw;
+    height:8vw;
+  }
+  .others_img3{
+    width:50%;
+    padding:10%;
+    margin-left:10%;
+  }
+  .others_profile{
+    padding-left:5vw;
+  }
+  .others_img{
+    width:30vw
+  }
+  .others_textArea{
+    float:none;
+    margin-left:2%;
+    width:104%;
+  }
+
+}
+@media screen and (max-width: 1040px){
+  .others_img{
+    width:20vw
+  }
+  .others_textArea{
+    float:none;
+    margin-left:2%;
+    width:104%;
+  }
+
 }
