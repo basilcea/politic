@@ -118,7 +118,9 @@ class partyController{
         "error" : "party does not exist",
       });
     }
-    };
+  }
+}
+
 
 
 export default partyController ;

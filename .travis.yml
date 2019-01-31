@@ -4,3 +4,20 @@ node_js:
 cache:
   directories:
     - "node_modules"
+env:
+  global:
+    - CC_TEST_REPORTER_ID=05a0eb4ea8fb6257ff0cb1a2d9fb472040683937cd84e4c61dddfff8199bf8c6
+before_script:
+  - npm install -g nyc
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+script:
+  - nyc --reporter=lcov npm test
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
+notifications:
+  email: false
