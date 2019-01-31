@@ -13,7 +13,7 @@ import client from '../connect';
     try{
       await client.query(`
         CREATE TABLE IF NOT EXISTS users(
-          userId UUID PRIMARY KEY,
+          userId  PRIMARY KEY,
           firstName VARCHAR(20),
           lastName VARCHAR(20),
           userName VARCHAR(30) UNIQUE not null,
