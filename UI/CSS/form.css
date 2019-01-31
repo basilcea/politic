@@ -54,9 +54,12 @@ select{
     padding:5% 7%;
     width:80%;
   }
-
+  .form_halfed{
+    float:none;
+    width:100%
+  }
 }
-@media screen and (max-width: 1040px){
+@media screen and (max-width: 1040px) and (min-width:601px){
   .form_halfed{
     float:none;
     width:100%

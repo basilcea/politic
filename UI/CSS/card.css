@@ -33,7 +33,13 @@
 	background-color:grey;
 	opacity:0.7;
 }
-@media screen and (max-width: 1040px){
+@media screen and (max-width:600px){
+  .card_login , .card_party{
+    margin:0% 5%;
+    width: 88%;
+  }
+}
+@media screen and (max-width: 1040px) and (min-width:601px){
   .card_login , .card_party{
     margin:0% 5%;
     width: 88%;
