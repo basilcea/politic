@@ -1,30 +1,29 @@
-import chai from "chai";
-import app from "../app/server";
+import chai from 'chai';
+import app from '../app/server';
 import chaiHttp from 'chai-http';
 import chaiChange from 'chai-change';
 import '@babel/polyfill';
 
-const expect =chai.expect;
+const expect = chai.expect;
 
-chai.use(chaiHttp) ;
+chai.use(chaiHttp);
 
-let testOffice1 = {
+const testOffice1 = {
     'type': 'officetype',
-    'name': 'officeName'
+  name: 'officeName'
 
   }
 
-describe("POST /offices" , function(){
-
-  let testOffice2 ={
-    'type': '',
-    'name': 'officeName'
-  }
-  let testOffice3 ={
-    'type': "",
-    'name': 'officeName'
-  }
-  it('should fail if office has no type', function(done){
+describe('POST /offices', function() {
+  const testOffice2 = {
+    type: '',
+    name: 'officeName'
+  };
+  const testOffice3 = {
+    type: '',
+    name: 'officeName'
+  };
+  it('should fail if office has no type', (done) => {
     chai.request(app)
     .post('/api/v1/offices')
     .send(testOffice2)
@@ -35,8 +34,8 @@ describe("POST /offices" , function(){
       expect(res.body).to.have.property('error').which.is.a('string')
       done()
     })
-  })
-  it('should fail if office has no name', function(done){
+  });
+  it('should fail if office has no name', (done) => {
     chai.request(app)
     .post('/api/v1/offices')
     .send(testOffice3)
@@ -47,8 +46,8 @@ describe("POST /offices" , function(){
       expect(res.body).to.have.property('error').which.is.a('string')
       done()
     })
-  })
-  it('should pass if office has type and name', function(done){
+  });
+  it('should pass if office has type and name', (done) => {
     chai.request(app)
     .post('/api/v1/offices')
     .send(testOffice1)
@@ -64,10 +63,10 @@ describe("POST /offices" , function(){
       expect(res.body).to.have.property('message').which.is.a('string')
       done()
     })
-  })
+  });
 });
-describe("Get /offices", function(){
-  it('should have status ok', function(done){
+describe('Get /offices', function() {
+  it('should have status ok', (done) => {
     chai.request(app)
     .get('/api/v1/offices')
     .end(function(err,res){
@@ -79,10 +78,11 @@ describe("Get /offices", function(){
       done()
     })
   });
-  it("data should be an array", function(done){
-    chai.request(app)
+  it('data should be an array', function(done) {
+    chai
+      .request(app)
     .get('/api/v1/offices')
-    .end(function(err,res){
+    .end((err,res) => {
       if((res.body.data)!==null){
         expect(res.body).to.have.property('data')
         expect(res.body.data).to.be.an('array')
@@ -92,21 +92,23 @@ describe("Get /offices", function(){
       done()
     });
   });
-  it("should have a message", function(done){
-    chai.request(app)
+  it('should have a message', function(done) {
+    chai
+      .request(app)
     .get('/api/v1/offices')
-    .end(function(err,res){
-      if((res.body.data)!==null){
+      .end(function(err, res) {
+        if (res.body.data !== null) {
         expect(res.body).to.have.property('message')
         expect(res.body).to.have.property('message').which.is.a('string')
       }
       done()
     });
   });
-  it("should have fail if there are no offices", function(done){
-    chai.request(app)
-    .get('/api/v1/offices')
-    .end(function(err,res){
+  it('should have fail if there are no offices', function(done) {
+    chai
+      .request(app)
+      .get('/api/v1/offices')
+    .end((err,res) => {
       if((res.body.data)===null){
         expect(res.body).to.have.status(400)
         expect(res.body).to.have.property('status')
@@ -116,10 +118,9 @@ describe("Get /offices", function(){
       done()
     });
   });
-
-})
-describe("Get /offices/<office-id>", function(){
-  it('should have status ok', function(done){
+});
+describe('Get /offices/<office-id>', function() {
+  it('should have status ok', (done) => {
     chai.request(app)
     .get('/api/v1/offices/1')
     .end(function(err,res){
@@ -131,22 +132,24 @@ describe("Get /offices/<office-id>", function(){
       done()
     })
   });
-  it("data should be an object", function(done){
-    chai.request(app)
+  it('data should be an object', function(done) {
+    chai
+      .request(app)
     .get('/api/v1/offices/1')
-    .end(function(err,res){
+      .end(function(err, res) {
       if((res.body.data)!==null){
         expect(res.body).to.have.property('data')
         expect(res.body.data).to.be.an('object')
         expect(res.body.data).to.have.keys('id','type','name')
-      }
+        }
       done()
     });
   });
-  it("should have a message", function(done){
-    chai.request(app)
+  it('should have a message', function(done) {
+    chai
+      .request(app)
     .get('/api/v1/offices/1')
-    .end(function(err,res){
+    .end((err,res) => {
       if((res.body.data)!==null){
         expect(res.body).to.have.property('message')
         expect(res.body).to.have.property('message').which.is.a('string')
@@ -154,18 +157,20 @@ describe("Get /offices/<office-id>", function(){
       done()
     });
   });
-  it("should have fail if there is no office", function(done){
-    chai.request(app)
+  it('should have fail if there is no office', function(done) {
+    chai
+      .request(app)
     .get('/api/v1/offices/1')
-    .end(function(err,res){
+      .end(function(err, res) {
       if((res.body.data)===null){
-        expect(res.body).to.have.status(404)
-        expect(res.body).to.have.property('status')
-        expect(res.body.status).to.equal(404)
-        expect(res.body).to.have.property('error').which.is.a('string')
-      }
+          expect(res.body).to.have.status(404);
+          expect(res.body).to.have.property('status');
+          expect(res.body.status).to.equal(404);
+          expect(res.body)
+            .to.have.property('error')
+            .which.is.a('string');
+        }
       done()
     });
   });
 
-})

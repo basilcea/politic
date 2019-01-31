@@ -1,7 +1,7 @@
-import express from 'express'
+import express from 'express';
 
-import partyController from './DS/controllers/party' ;
-import officeController from './DS/controllers/office' ;
+import partyController from './DS/controllers/party';
+import officeController from './DS/controllers/office';
 
 const router = express.Router();
 
@@ -11,7 +11,6 @@ router.get('/parties', partyController.getAllParties);
 router.get('/parties/:id', partyController.getParty);
 router.delete('/parties/:id', partyController.deleteParty);
 router.patch('/parties/:id/name', partyController.editPartyName);
-
 
 // office routes
 
