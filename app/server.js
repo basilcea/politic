@@ -4,7 +4,7 @@ import router from './route';
 
 const server = express();
 
-server.use(express.json());
+server.use(express.json())
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use('/api/v1', router);

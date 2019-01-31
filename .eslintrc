@@ -1,74 +1,38 @@
 {
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module"
-  },
   "root": true,
-    "extends": [
-      "airbnb-base",
-      "plugin:react/recommended",
-      "plugin:prettier/recommended"
-    ],
-    "env": {
+  "extends": "airbnb-base",
+  "env": {
+      "node": true,
       "es6": true,
-      "jest": true,
-      "browser": true
-    },
-    "settings": {
-      "import/resolver": {
-        "node": {
-          "extensions": [
-            ".js",
-            ".jsx"
-          ]
-        }
-      }
-    },
-    "globals": {
-      "window": true,
-      "document": true,
-      "location": true,
-      "describe": true,
-      "localStorage": true
+      "mocha": true
   },
-    "rules": {
+  "rules": {
       "one-var": 0,
-      "arrow-body-style": ["error", "as-needed"],
       "one-var-declaration-per-line": 0,
       "new-cap": 0,
       "consistent-return": 0,
       "no-param-reassign": 0,
-      "react/react-in-jsx-scope": 1,
-      "no-console": 0,
       "comma-dangle": 0,
+      "no-console": 0,
       "curly": ["error", "multi-line"],
       "import/no-unresolved": [2, { "commonjs": true }],
-      "import/no-named-as-default": 0,
-      "import/extensions": [1, { "js": "never", "jsx": "never" }],
-      "import/named": 0,
+      "import/no-dynamic-require": 0,
       "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
+      "linebreak-style": 0,
       "valid-jsdoc": ["error", {
-        "requireReturn": false,
-        "requireReturnType": false,
-        "requireParamDescription": false,
-        "requireReturnDescription": true
+          "requireReturn": true,
+          "requireReturnType": true,
+          "requireParamDescription": false,
+          "requireReturnDescription": true
       }],
       "require-jsdoc": ["error", {
           "require": {
               "FunctionDeclaration": true,
-              "MethodDefinition": false,
-              "ClassDeclaration": true
+              "MethodDefinition": true,
+              "ClassDeclaration": true,
+              "ArrowFunctionExpression": true,
+              "FunctionExpression": true
           }
-      }],
-      "prettier/prettier": [
-        "error",
-        {
-          "tailingComma": "es5",
-          "singleQuote": true,
-          "printWidth": 120
-        }
-
-      ]
-    }
+      }]
   }
+}
