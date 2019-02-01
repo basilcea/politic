@@ -17,8 +17,8 @@
 @media screen and (max-width: 600px){
   .background_icon{
     display:block;
-    width:20%;
-    height:31px;
+    width:20vw;
+    height:10vw;
     float:right;
     background-size: 100% 100%;
     background-image: url('../STATIC/ham1_hover.jpg');
@@ -26,8 +26,8 @@
   }
   .background_icon1{
     display:block;
-    width:20%;
-    height:31px;
+    width:20vw;
+    height:10vw;
     float:right;
     background-size: 100% 100%;
     background-image: url('../STATIC/ham.jpg');

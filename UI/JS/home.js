@@ -1,12 +1,32 @@
-const icon = document.getElementsByClassName('background_icon')[0];
-const horizontal = document.getElementsByClassName('nav_horizontal');
-const list = document.querySelectorAll('li');
+const icon = document.getElementsByClassName('background_icon')[0]
+const smallLink = document.getElementsByClassName('nav_horizontal_small')
 
-icon.onclick = () => {
-  if (icon.className === 'nav_menuButton background_icon') {
-    icon.className = 'nav_menuButton background_icon1';
-    icon.parentNode.insertBefore(icon, list[0]);
-  } else {
-    icon.className = 'nav_menuButton background_icon';
+icon.onclick =()=>{
+  if(icon.className === "background_icon"){
+    icon.className='background_icon1';
+    for (let i=0; i< smallLink.length ; i++ ){
+      smallLink[i].style.display='block'
+    }
   }
-};
+  else{
+    icon.className='background_icon'
+    for (let i=0; i< smallLink.length ; i++ ){
+      smallLink[i].style.display='none'
+    }
+  }
+
+}
+
+let vote= document.getElementById('vote')
+vote.onclick=()=>{
+
+  let x = document.getElementById("snackbar");
+
+  // Add the "show" class to DIV
+  x.className = "show";
+
+  // After 3 seconds, remove the show class from DIV
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
+
+
