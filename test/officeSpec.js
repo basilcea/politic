@@ -1,27 +1,39 @@
 import chai from 'chai';
 import app from '../app/server';
 import chaiHttp from 'chai-http';
-import chaiChange from 'chai-change';
 import '@babel/polyfill';
+
+/**Use chai expect for tdd and http for handling request */
 
 const expect = chai.expect;
 
 chai.use(chaiHttp);
 
+/**
+*@param {object} testOffice1
+
+*/
 const testOffice1 = {
     'type': 'officetype',
   name: 'officeName'
 
   }
+/**
+* test for create office
+* @param {object} testoffice2 - test data without type field
+* @param {object} testoffice3 - test data without  hqAddress field
+* @method post
+* @route api/vi/office
 
+*/
 describe('POST /offices', function() {
   const testOffice2 = {
     type: '',
     name: 'officeName'
   };
   const testOffice3 = {
-    type: '',
-    name: 'officeName'
+    type: 'federal',
+    name: ''
   };
   it('should fail if office has no type', (done) => {
     chai.request(app)
@@ -65,6 +77,15 @@ describe('POST /offices', function() {
     })
   });
 });
+
+/**
+* test for getting all offices
+* @param request
+* @param resp
+* @method get
+* @route api/vi/offices
+
+*/
 describe('Get /offices', function() {
   it('should have status ok', (done) => {
     chai.request(app)
@@ -119,6 +140,16 @@ describe('Get /offices', function() {
     });
   });
 });
+
+/**
+* test for getting a specific office
+* @param request
+* @param resp
+* @param id
+* @method get
+* @route api/vi/offices/1
+
+*/
 describe('Get /offices/<office-id>', function() {
   it('should have status ok', (done) => {
     chai.request(app)
@@ -173,4 +204,6 @@ describe('Get /offices/<office-id>', function() {
       done()
     });
   });
+});
+
 

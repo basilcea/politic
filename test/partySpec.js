@@ -1,13 +1,18 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import chaiChange from 'chai-change';
 import app from '../app/server';
 import '@babel/polyfill';
+
+/**Use chai expect for tdd and http for handling request */
 
 const expect = chai.expect;
 
 chai.use(chaiHttp);
-chai.use(chaiChange);
+
+/**
+*@param {object} testParty1
+
+*/
 
 const testParty1 = {
   name: 'partyName',
@@ -16,6 +21,14 @@ const testParty1 = {
   logoUrl: 'partyAddress'
 };
 
+/**
+* test for create party
+* @param {object} testParty2 - test data without  name field
+* @param {object} testParty3 - test data without  hqAddress field
+* @method post
+* @route api/vi/parties
+
+*/
 describe('POST /parties', () => {
   const testParty2 = {
     name: '',
@@ -86,6 +99,15 @@ describe('POST /parties', () => {
       });
   });
 });
+/**
+* test for getting all parties
+* @param request
+* @param resp
+* @method get
+* @route api/vi/parties
+
+*/
+
 describe('Get /parties', () => {
   it('should have status ok', done => {
     chai
@@ -146,6 +168,17 @@ describe('Get /parties', () => {
       });
   });
 });
+
+/**
+* test for getting a specific party
+* @param request
+* @param resp
+* @param id
+* @method get
+* @route api/vi/parties/1
+
+*/
+
 describe('Get /parties/<party-id>', () => {
   it('should have status ok', done => {
     chai
@@ -207,6 +240,15 @@ describe('Get /parties/<party-id>', () => {
   });
 });
 
+/**
+* test for editing the party name of a specific party
+* @param request
+* @param resp
+* @param id
+* @method get
+* @route api/vi/parties/1/name
+
+*/
 describe('Patch /parties/<party-id>/name', () => {
   const testParty4 = {
     name: 'newPartyName'
@@ -267,6 +309,16 @@ describe('Patch /parties/<party-id>/name', () => {
       });
   });
 });
+/**
+* test for delete a specific office
+* @param request
+* @param resp
+* @param id
+* @method get
+* @route api/vi/parties/1
+
+*/
+
 describe('Delete /parties/<party-id>', () => {
   it('should have status ok', done => {
     chai

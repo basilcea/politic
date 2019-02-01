@@ -7,7 +7,7 @@
     "test": "mocha test --require @babel/register ",
     "babel-node": "babel-node --presets=/*a*/ --ignore='foo|bar|baz'",
     "lint": "eslint *.js --fix",
-    "start": "nodemon app/server.js --exec babel-node --",
+    "start": "nodemon --require@babel/register app/server.js --exec babel-node --",
     "connect": "babel-node ./app/DB/models/dbModel"
   },
   "repository": {

@@ -1,6 +1,12 @@
+/** -----for small screen sizes------- */
+
+/**get hamburger icon */
 const icon = document.getElementsByClassName('background_icon')[0]
+
+/** get nav list  */
 const smallLink = document.getElementsByClassName('nav_horizontal_small')
 
+/** style nav menu */
 icon.onclick =()=>{
   if(icon.className === "background_icon"){
     icon.className='background_icon1';
@@ -14,9 +20,9 @@ icon.onclick =()=>{
       smallLink[i].style.display='none'
     }
   }
-
 }
 
+/** implement toast for vote */
 let vote= document.getElementById('vote')
 vote.onclick=()=>{
 
@@ -29,4 +35,5 @@ vote.onclick=()=>{
   setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }
 
+// courtesy w3schools tutorials
 

@@ -1,4 +1,5 @@
-// list of political offices by their types
+/** seeD data structure */
+//list of political offices by their types
 const offices = [
   {
     Type: ['--Select Type of Office--'],
@@ -1466,7 +1467,7 @@ const Parties = [
   'Unity Party of Nigeria (UPN)'
 ];
 
-// 	Create options for datalsist or select list with the first option disabled, serving as placeholder
+/** Create options for datalist or select list with the first option disabled, serving as placeholder */
 
 const createOptions = (element, values) => {
   const options = document.createElement('option');
@@ -1481,7 +1482,7 @@ const createOptions = (element, values) => {
     element.add(options);
   }
 };
-//	Create options of all political offices
+/** Create options of all political offices */
 const merged = offices[0].Office.concat(offices[1].Office, offices[2].Office, offices[3].Office, offices[4].Office);
 const searchList = document.getElementById('searchList');
 if (searchList) {
@@ -1510,7 +1511,7 @@ if (partyList3) {
   createOptions(partyList3, Parties);
 }
 
-//	 Create options of all types of  political offices
+/** Create options of all types of  political offices */
 const selectType = document.getElementById('selectType');
 const officeList = offices[0].Type.concat(offices[1].Type, offices[2].Type, offices[3].Type, offices[4].Type);
 if (selectType) {
@@ -1518,16 +1519,16 @@ if (selectType) {
 }
 
 const selectOffice = document.getElementById('selectOffice');
-// 	Trigger event when type of office is selected
+/**	Trigger event when type of office is selected */
 if (selectType) {
   selectType.onclick = () => {
-    // Remove all previous options
+    /**Remove all previous options*/
     selectOffice.options.length = 0;
     selectCandidate.options.length = 0;
     for (let i = 0; i < offices.length; i++) {
-      // 	Check if a type of office is selected
+      /** Check if a type of office is selected */
       if (selectType.value === offices[i].Type[0]) {
-        //	Then create and display name of offices options for that particular type
+        /** Then create and display name of offices options for that particular type */
         for (let j = 0; j < offices[i].Office.length; j++) {
           const options = document.createElement('option');
           options.value = offices[i].Office[j];
@@ -1542,12 +1543,12 @@ if (selectType) {
 let selectCandidate = document.getElementById('selectCandidate');
 if (selectCandidate) {
   selectOffice.onclick = () => {
-    // Remove all previous options
+    /** Remove all previous options  */
     selectCandidate.options.length = 0;
     for (let i = 0; i < Candidacy.length; i++) {
-      //	Check if an office is selected
+      /** Check if an office is selected */
       if (selectOffice.value === Candidacy[i].Office) {
-        // 	then create and display candidate options for that office
+        /** then create and display candidate options for that office */
         selectCandidate.options.length = 0;
         for (let j = 0; j < Candidacy[i].Candidates.length; j++) {
           const options = document.createElement('option');
