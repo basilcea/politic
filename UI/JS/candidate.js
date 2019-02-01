@@ -41,16 +41,26 @@ for (let i = 0; i < par.length; i++) {
 const icon = document.getElementsByClassName('background_icon')[0];
 const smallLink = document.getElementsByClassName('nav_horizontal_small');
 
-icon.onclick = () => {
-  if (icon.className === 'background_icon') {
-    icon.className = 'background_icon1';
-    for (let i = 0; i < smallLink.length; i++) {
-      smallLink[i].style.display = 'block';
-    }
-  } else {
-    icon.className = 'background_icon';
-    for (let i = 0; i < smallLink.length; i++) {
-      smallLink[i].style.display = 'none';
+//  Center all paragragphs
+let par = document.querySelectorAll("p");
+for (let i=0; i<par.length; i++){
+  par[i].className ="text_centered";
+}
+const icon = document.getElementsByClassName('background_icon')[0]
+const smallLink = document.getElementsByClassName('nav_horizontal_small')
+
+icon.onclick =()=>{
+  if(icon.className === "background_icon"){
+    icon.className='background_icon1';
+    for (let i=0; i< smallLink.length ; i++ ){
+      smallLink[i].style.display='block'
     }
   }
-};
+  else{
+    icon.className='background_icon'
+    for (let i=0; i< smallLink.length ; i++ ){
+      smallLink[i].style.display='none'
+    }
+  }
+
+}

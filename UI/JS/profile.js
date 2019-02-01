@@ -32,24 +32,24 @@ petitionButton.onclick = () => {
 const icon = document.getElementsByClassName('background_icon')[0];
 const smallLink = document.getElementsByClassName('nav_horizontal_small');
 
-/** Make changes to Icon type */
-icon.onclick = () => {
-  if (icon.className === 'background_icon') {
-    icon.className = 'background_icon1';
-    for (let i = 0; i < smallLink.length; i++) {
-      smallLink[i].style.display = 'block';
-    }
-  } else {
-    icon.className = 'background_icon';
-    for (let i = 0; i < smallLink.length; i++) {
-      smallLink[i].style.display = 'none';
+const icon = document.getElementsByClassName('background_icon')[0]
+const smallLink = document.getElementsByClassName('nav_horizontal_small')
+
+icon.onclick =()=>{
+  if(icon.className === "background_icon"){
+    icon.className='background_icon1';
+    for (let i=0; i< smallLink.length ; i++ ){
+      smallLink[i].style.display='block'
     }
   }
-};
-/** Functionality for upload and preview image */
-const uploadButton = document.querySelector('.button_btn');
-const fileInfo = document.querySelector('.button_upload');
-const realInput = document.getElementById('realInput');
+  else{
+    icon.className='background_icon'
+    for (let i=0; i< smallLink.length ; i++ ){
+      smallLink[i].style.display='none'
+    }
+  }
+
+}
 
 uploadButton.addEventListener('click', () => {
   realInput.click();
