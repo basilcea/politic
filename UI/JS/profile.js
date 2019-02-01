@@ -9,6 +9,18 @@ runButton.className = 'button_active3';
 petitionButton.className = 'button_login3';
 petition.className = 'layout_none';
 
+runButton.onclick = () => {
+  runButton.className = 'button_active3';
+  petitionButton.className = 'button_login3';
+  run.className = 'layout_block';
+  petition.className = 'layout_none';
+};
+petitionButton.onclick = () => {
+  petitionButton.className = 'button_active3';
+  runButton.className = 'button_login3';
+  run.className = 'layout_none';
+  petition.className = 'layout_block';
+};
 const icon = document.getElementsByClassName('background_icon')[0]
 const smallLink = document.getElementsByClassName('nav_horizontal_small')
 

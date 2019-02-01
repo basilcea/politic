@@ -1,14 +1,4 @@
 // Get Divs by their Id
-<<<<<<< HEAD
-const login = document.getElementById('login');
-const signup = document.getElementById('signup');
-const reset = document.getElementById('reset');
-const icon = document.getElementById('hamburger');
-const loginLink = document.getElementById('loginLink');
-const backLink = document.getElementById('backLink');
-const signupLink = document.getElementById('signupLink');
-const resetLink = document.getElementById('resetLink');
-=======
 const login = document.getElementById("login");
 const logon = document.getElementById("log");
 const signup = document.getElementById("signup");
@@ -20,7 +10,6 @@ const backLink = document.getElementById('backLink')
 const signupLink = document.getElementById('signupLink')
 const resetLink = document.getElementById('resetLink')
 
->>>>>>> ft-ui-pages-163295058
 
 //  Get all buttons on the page
 
@@ -41,16 +30,6 @@ reset.className = 'layout_none';
     Display only login div, hide others.
     change style of ogin button to active.
 */
-<<<<<<< HEAD
-loginButton.onclick = () => {
-  loginButton.className = 'button_active';
-  signupButton.className = 'button_login';
-  login.className = 'layout_block';
-  signup.className = 'layout_none';
-  reset.className = 'layout_none';
-  icon.className = 'background_icon';
-};
-=======
 loginButton.onclick =()=>{
   location.href='home.html'
 	loginButton.className ="button_active";
@@ -60,7 +39,6 @@ loginButton.onclick =()=>{
 	reset.className = "layout_none";
   icon.className ="background_icon";
 }
->>>>>>> ft-ui-pages-163295058
 /*  Trigger event when signup button is clicked.
     Display only signup div, hide others.
     change style of signup button to active.
@@ -130,21 +108,3 @@ const resetdetails = form3.querySelectorAll('[required]');
 /*  Ensure all required documents are inputted before submitting.
     Otherwise disable form submit button
 */
-<<<<<<< HEAD
-for (i = 0; i < signupdetails[i].length; i++) {
-  if (signupdetails[i].value !== '') {
-    signin.disabled = false;
-  }
-}
-for (i = 0; i < enterdetails[i].length; i++) {
-  if (enterdetails[i].value !== '') {
-    enter.disabled = false;
-  }
-}
-for (i = 0; i < resetdetails[i].length; i++) {
-  if (resetdetails[i].value !== '') {
-    reseted.disabled = false;
-  }
-}
-=======
->>>>>>> ft-ui-pages-163295058
