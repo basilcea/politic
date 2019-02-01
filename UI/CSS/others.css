@@ -39,11 +39,24 @@
 	padding-top:10%;
 }
 .others_fix{
-  width:98%
+  width:98%;
 }
 .others_fullName{
   display:none;
 }
+#vote
+{
+  height:30px;
+  margin:3% 22%;
+  width: 54%;
+  outline: none;
+  border:none;
+}
+#vote:hover
+{
+  background-color:#d92121
+}
+
 @media screen and (max-width: 600px){
   .others_logo{
     width:32vw;
@@ -65,7 +78,11 @@
     margin-left:2%;
     width:104%;
   }
+  .others_full{
+    display:block;
+    padding-right:40vw;
 
+  }
 }
 @media screen and (max-width: 1040px) and (min-width:601px){
   .others_img{

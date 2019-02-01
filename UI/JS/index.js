@@ -1,6 +1,8 @@
 // Get Divs by their Id
 const login = document.getElementById("login");
+const logon = document.getElementById("log");
 const signup = document.getElementById("signup");
+const signon = document.getElementById("sign");
 const reset =  document.getElementById("reset");
 const icon =  document.getElementById("hamburger");
 const loginLink = document.getElementById('loginLink')
@@ -31,12 +33,13 @@ reset.className = "layout_none";
     change style of ogin button to active.
 */
 loginButton.onclick =()=>{
+  location.href='home.html'
 	loginButton.className ="button_active";
 	signupButton.className ="button_login";
 	login.className = "layout_block";
 	signup.className = "layout_none";
 	reset.className = "layout_none";
-  icon.className ="background_icon"
+  icon.className ="background_icon";
 }
 /*  Trigger event when signup button is clicked.
     Display only signup div, hide others.
@@ -67,24 +70,27 @@ loginLink.onclick =()=>{
 signupLink.onclick =()=>{
   signupButton.onclick()
 }
+signon.onclick =()=>{
+  signupButton.onclick()
+}
+logon.onclick =()=>{
+  loginButton.onclick()
+}
+const smallLink = document.getElementsByClassName('nav_horizontal_small')
 icon.onclick =()=>{
   if(icon.className === "background_icon"){
-    icon.parentNode.insertBefore(icon,loginButton)
     icon.className='background_icon1';
-    if(signupButton.className ==='button_active'){
-      loginButton.className='button_full'
+    for (let i=0; i< smallLink.length ; i++ ){
+      smallLink[i].style.display='block'
     }
-    else{signupButton.className ='button_full'}
-
   }
   else{
     icon.className='background_icon'
-    if(signupButton.className==="button_active"){
-      loginButton.className='button_login'
+    for (let i=0; i< smallLink.length ; i++ ){
+      smallLink[i].style.display='none'
     }
-    else{signupButton.className ='button_login'}
-
   }
+
 }
 //  Get all forms
 let form1 =document.getElementById("form1");
@@ -104,18 +110,3 @@ let resetdetails = form3.querySelectorAll("[required]");
 /*  Ensure all required documents are inputted before submitting.
     Otherwise disable form submit button
 */
-for(i=0;i<signupdetails[i].length;i++){
-	if(signupdetails[i].value !==""){
-		signin.disabled=false;
-	}
-}
-for(i=0;i<enterdetails[i].length;i++){
-  if(enterdetails[i].value !==""){
-		enter.disabled=false;
-  }
-}
-for(i=0;i<resetdetails[i].length;i++){
-	if(resetdetails[i].value !==""){
-		reseted.disabled=false;
-  }
-}
