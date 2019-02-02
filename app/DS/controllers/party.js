@@ -142,7 +142,7 @@ class partyController {
       if (party.id === id) {
         partyFound = party;
         partyFound.name = req.body.name || partyFound.name;
-        if(/^[a-zA-Z]+$/.test(partyFound)===false){
+        if(/^[a-zA-Z]+$/.test(partyFound.name)===false){
           return res.status(406).send({
             "status":406,
             "error": 'name must be alphabets only'

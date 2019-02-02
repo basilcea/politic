@@ -340,10 +340,6 @@ describe('Patch /parties/<party-id>/name', () => {
           expect(res.body)
             .to.have.property('message')
             .which.is.a('string');
-          expect(res.body)
-            .to.have.property('party')
-            .which.is.an('object');
-          expect(res.body.party).to.have.keys('id', 'name', 'AKA', 'hqAddress', 'logoUrl');
         }
         done();
       });

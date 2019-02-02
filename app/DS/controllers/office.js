@@ -60,15 +60,44 @@ class officeController {
   static getAllOffices(req, res) {
     if (offices) {
       return res.status(200).send({
-        status: 200,
-        data: offices,
-        message: 'offices retrieved successfully'
+        "status": 200,
+        "data": offices,
+        "message": 'offices retrieved successfully'
       });
     }
     if (!offices) {
       return res.status(400).send({
-        status: 400,
-        error: 'offices does not exist'
+        "status": 400,
+        "error": 'offices does not exist'
+      });
+    }
+  }
+
+   /**
+  * Get an office
+  * @param {integer} - id of the office
+  * @return {object} -An office with the id
+  */
+
+  static getOffice(req, res) {
+    // force all id string to integer
+    const id = parseInt(req.params.id, 10);
+    let officeFound;
+    offices.filter((office) => {
+      if (office.id === id) {
+        officeFound = office;
+        return res.status(200).send({
+          "status": 200,
+          "data": office,
+          "message": 'Political office retrieved succesfully'
+        });
+      }
+    });
+    // if no such office with that id
+    if (!officeFound) {
+      res.status(404).send({
+        "status": 404,
+        "error": 'Office Not Found'
       });
     }
   }

@@ -182,4 +182,69 @@ describe('Get /offices', () => {
   });
 });
 
+/**
+* test for getting a specific office
+* @param request
+* @param resp
+* @param id{integer} - The id value
+* @method get
+* @route api/vi/offices/1
+
+*/
+describe('Get /offices/<office-id>', () => {
+  it('should have status ok', (done) => {
+    chai.request(app)
+      .get('/api/v1/offices/1')
+      .end((err, res) => {
+        if ((res.body.data) !== null) {
+          expect(res.body).to.have.status(200);
+          expect(res.body).to.have.property('status').which.is.a('number');
+          expect(res.body.status).to.equal(200);
+        }
+        done();
+      });
+  });
+  it('data should be an object', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/offices/1')
+      .end((err, res) => {
+        if ((res.body.data) !== null) {
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.be.an('object');
+          expect(res.body.data).to.have.keys('id', 'type', 'name');
+        }
+        done();
+      });
+  });
+  it('should have a message', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/offices/1')
+      .end((err, res) => {
+        if ((res.body.data) !== null) {
+          expect(res.body).to.have.property('message');
+          expect(res.body).to.have.property('message').which.is.a('string');
+        }
+        done();
+      });
+  });
+  it('should have fail if there is no office', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/offices/1')
+      .end((err, res) => {
+        if ((res.body.data) === null) {
+          expect(res.body).to.have.status(404);
+          expect(res.body).to.have.property('status');
+          expect(res.body.status).to.equal(404);
+          expect(res.body)
+            .to.have.property('error')
+            .which.is.a('string');
+        }
+        done();
+      });
+  });
+});
+
 
