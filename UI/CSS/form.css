@@ -7,21 +7,22 @@ form{
 input{
 	margin:2%;
 	padding:2%;
-	width:100%;
+	width:96%;
 	outline:none;
 	border:1px solid gainsboro;
 }
 .form_halfed{
-	width:47%;
-	float:right;
+	width:49.5%;
+  float:right;
+  margin-right:0;
 }
 input:hover{
 	border:none;
 	border-bottom:1px solid #d92121;
 }
 input[type=submit]{
-	margin:3% 14%;
-	width: 80%;
+	margin:3% 15%;
+	width: 74%;
 }
 input[type=submit]:hover{
 	background-color:#d92121;
@@ -38,9 +39,30 @@ input[type=checkbox]{
 	width:5%;
 }
 select{
-	width:104%;
+	width:100%;
 	outline:none;
-	border:none;
-	margin:2% 2%;
-	height:2.5vw;
+  border:none;
+  margin-top:2%;
+  margin-top:2%;
+  margin-left:2%;
+  margin-right:5%;
+	height:25px;
+}
+
+@media screen and (max-width:600px){
+  form{
+    padding:5% 7%;
+    width:80%;
+  }
+  .form_halfed{
+    float:none;
+    width:100%
+  }
+}
+@media screen and (max-width: 1040px) and (min-width:601px){
+  .form_halfed{
+    float:none;
+    width:100%
+  }
+
 }
