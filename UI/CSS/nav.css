@@ -1,20 +1,24 @@
-.nav_tabs{
+.nav_tabs, .nav_tabs_small{
 	list-style-type: none;
 	padding:0;
 	margin:0;
-	float:right;
 
+}
+.nav_tabs{
+  float:right;
+}
+.nav_tabs_small{
+  display:none
 }
 a{
 	text-decoration: none;
-	color:black;
+  color:black;
 }
 .nav_horizontal{
 	float:left;
 	display: block;
-	padding:5vh 0.5vw;
+	padding:5vw 0.5vw;
 }
-
 .nav_menuButton{
 	padding:2vh 2vw;
 	border:none;
@@ -35,54 +39,36 @@ a{
 	border-bottom:2px solid #d92121;
 	border-radius:5px;
 }
-
-.nav_headButton{
-	float:left;
-	text-decoration:none;
-	composes: white from ".nav_/color.nav_css";
-	padding-right:1.nav_5vw;
-}
-.nav_headButton:hover{
-	color:#ef7c0b;
-}
-.nav_topMenu{
-	composes:tabs;
-	float:right;
-
-}
-.nav_footerButton{
-	display:inline-block;
-	text-decoration:none;
-	float:left;
-	padding:1vh 2vw;
-	composes: light from ".nav_/color.nav_css";
-}
-.nav_footerButton:hover{
-	color:#ef7c0b;
-
-}
-.nav_footer{
-	composes:tabs;
-	float:none;
-}
 .nav_icon{
 	display:none;
 }
+
 @media screen and (max-width: 600px) {
-	.nav_tabs > .nav_horizontal:not(:first-child):not(:nth-child(2)) {
-		display: none;
-	}
-	.nav_tabs {
-		float:right;
-	}
+	.nav_tabs_small {
+		display:block;
+  }
+  .nav_horizontal_small{
+    display:none;
+    float:left;
+    padding:2vw 5vw;
+    width:70%;
+    height:6vw;
+    outline:none;
+    font-size:20px;
+    background-color:#d92121;
+    opacity:0.7
+  }
+  .nav_horizontal_small:hover{
+    background-color:#28495b;
+  }
+  .nav_horizontal_small:not(:first-of-type){
+    width:90vw;
+
+  }
 
 	.nav_icon {
 	background:initial;
 	display: block;
-	}
-	.nav_vertical,.nav_vertical a{
-		width:200px;
-		display:block;
-	}
 
+  }
 }
