@@ -278,6 +278,145 @@ describe('Get /parties/<party-id>', () => {
   });
 });
 
+/**
+* test for editing the party name of a specific party
+* @param request
+* @param resp
+* @param id{integer} - The id value
+* @method get
+* @route api/vi/parties/1/name
+
+*/
+describe('Patch /parties/<party-id>/name', () => {
+  const testParty4 = {
+    name: 'newPartyName'
+  };
+  const testParty5 = {
+    name: 1
+  };
+  it('should fail if party name is not an alphabet', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/parties')
+      .send(testParty5)
+      .end((err, res) => {
+        expect(/^[a-zA-Z]+$/.test(testParty5.name)).to.be.false
+        expect(res).to.have.status(406);
+        expect(res.body).to.have.property('status');
+        expect(res.body.status).to.equal(406);
+        expect(res.body)
+          .to.have.property('error')
+          .which.is.a('string');
+        done();
+      });
+  });
+
+  it('should have status created', (done) => {
+    chai
+      .request(app)
+      .patch('/api/v1/parties/1/name')
+      .send(testParty4)
+      .end((err, res) => {
+        if (res.body.data !== undefined) {
+          expect(res.body).to.have.status(201);
+          expect(res.body)
+            .to.have.property('status')
+            .which.is.a('number');
+          expect(res.body.status).to.equal(201);
+        }
+        done();
+      });
+  });
+  it('data should be an object', (done) => {
+    chai
+      .request(app)
+      .patch('/api/v1/parties/1/name')
+      .send(testParty4)
+      .end((err, res) => {
+        if (res.body.data !== undefined) {
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.be.an('object');
+          expect(res.body.data).to.have.keys('id', 'name');
+          expect(res.body)
+            .to.have.property('message')
+            .which.is.a('string');
+          expect(res.body)
+            .to.have.property('party')
+            .which.is.an('object');
+          expect(res.body.party).to.have.keys('id', 'name', 'AKA', 'hqAddress', 'logoUrl');
+        }
+        done();
+      });
+  });
+
+  it('should have fail if there is no party', (done) => {
+    chai
+      .request(app)
+      .patch('/api/v1/parties/10/name')
+      .end((err, res) => {
+        console.log(res.body.data)
+        if (res.body.data === undefined) {
+          expect(res.body).to.have.status(404);
+          expect(res.body).to.have.property('status');
+          expect(res.body.status).to.equal(404);
+          expect(res.body)
+            .to.have.property('error')
+            .which.is.a('string');
+        }
+        done();
+      });
+  });
+});
+/**
+* test for delete a specific party
+* @param request
+* @param resp
+* @param id{integer} - The id value
+* @method get
+* @route api/vi/parties/1
+
+*/
+
+describe('Delete /parties/<party-id>', () => {
+  it('should have status ok', (done) => {
+    chai
+      .request(app)
+      .delete('/api/v1/parties/1')
+      .end((err, res) => {
+        if (res.body.data !== null) {
+          expect(res.body).to.have.status(200);
+          expect(res.body)
+            .to.have.property('status')
+            .which.is.a('number');
+          expect(res.body.status).to.equal(200);
+          expect(res.body).to.have.property('data');
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.be.an('object');
+          expect(res.body.data)
+            .to.have.property('message')
+            .which.is.a('string');
+        }
+        done();
+      });
+  });
+  it('should have fail if there is no party', (done) => {
+    chai
+      .request(app)
+      .delete('/api/v1/parties/1')
+      .end((err, res) => {
+        if (res.body.data === null) {
+          expect(res.body).to.have.status(404);
+          expect(res.body).to.have.property('status');
+          expect(res.body.status).to.equal(404);
+          expect(res.body)
+            .to.have.property('error')
+            .which.is.a('string');
+        }
+        done();
+      });
+  });
+});
+
 
 
 

@@ -17,7 +17,7 @@ class partyController {
         "error": " name is required"
       });
     }
-    // check if
+    // check if name is an alphabet
     if(/^[a-zA-Z]+$/.test(name)===false){
       return res.status(406).send({
         "status":406,
@@ -126,6 +126,39 @@ class partyController {
       return res.status(404).send({
         "status": 404,
         "error": 'party does not exist'
+      });
+    }
+  }
+   /**
+  * Edit party name
+  * @param {integer} - id of the party
+  * @return {object} -An party that has has a new name
+  */
+
+  static editPartyName(req, res) {
+    const id = parseInt(req.params.id, 10);
+    let partyFound;
+    parties.filter((party, index) => {
+      if (party.id === id) {
+        partyFound = party;
+        partyFound.name = req.body.name || partyFound.name;
+        if(/^[a-zA-Z]+$/.test(partyFound)===false){
+          return res.status(406).send({
+            "status":406,
+            "error": 'name must be alphabets only'
+          });}
+        return res.status(201).send({
+          "status": 201,
+          "data": {
+            "id": partyFound.id,
+            "name": partyFound.name
+          }, "message": 'Party Name edited'
+        });}
+    });
+    if (!partyFound) {
+      return res.status(404).send({
+        'status': 404,
+        "error": 'Party does not exist'
       });
     }
   }
