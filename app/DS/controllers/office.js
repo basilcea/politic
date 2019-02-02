@@ -52,6 +52,26 @@ class officeController {
       });
     }
   }
+
+   /**
+  * Get all offices
+  * @return {object} - array of all offices
+  */
+  static getAllOffices(req, res) {
+    if (offices) {
+      return res.status(200).send({
+        status: 200,
+        data: offices,
+        message: 'offices retrieved successfully'
+      });
+    }
+    if (!offices) {
+      return res.status(400).send({
+        status: 400,
+        error: 'offices does not exist'
+      });
+    }
+  }
 }
 
 

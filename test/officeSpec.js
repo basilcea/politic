@@ -120,3 +120,66 @@ describe('POST /offices', () => {
   });
 });
 
+/**
+* test for getting all offices
+* @param request
+* @param resp
+* @method get
+* @route api/vi/offices
+
+*/
+describe('Get /offices', () => {
+  it('should have status ok', (done) => {
+    chai.request(app)
+      .get('/api/v1/offices')
+      .end((err, res) => {
+        if ((res.body.data) !== null) {
+          expect(res.body).to.have.status(200);
+          expect(res.body).to.have.property('status').which.is.a('number');
+          expect(res.body.status).to.equal(200);
+        }
+        done();
+      });
+  });
+  it('data should be an array', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/offices')
+      .end((err, res) => {
+        if ((res.body.data) !== null) {
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.be.an('array');
+          expect(res.body.data[0]).to.have.keys('id', 'type', 'name',);
+        }
+        done();
+      });
+  });
+  it('should have a message', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/offices')
+      .end((err, res) => {
+        if (res.body.data !== null) {
+          expect(res.body).to.have.property('message');
+          expect(res.body).to.have.property('message').which.is.a('string');
+        }
+        done();
+      });
+  });
+  it('should have fail if there are no offices', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/offices')
+      .end((err, res) => {
+        if ((res.body.data) === null) {
+          expect(res.body).to.have.status(400);
+          expect(res.body).to.have.property('status');
+          expect(res.body.status).to.equal(400);
+          expect(res.body).to.have.property('error').which.is.a('string');
+        }
+        done();
+      });
+  });
+});
+
+
