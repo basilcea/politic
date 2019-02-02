@@ -1,0 +1,68 @@
+{
+  "name": "politico",
+  "version": "1.0.0",
+  "description": "[![Build Status](https://travis-ci.org/basilcea/politico.svg?branch=develop)](https://travis-ci.org/basilcea/politico)\r [![Maintainability](https://api.codeclimate.com/v1/badges/1ab9d7aac9c48843eac3/maintainability)](https://codeclimate.com/github/basilcea/politico/maintainability)\r [![Coverage Status](https://coveralls.io/repos/github/basilcea/politico/badge.svg?branch=develop)](https://coveralls.io/github/basilcea/politico?branch=develop)\r [![Test Coverage](https://api.codeclimate.com/v1/badges/1ab9d7aac9c48843eac3/test_coverage)](https://codeclimate.com/github/basilcea/politico/test_coverage)",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test --require @babel/register ",
+    "babel-node": "babel-node --presets=/*a*/ --ignore='foo|bar|baz'",
+    "lint": "eslint **/*.js --fix",
+    "start": "babel-node -- app/server.js",
+    "dev": "nodemon app/server.js --exec babel-node --",
+    "connect": "babel-node ./app/DB/models/dbModel"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/basilcea/politico.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/basilcea/politico/issues"
+  },
+  "homepage": "https://github.com/basilcea/politico#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "cross-env": "^5.2.0",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "mocha": "^5.2.0",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/register": "^7.0.0",
+    "pg": "^7.8.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/register": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "chai-change": "^2.1.2",
+    "coveralls": "^3.0.2",
+    "eslint": "^5.12.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-import": "^2.15.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "make-runnable": "^1.3.6",
+    "nodemon": "^1.18.9",
+    "prettier": "^1.15.3"
+  },
+  "directories": {
+    "test": "test"
+  }
+}
