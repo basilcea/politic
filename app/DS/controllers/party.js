@@ -164,8 +164,4 @@ class partyController {
   }
 }
 
-<<<<<<< HEAD
 export default partyController;
-=======
-export default partyController;
->>>>>>> 2ffd4e67b9b936273f22bf5cc07d345319d155cc

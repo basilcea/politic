@@ -6,9 +6,9 @@
   "scripts": {
     "test": "mocha test --require @babel/register ",
     "babel-node": "babel-node --presets=/*a*/ --ignore='foo|bar|baz'",
-    "lint": "eslint *.js --fix",
-    "dev": "nodemon app/server.js --exec babel-node --",
+    "lint": "eslint **/*.js --fix",
     "start": "babel-node -- app/server.js",
+    "dev": "nodemon app/server.js --exec babel-node --",
     "connect": "babel-node ./app/DB/models/dbModel"
   },
   "repository": {
@@ -32,15 +32,7 @@
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
     "mocha": "^5.2.0",
-    "pg": "^7.8.0",
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/node": "^7.2.2",
-    "@babel/polyfill": "^7.2.5",
-    "@babel/preset-env": "^7.3.1",
-    "@babel/register": "^7.0.0",
-    "babel-eslint": "^10.0.1",
-    "nodemon": "^1.18.9"
+    "pg": "^7.8.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
