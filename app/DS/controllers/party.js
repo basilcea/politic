@@ -52,6 +52,27 @@ class partyController {
       message: 'You have added a political party'
     });
   }
+
+   /**
+  * Get all parties
+  * @return {object} - array of all parties with the status code
+  */
+
+  static getAllParties(req, res) {
+    if (parties) {
+      return res.status(200).send({
+        status: 200,
+        data: parties,
+        message: 'parties retrieved successfully'
+      });
+    }
+    if (!parties) {
+      return res.status(400).send({
+        status: 400,
+        error: 'parties does not exist'
+      });
+    }
+  }
 }
 
 export default partyController;
