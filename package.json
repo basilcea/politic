@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests --require @babel/register ",
+    "test": "mocha test --require @babel/register ",
     "babel-node": "babel-node --presets=/*a*/ --ignore='foo|bar|baz'",
     "eslint ": "./node_modules/.bin/eslint --init ",
     "start": "node_modules/.bin/nodemon app/server.js --exec babel-node --"
@@ -26,6 +26,7 @@
     "chai-http": "^4.2.1",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "express-validator": "^5.3.1",
     "mocha": "^5.2.0"
   },
   "devDependencies": {
