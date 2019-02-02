@@ -158,7 +158,7 @@ class partyController {
     if (!partyFound) {
       return res.status(404).send({
         'status': 404,
-        "error': 'Party does not exist'
+        "error": 'Party does not exist'
       });
     }
   }
