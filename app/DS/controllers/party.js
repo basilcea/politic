@@ -141,28 +141,24 @@ class partyController {
     parties.filter((party, index) => {
       if (party.id === id) {
         partyFound = party;
-        // party name is either the new name or the previous name
         partyFound.name = req.body.name || partyFound.name;
         if(/^[a-zA-Z]+$/.test(partyFound)===false){
           return res.status(406).send({
             "status":406,
             "error": 'name must be alphabets only'
-          })
-        }
+          });}
         return res.status(201).send({
           "status": 201,
           "data": {
             "id": partyFound.id,
             "name": partyFound.name
-          },
-          "message": 'Party Name edited'
-        });
-      }
+          }, "message": 'Party Name edited'
+        });}
     });
     if (!partyFound) {
       return res.status(404).send({
-        status: 404,
-        error: 'Party does not exist'
+        'status': 404,
+        "error': 'Party does not exist'
       });
     }
   }
