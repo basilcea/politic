@@ -4,23 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
-<<<<<<< HEAD
     "test": "mocha test --require @babel/register ",
     "babel-node": "babel-node --presets=/*a*/ --ignore='foo|bar|baz'",
     "eslint ": "./node_modules/.bin/eslint --init ",
     "start": "node_modules/.bin/nodemon app/server.js --exec babel-node --"
-=======
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "babel-node": "babel-node --presets=/*a*/ --ignore='foo|bar|baz'",
-    "start": "nodemon --exec npm run babel-node -- path/to/script.js"
->>>>>>> feat(UI): fix responsiveness of UI
-=======
-    "test": "mocha test --require @babel/register ",
-    "babel-node": "babel-node --presets=/*a*/ --ignore='foo|bar|baz'",
-    "eslint ": "./node_modules/.bin/eslint --init ",
-    "start": "node_modules/.bin/nodemon app/server.js --exec babel-node --"
->>>>>>> fix(endpoints): fix create party endpoint
   },
   "repository": {
     "type": "git",
@@ -35,8 +22,6 @@
   "homepage": "https://github.com/basilcea/politico#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
-<<<<<<< HEAD
-<<<<<<< HEAD
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
     "dotenv": "^6.2.0",
@@ -55,31 +40,8 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.15.0",
-=======
-=======
-    "chai": "^4.2.0",
-    "chai-http": "^4.2.1",
->>>>>>> fix(endpoints): fix create party endpoint
-    "dotenv": "^6.2.0",
-    "express": "^4.16.4",
-    "express-validator": "^5.3.1",
-    "mocha": "^5.2.0"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.3.1",
-<<<<<<< HEAD
->>>>>>> feat(UI): fix responsiveness of UI
-=======
     "@babel/register": "^7.0.0",
     "babel-eslint": "^10.0.1",
-    "eslint": "^5.12.1",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.15.0",
->>>>>>> fix(endpoints): fix create party endpoint
     "nodemon": "^1.18.9"
   }
 }
