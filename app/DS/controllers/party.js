@@ -68,8 +68,36 @@ class partyController {
     }
     if (!parties) {
       return res.status(400).send({
-        status: 400,
-        error: 'parties does not exist'
+        "status":400,
+        "error": 'parties does not exist'
+      })
+    };
+  }
+
+  /**
+  * Get a party
+  * @param {integer} - id of the party
+  * @return {object} -An party that has that id  with the status code
+  */
+
+  static getParty(req, res) {
+    // force all id string to integer
+    const id = parseInt(req.params.id, 10);
+    let partyFound;
+    parties.filter((party) => {
+      if (party.id === id) {
+        partyFound = party;
+        return res.status(200).send({
+          status: 200,
+          data: party,
+          message: 'Political party retrieved succesfully'
+        });
+      }
+    });
+    if (!partyFound) {
+      return res.status(404).send({
+        status: 404,
+        error: 'Party Not Found'
       });
     }
   }
