@@ -1,55 +1,57 @@
-import parties from "../models/party";
+import parties from '../models/party';
+/** Class representing controllers for parties endpoints */
 
-class partyController{
-  static createParty(req,res){
-    //create a political party
+class partyController {
+  /**
+  * Create an office
+  * @param {string} - name of office
+  * @param {string} - hqAddress of office
+  */
 
-    // check if name is provided
-    if (!req.body.name) {
+  static createParty(req, res) {
+    const {id, name, AKA, hqAddress, logoUrl} = req.body;
+      // check if name is provided
+    if (!name) {
       return res.status(412).send({
-        "status":412,
-        "error": " name is required"
+        status: 412,
+        error: ' name is required'
       });
     }
+    // check if
+    if(/^[a-zA-Z]+$/.test(name)===false){
+      return res.status(406).send({
+        status:406,
+        error: 'name must be alphabets only'
+      })
+    }
     // check if headquaters address is provided
-    if (!req.body.hqAddress){
+    if (!hqAddress) {
       return res.status(412).send({
-        "status": 412,
-        "error": "Headquaters's address is required"
+        status: 412,
+        error: "Headquaters's address is required"
       });
     }
     const party = {
-      "id": parties.length + 1,
-      "name": req.body.name ,
-      "AKA": req.body.AKA ,
-      "hqAddress" : req.body.hqAddress,
-      "logoUrl": req.body.logoUrl
-    }
-    // add party details to the data structure
+      id: parties.length + 1,
+      name: name,
+      AKA: AKA,
+      hqAddress: hqAddress,
+      logoUrl: logoUrl
+    };
+    /**
+
+    * Add the part object to the the data array
+    * create an  unique id
+    * @return {object} - The party object
+
+    */
     parties.push(party);
     return res.status(201).send({
-      "status": 201,
-      "data": party,
-      "message":"You have added a political party"
+      status: 201,
+      data: party,
+      message: 'You have added a political party'
     });
   }
-
-  static getAllParties(req,res){
-    if(parties){
-       return res.status(200).send({
-        "status": 200,
-        "data" :parties,
-        "message": 'parties retrieved successfully'
-      });
-    }
-    else if (!parties) {
-      return res.status(400).send({
-        "status":400,
-        "error": 'parties does not exist',
-      })
-    };
-  }
-
-
 }
-export default partyController ;
+
+export default partyController;
