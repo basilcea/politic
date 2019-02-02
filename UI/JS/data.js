@@ -1,9 +1,5 @@
 /** seeD data structure */
-<<<<<<< HEAD
-//list of political offices by their types
-=======
 // list of political offices by their types
->>>>>>> 2ffd4e67b9b936273f22bf5cc07d345319d155cc
 const offices = [
   {
     Type: ['--Select Type of Office--'],
@@ -1311,7 +1307,6 @@ const offices = [
 ];
 
 const Candidacy = [
-<<<<<<< HEAD
   {
     Office: 'President-Nigeria',
     Candidates: [
@@ -1364,61 +1359,6 @@ const Candidacy = [
     ]
   },
   {
-=======
-  {
-    Office: 'President-Nigeria',
-    Candidates: [
-      '-- Select Candidates --',
-      'Abiodun Olujimi-PDP',
-      'Badaru Abubakar-APC',
-      'Adebayo Osinowo-APGA',
-      'Lateef Adegbite-SDP',
-      'Adedeji Adeleke-LP',
-      'Prince Julius Adewale-UDP',
-      'Adelusi Adeluyi-KOWA',
-      'Solomon Olamilekan Adeola-AP'
-    ]
-  },
-  {
-    Office: 'Governor-Abia',
-    Candidates: [
-      '-- Select Candidates --',
-      'Godwin Ogbaga-PDP',
-      'Chigozie Ogbu-APC',
-      'Osita Ogbu-APGA',
-      'Chris Ogiemwonyi-LP',
-      'Ogor Okuweh-UDP',
-      'Oluwole Oke-KOWA',
-      'Edward Ikem Okeke-AP',
-      'Doyin Okupe-APGA',
-      'Alhaji Alabi Hassan Olajoku-ADP',
-      'Ali Olanusi-UDP',
-      'Funmilayo Olayinka-UPP',
-      'Folake Olunloyo-PPA',
-      'Mike Omotosho-PPN',
-      'Emmanuel Onwe-PPC',
-      'D. K. Onwenu-PDM',
-      'Nkeiruka Onyejeocha-PPN',
-      'Stephen Oru-NNPP',
-      'Oshodi Tapa-MPPP',
-      'Kayode Otitoju-ID',
-      'Adegboyega Oyetola-HDP',
-      'Asiwaju Yinka Mafe-DPC',
-      'Salisu Abubakar Maikasuwa-DPP',
-      'Oluwaseyi Makinde-FDP',
-      'Louis Mbanefo-AD',
-      'Sebastian Okechukwu Mezu-ACPN',
-      'Michael Ajegbo-APA',
-      'Danladi Mohammed-ACDP',
-      'Janet Nwadiogo Mokelu-APDA',
-      'Tony Momoh-AP',
-      'Patrick Abba Moro-AAP',
-      'Najaatu Bala Muhammad-ADC'
-    ]
-<<<<<<< HEAD
-  },
-  {
->>>>>>> 2ffd4e67b9b936273f22bf5cc07d345319d155cc
     Office: 'Senator-Abia-North',
     Candidates: [
       '-- Select Candidates --',
@@ -1456,50 +1396,6 @@ const Candidacy = [
     ]
   },
   {
-<<<<<<< HEAD
-=======
-=======
-  },
-  {
-    Office: 'Senator-Abia-North',
-    Candidates: [
-      '-- Select Candidates --',
-      'Godwin Ogbaga-PDP',
-      'Chigozie Ogbu-APC',
-      'Osita Ogbu-APGA',
-      'Chris Ogiemwonyi-LP',
-      'Ogor Okuweh-UDP',
-      'Oluwole Oke-KOWA',
-      'Edward Ikem Okeke-AP',
-      'Doyin Okupe-APGA',
-      'Alhaji Alabi Hassan Olajoku-ADP',
-      'Ali Olanusi-UDP',
-      'Funmilayo Olayinka-UPP',
-      'Folake Olunloyo-PPA',
-      'Mike Omotosho-PPN',
-      'Emmanuel Onwe-PPC',
-      'D. K. Onwenu-PDM',
-      'Nkeiruka Onyejeocha-PPN',
-      'Stephen Oru-NNPP',
-      'Oshodi Tapa-MPPP',
-      'Kayode Otitoju-ID',
-      'Adegboyega Oyetola-HDP',
-      'Asiwaju Yinka Mafe-DPC',
-      'Salisu Abubakar Maikasuwa-DPP',
-      'Oluwaseyi Makinde-FDP',
-      'Louis Mbanefo-AD',
-      'Sebastian Okechukwu Mezu-ACPN',
-      'Michael Ajegbo-APA',
-      'Danladi Mohammed-ACDP',
-      'Janet Nwadiogo Mokelu-APDA',
-      'Tony Momoh-AP',
-      'Patrick Abba Moro-AAP',
-      'Najaatu Bala Muhammad-ADC'
-    ]
-  },
-  {
->>>>>>> fix(endpoints): fix create party endpoint
->>>>>>> 2ffd4e67b9b936273f22bf5cc07d345319d155cc
     Office: 'Chairman-Aba-North',
     Candidates: [
       '-- Select Candidates --',
@@ -1591,22 +1487,6 @@ const merged = offices[0].Office.concat(offices[1].Office, offices[2].Office, of
 const searchList = document.getElementById('searchList');
 if (searchList) {
   createOptions(searchList, merged);
-<<<<<<< HEAD
-}
-
-const searchList2 = document.getElementById('pList');
-if (searchList2) {
-  createOptions(searchList2, merged);
-=======
-<<<<<<< HEAD
-}
-//	Create options of all political offices
-let merged = offices[0].Office.concat(offices[1].Office, offices[2].Office, offices[3].Office, offices[4].Office);
-let searchList = document.getElementById("searchList")
-if(searchList){
-  createOptions(searchList,merged)
-=======
->>>>>>> fix(endpoints): fix create party endpoint
 }
 
 const searchList2 = document.getElementById('pList');
@@ -1629,109 +1509,7 @@ if (partyList2) {
 }
 if (partyList3) {
   createOptions(partyList3, Parties);
->>>>>>> 2ffd4e67b9b936273f22bf5cc07d345319d155cc
 }
-const partyList1 = document.getElementById('candidateParty');
-const partName = (partyList1, document.getElementById('partName'));
-
-<<<<<<< HEAD
-if (partyList1) {
-  createOptions(partyList1, Parties);
-  partyList1.onclick = () => {
-    partName.placeholder = partyList1.value;
-  };
-}
-const partyList2 = document.getElementById('candidatePart');
-const partyList3 = document.getElementById('candidatePart1');
-if (partyList2) {
-  createOptions(partyList2, Parties);
-}
-if (partyList3) {
-  createOptions(partyList3, Parties);
-}
-
-/** Create options of all types of  political offices */
-const selectType = document.getElementById('selectType');
-const officeList = offices[0].Type.concat(offices[1].Type, offices[2].Type, offices[3].Type, offices[4].Type);
-if (selectType) {
-  createOptions(selectType, officeList);
-}
-
-const selectOffice = document.getElementById('selectOffice');
-/**	Trigger event when type of office is selected */
-if (selectType) {
-  selectType.onclick = () => {
-    /**Remove all previous options*/
-    selectOffice.options.length = 0;
-    selectCandidate.options.length = 0;
-    for (let i = 0; i < offices.length; i++) {
-      /** Check if a type of office is selected */
-      if (selectType.value === offices[i].Type[0]) {
-        /** Then create and display name of offices options for that particular type */
-        for (let j = 0; j < offices[i].Office.length; j++) {
-          const options = document.createElement('option');
-          options.value = offices[i].Office[j];
-          options.text = offices[i].Office[j];
-          selectOffice.add(options);
-        }
-      }
-    }
-  };
-}
-
-=======
-/** Create options of all types of  political offices */
-const selectType = document.getElementById('selectType');
-const officeList = offices[0].Type.concat(offices[1].Type, offices[2].Type, offices[3].Type, offices[4].Type);
-if (selectType) {
-  createOptions(selectType, officeList);
-}
-
-const selectOffice = document.getElementById('selectOffice');
-/**	Trigger event when type of office is selected */
-if (selectType) {
-  selectType.onclick = () => {
-    /** Remove all previous options */
-    selectOffice.options.length = 0;
-    selectCandidate.options.length = 0;
-    for (let i = 0; i < offices.length; i++) {
-      /** Check if a type of office is selected */
-      if (selectType.value === offices[i].Type[0]) {
-        /** Then create and display name of offices options for that particular type */
-        for (let j = 0; j < offices[i].Office.length; j++) {
-          const options = document.createElement('option');
-          options.value = offices[i].Office[j];
-          options.text = offices[i].Office[j];
-          selectOffice.add(options);
-        }
-      }
-    }
-  };
-}
-const partyList1 = document.getElementById('candidateParty');
-const partName = (partyList1, document.getElementById('partName'));
-
-let selectCandidate = document.getElementById('selectCandidate');
-if (selectCandidate) {
-  selectOffice.onclick = () => {
-    /** Remove all previous options  */
-    selectCandidate.options.length = 0;
-    for (let i = 0; i < Candidacy.length; i++) {
-      /** Check if an office is selected */
-      if (selectOffice.value === Candidacy[i].Office) {
-        /** then create and display candidate options for that office */
-        selectCandidate.options.length = 0;
-        for (let j = 0; j < Candidacy[i].Candidates.length; j++) {
-          const options = document.createElement('option');
-          options.value = Candidacy[i].Candidates[j];
-          options.text = Candidacy[i].Candidates[j];
-          selectCandidate.add(options);
-        }
-      }
-    }
-  };
-}
-<<<<<<< HEAD
 
 /** Create options of all types of  political offices */
 const selectType = document.getElementById('selectType');
@@ -1762,7 +1540,6 @@ if (selectType) {
   };
 }
 
->>>>>>> 2ffd4e67b9b936273f22bf5cc07d345319d155cc
 let selectCandidate = document.getElementById('selectCandidate');
 if (selectCandidate) {
   selectOffice.onclick = () => {
@@ -1783,8 +1560,3 @@ if (selectCandidate) {
     }
   };
 }
-<<<<<<< HEAD
-=======
-=======
->>>>>>> fix(endpoints): fix create party endpoint
->>>>>>> 2ffd4e67b9b936273f22bf5cc07d345319d155cc

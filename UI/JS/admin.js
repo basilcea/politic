@@ -1,121 +1,16 @@
-<<<<<<< HEAD
-/**Get divs by their office */
-=======
 /** Get divs by their office */
->>>>>>> 2ffd4e67b9b936273f22bf5cc07d345319d155cc
 const createParty = document.getElementById('create');
 const editParty = document.getElementById('edit');
 const deletedParty = document.getElementById('delete');
 const createOffice = document.getElementById('office');
 
-<<<<<<< HEAD
-/**Get buttons */
-=======
 /** Get buttons */
->>>>>>> 2ffd4e67b9b936273f22bf5cc07d345319d155cc
 const buttons = document.querySelectorAll('button');
 const createButton = buttons[0];
 const editButton = buttons[1];
 const deletedButton = buttons[2];
 const createdButton = buttons[3];
 
-<<<<<<< HEAD
-/** Style buttons and div functionality*/
-createButton.className = "button_active2";
-editButton.className = "button_login2";
-deletedButton.className = "button_login2";
-createdButton.className = "button_login2";
-editParty.className = "layout_none";
-deletedParty.className = "layout_none";
-createOffice.className ="layout_none";
-
-/**Trigger event when create button is clicked,
-    Display only create div, hide others.
-    change style of login button to active.*/
-
-createButton.onclick =()=>{
-	createButton.className ="button_active2";
-	editButton.className ="button_login2";
-	deletedButton.className = "button_login2";
-	createdButton.className = "button_login2";
-	createParty.className = "layout_block";
-	editParty.className = "layout_none";
-	deletedParty.className = "layout_none";
-	createOffice.className ="layout_none";
-
-}
-/**Trigger event when edit button is clicked,
-    Display only edit div, hide others.
-    change style of login button to active.*/
-
-editButton.onclick =()=>{
-	editButton.className ="button_active2";
-	createButton.className ="button_login2";
-	deletedButton.className = "button_login2";
-	createdButton.className = "button_login2";
-	editParty.className = "layout_block";
-	createParty.className = "layout_none";
-	deletedParty.className = "layout_none";
-	createOffice.className ="layout_none";
-
-}
-/**Trigger event when delete button is clicked,
-    Display only delete div, hide others.
-    change style of login button to active.*/
-
-deletedButton.onclick =()=>{
-	deletedButton.className ="button_active2";
-	createButton.className ="button_login2";
-	editButton.className = "button_login2";
-	createdButton.className = "button_login2";
-	deletedParty.className = "layout_block";
-	createParty.className = "layout_none";
-	editParty.className = "layout_none";
-	createOffice.className ="layout_none";
-
-}
-/**Trigger event when create office button is clicked,
-    Display only create office div, hide others.
-    change style of login button to active.*/
-createdButton.onclick =()=>{
-	deletedButton.className ="button_login2";
-	createButton.className ="button_login2";
-	editButton.className = "button_login2";
-	createdButton.className = "button_active2";
-	deletedParty.className = "layout_none";
-	createParty.className = "layout_none";
-	editParty.className = "layout_none";
-	createOffice.className ="layout_block";
-
-}
-/**----------for small screen sizes */
-
-/**get hamburger */
-const icon = document.getElementsByClassName('background_icon')[0]
-const smallLink = document.getElementsByClassName('nav_horizontal_small')
-
-icon.onclick =()=>{
-  if(icon.className === "background_icon"){
-    icon.className='background_icon1';
-    for (let i=0; i< smallLink.length ; i++ ){
-      smallLink[i].style.display='block'
-    }
-  }
-  else{
-    icon.className='background_icon'
-    for (let i=0; i< smallLink.length ; i++ ){
-      smallLink[i].style.display='none'
-    }
-  }
-
-}
-let par = document.querySelectorAll("p");
-for (let i=0; i<par.length; i++){
-	par[i].className ="text_centered";
-}
-
-/**image upload and preview */
-=======
 /** Style buttons and div functionality */
 createButton.className = 'button_active2';
 editButton.className = 'button_login2';
@@ -205,7 +100,6 @@ for (let i = 0; i < par.length; i++) {
 }
 
 /** image upload and preview */
->>>>>>> 2ffd4e67b9b936273f22bf5cc07d345319d155cc
 const uploadButton = document.querySelector('.button_btn');
 const fileInfo = document.querySelector('.button_upload');
 const realInput = document.getElementById('realInput');
