@@ -1,26 +1,14 @@
 
-<<<<<<< HEAD
-/**Get the various divs */
-const run = document.getElementById('run');
-const petition = document.getElementById('petition');
-
-/**Get the  the run and petition buttons */
-=======
 /** Get the various divs */
 const run = document.getElementById('run');
 const petition = document.getElementById('petition');
 
 /** Get the  the run and petition buttons */
->>>>>>> 2ffd4e67b9b936273f22bf5cc07d345319d155cc
 const buttons = document.querySelectorAll('button');
 const runButton = buttons[0];
 const petitionButton = buttons[1];
 
-<<<<<<< HEAD
-/**Style the run and petition buttons by attaching */
-=======
 /** Style the run and petition buttons by attaching */
->>>>>>> 2ffd4e67b9b936273f22bf5cc07d345319d155cc
 runButton.className = 'button_active3';
 petitionButton.className = 'button_login3';
 petition.className = 'layout_none';
@@ -32,11 +20,7 @@ runButton.onclick = () => {
   run.className = 'layout_block';
   petition.className = 'layout_none';
 };
-<<<<<<< HEAD
-/**When petition button is clicked  */
-=======
 /** When petition button is clicked  */
->>>>>>> 2ffd4e67b9b936273f22bf5cc07d345319d155cc
 petitionButton.onclick = () => {
   petitionButton.className = 'button_active3';
   runButton.className = 'button_login3';
@@ -44,38 +28,9 @@ petitionButton.onclick = () => {
   petition.className = 'layout_block';
 };
 
-<<<<<<< HEAD
-/**get hamburger and nav bar for small screen sizes */
-const icon = document.getElementsByClassName('background_icon')[0]
-const smallLink = document.getElementsByClassName('nav_horizontal_small')
-
-/**Make changes to Icon type */
-icon.onclick =()=>{
-  if(icon.className === "background_icon"){
-    icon.className='background_icon1';
-    for (let i=0; i< smallLink.length ; i++ ){
-      smallLink[i].style.display='block'
-    }
-  }
-  else{
-    icon.className='background_icon'
-    for (let i=0; i< smallLink.length ; i++ ){
-      smallLink[i].style.display='none'
-    }
-  }
-
-}
-/**Functionality for upload and preview image */
-=======
 /** get hamburger and nav bar for small screen sizes */
 const icon = document.getElementsByClassName('background_icon')[0];
 const smallLink = document.getElementsByClassName('nav_horizontal_small');
-<<<<<<< HEAD
-
-const icon = document.getElementsByClassName('background_icon')[0]
-const smallLink = document.getElementsByClassName('nav_horizontal_small')
-=======
->>>>>>> fix(endpoints): fix create party endpoint
 
 /** Make changes to Icon type */
 icon.onclick = () => {
@@ -92,19 +47,10 @@ icon.onclick = () => {
   }
 };
 /** Functionality for upload and preview image */
->>>>>>> 2ffd4e67b9b936273f22bf5cc07d345319d155cc
 const uploadButton = document.querySelector('.button_btn');
 const fileInfo = document.querySelector('.button_upload');
 const realInput = document.getElementById('realInput');
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-}
-
-=======
->>>>>>> fix(endpoints): fix create party endpoint
->>>>>>> 2ffd4e67b9b936273f22bf5cc07d345319d155cc
 uploadButton.addEventListener('click', () => {
   realInput.click();
 });
@@ -116,11 +62,7 @@ realInput.addEventListener('change', () => {
   };
   reader.readAsDataURL(event.target.files[0]);
 });
-<<<<<<< HEAD
-/**Seed data structure for front end */
-=======
 /** Seed data structure for front end */
->>>>>>> 2ffd4e67b9b936273f22bf5cc07d345319d155cc
 const info = [
   {
     Candidate: 'Prosper Umeytinwa-PDP',

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Politico- Your right to choose</title>
+		<meta charset="UTF-8">
+		<meta name="author" content="Cea">
+		<meta name="viewport" content ="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href ="./CSS/card.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/layout.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/background.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/button.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/text.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/form.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/nav.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/others.css">
+	</head>
+	<body>
+		<div class="layout_large background_body">
+      <div class="layout_smallNav">
+          <ul class="nav_tabs_small">
+            <li class="nav_horizontal_small">
+              <a class="others_full" href="home.html">Home</a>
+            </li>
+            <a class="background_icon" href="javascript:void(0)" ></a>
+            <li class="nav_horizontal_small">
+              <a class="others_full" href="profile.html">Your Profile</a>
+            </li>
+            <li class="nav_horizontal_small">
+              <a class="others_full" href="admin.html">Admin</a>
+            </li>
+            <li class="nav_horizontal_small">
+              <a class="others_full" href="candidate.html">Candidacy</a>
+            </li>
+            <li class="nav_horizontal_small">
+              <a class="others_full" href="index.html">Log out</a>
+              </li>
+          </ul>
+      </div>
+
+			<div class="layout_header">
+				<img class="others_logo" src="STATIC/logo.png" alt="logo"/>
+			</div>
+			<div class="layout_nav">
+				<ul class="nav_tabs">
+					<li class="nav_horizontal">
+						<a class="nav_menuButton" href="home.html">Home</a>
+					</li>
+					<li class="nav_horizontal">
+						<a class="nav_menuButton" href="profile.html">Your Profile</a>
+					</li>
+					<li class="nav_horizontal">
+						<a class="nav_menubutton" href="admin.html">Admin</a>
+					</li>
+					<li class="nav_horizontal">
+						<a class="nav_active" href="candidate.html">Candidacy</a>
+					</li>
+				</ul>
+			</div>
+			<div class="layout_navVert">
+				<ul class="nav_tabs">
+					<li class="nav_horizontal">
+						<a class="nav_menuButton" href="index.html">Logout</a>
+					</li>
+				</ul>
+			</div>
+			<div class="layout_centered1 card_party">
+				<button type="button" href="admin.html#create">Run For Office</button>
+				<button type="button" href="admin.html#edit">Petition</button>
+				<div id="run">
+					<form id="searchForm">
+						<p>Run for an Office</p>
+						<select id="searchList" name="office" form="searchForm">
+							<!--input names of political offices from database.js-->
+						</select>
+						<select id="candidatePart1" name="party" form="searchForm">
+						</select>
+						<input type =submit value="submit">
+					</form>
+				</div>
+				<div id="petition">
+					<form>
+						<p>Electoral Petition</p>
+            <br><br>
+            <select id="pList" name="office" form="searchForm">
+							<!--input names of political offices from database.js-->
+						</select>
+						<input type="text" name="complaintSubject" placeholder="Subject of Complaint">
+						<textarea class="others_textArea2" name="complaint" placeholder="Type your complains here..." rows=15 cols=12 required></textarea>
+						<input type="submit" value="submit">
+					</form>
+				</div>
+			</div>
+		</div>
+		<footer class="background_footer"></footer>
+		<script src="./JS/candidate.js"></script>
+    <script src="./JS/data.js"></script>
+	</body>
+</html>
