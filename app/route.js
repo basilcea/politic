@@ -5,7 +5,7 @@ import officeController from './DS/controllers/office';
 
 const router = express.Router();
 
-// party routes
+// parties route
 router.post('/parties', partyController.createParty);
 router.get('/parties', partyController.getAllParties);
 router.get('/parties/:id', partyController.getParty);

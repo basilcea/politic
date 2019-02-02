@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import app from '../app/server';
 import '@babel/polyfill';
 
-/**Use chai expect for tdd and http for handling request */
+/** Use chai expect for tdd and http for handling request */
 
 const expect = chai.expect;
 
@@ -34,15 +34,21 @@ describe('POST /parties', () => {
     name: '',
     AKA: 'pN',
     hqAddress: '',
-    logoUrl: 'partyAddress'
+    logoUrl: 'urlAddress'
   };
   const testParty3 = {
     name: 'partyName',
     AKA: 'pN',
     hqAddress: '',
-    logoUrl: 'partyAddress'
+    logoUrl: 'urlAddress'
   };
-  it('should fail if party has no name', done => {
+  const testParty4 = {
+    name: '1',
+    AKA: 'pN',
+    hqAddress: 'partyaddress',
+    logoUrl: 'urlAddress'
+  };
+  it('should fail if party has no name', (done) => {
     chai
       .request(app)
       .post('/api/v1/parties')
@@ -57,7 +63,24 @@ describe('POST /parties', () => {
         done();
       });
   });
-  it('should fail if party has a name but no address', done => {
+
+  it('should fail if party name is not an alphabet', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/parties')
+      .send(testParty4)
+      .end((err, res) => {
+        expect(/^[a-zA-Z]+$/.test(testParty4.name)).to.be.false
+        expect(res).to.have.status(406);
+        expect(res.body).to.have.property('status');
+        expect(res.body.status).to.equal(406);
+        expect(res.body)
+          .to.have.property('error')
+          .which.is.a('string');
+        done();
+      });
+  });
+  it('should fail if party has a name but no address', (done) => {
     chai
       .request(app)
       .post('/api/v1/parties')
@@ -72,7 +95,7 @@ describe('POST /parties', () => {
         done();
       });
   });
-  it('should pass if party has name and address', done => {
+  it('should pass if party has name and address', (done) => {
     chai
       .request(app)
       .post('/api/v1/parties')
@@ -98,7 +121,22 @@ describe('POST /parties', () => {
         done();
       });
   });
-});
+  it("should have fail if there is no party", function(done){
+    chai.request(app)
+    .get('/api/v1/parties/1')
+    .end(function(err,res){
+      if((res.body.data)===null){
+        expect(res.body).to.have.status(404)
+        expect(res.body).to.have.property('status')
+        expect(res.body.status).to.equal(404)
+        expect(res.body).to.have.property('error').which.is.a('string')
+      }
+      done()
+    });
+  });
+
+})
+
 /**
 * test for getting all parties
 * @param request
@@ -109,7 +147,7 @@ describe('POST /parties', () => {
 */
 
 describe('Get /parties', () => {
-  it('should have status ok', done => {
+  it('should have status ok', (done) => {
     chai
       .request(app)
       .get('/api/v1/parties')
@@ -124,7 +162,7 @@ describe('Get /parties', () => {
         done();
       });
   });
-  it('data should be an array', done => {
+  it('data should be an array', (done) => {
     chai
       .request(app)
       .get('/api/v1/parties')
@@ -137,7 +175,7 @@ describe('Get /parties', () => {
         done();
       });
   });
-  it('should have a message', done => {
+  it('should have a message', (done) => {
     chai
       .request(app)
       .get('/api/v1/parties')
@@ -151,7 +189,7 @@ describe('Get /parties', () => {
         done();
       });
   });
-  it('should have fail if there are no parties', done => {
+  it('should have fail if there are no parties', (done) => {
     chai
       .request(app)
       .get('/api/v1/parties')
@@ -173,14 +211,14 @@ describe('Get /parties', () => {
 * test for getting a specific party
 * @param request
 * @param resp
-* @param id
+* @param id{integer} - The id value
 * @method get
 * @route api/vi/parties/1
 
 */
 
 describe('Get /parties/<party-id>', () => {
-  it('should have status ok', done => {
+  it('should have status ok', (done) => {
     chai
       .request(app)
       .get('/api/v1/parties/1')
@@ -195,7 +233,7 @@ describe('Get /parties/<party-id>', () => {
         done();
       });
   });
-  it('data should be an object', done => {
+  it('data should be an object', (done) => {
     chai
       .request(app)
       .get('/api/v1/parties/1')
@@ -208,7 +246,7 @@ describe('Get /parties/<party-id>', () => {
         done();
       });
   });
-  it('should have a message', done => {
+  it('should have a message', (done) => {
     chai
       .request(app)
       .get('/api/v1/parties/1')
@@ -222,7 +260,7 @@ describe('Get /parties/<party-id>', () => {
         done();
       });
   });
-  it('should have fail if there is no party', done => {
+  it('should have fail if there is no party', (done) => {
     chai
       .request(app)
       .get('/api/v1/parties/1')
@@ -244,7 +282,7 @@ describe('Get /parties/<party-id>', () => {
 * test for editing the party name of a specific party
 * @param request
 * @param resp
-* @param id
+* @param id{integer} - The id value
 * @method get
 * @route api/vi/parties/1/name
 
@@ -253,8 +291,27 @@ describe('Patch /parties/<party-id>/name', () => {
   const testParty4 = {
     name: 'newPartyName'
   };
+  const testParty5 = {
+    name: 1
+  };
+  it('should fail if party name is not an alphabet', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/parties')
+      .send(testParty5)
+      .end((err, res) => {
+        expect(/^[a-zA-Z]+$/.test(testParty5.name)).to.be.false
+        expect(res).to.have.status(406);
+        expect(res.body).to.have.property('status');
+        expect(res.body.status).to.equal(406);
+        expect(res.body)
+          .to.have.property('error')
+          .which.is.a('string');
+        done();
+      });
+  });
 
-  it('should have status created', done => {
+  it('should have status created', (done) => {
     chai
       .request(app)
       .patch('/api/v1/parties/1/name')
@@ -270,7 +327,7 @@ describe('Patch /parties/<party-id>/name', () => {
         done();
       });
   });
-  it('data should be an object', done => {
+  it('data should be an object', (done) => {
     chai
       .request(app)
       .patch('/api/v1/parties/1/name')
@@ -283,20 +340,17 @@ describe('Patch /parties/<party-id>/name', () => {
           expect(res.body)
             .to.have.property('message')
             .which.is.a('string');
-          expect(res.body)
-            .to.have.property('party')
-            .which.is.an('object');
-          expect(res.body.party).to.have.keys('id', 'name', 'AKA', 'hqAddress', 'logoUrl');
         }
         done();
       });
   });
 
-  it('should have fail if there is no party', done => {
+  it('should have fail if there is no party', (done) => {
     chai
       .request(app)
-      .patch('/api/v1/parties/1/name')
+      .patch('/api/v1/parties/10/name')
       .end((err, res) => {
+        console.log(res.body.data)
         if (res.body.data === undefined) {
           expect(res.body).to.have.status(404);
           expect(res.body).to.have.property('status');
@@ -310,17 +364,17 @@ describe('Patch /parties/<party-id>/name', () => {
   });
 });
 /**
-* test for delete a specific office
+* test for delete a specific party
 * @param request
 * @param resp
-* @param id
+* @param id{integer} - The id value
 * @method get
 * @route api/vi/parties/1
 
 */
 
 describe('Delete /parties/<party-id>', () => {
-  it('should have status ok', done => {
+  it('should have status ok', (done) => {
     chai
       .request(app)
       .delete('/api/v1/parties/1')
@@ -341,7 +395,7 @@ describe('Delete /parties/<party-id>', () => {
         done();
       });
   });
-  it('should have fail if there is no party', done => {
+  it('should have fail if there is no party', (done) => {
     chai
       .request(app)
       .delete('/api/v1/parties/1')
@@ -358,3 +412,7 @@ describe('Delete /parties/<party-id>', () => {
       });
   });
 });
+
+
+
+

@@ -1,54 +1,84 @@
 import parties from '../models/party';
+/** Class representing controllers for parties endpoints */
 
 class partyController {
-  static createParty(req, res) {
-    // create a political party
+  /**
+  * Create an office
+  * @param {string} - name of office
+  * @param {string} - hqAddress of office
+  */
 
-    // check if name is provided
-    if (!req.body.name) {
+  static createParty(req, res) {
+    const {id, name, AKA, hqAddress, logoUrl} = req.body;
+      // check if name is provided
+    if (!name) {
       return res.status(412).send({
         status: 412,
         error: ' name is required'
       });
     }
+    // check if name is an alphabet
+    if(/^[a-zA-Z]+$/.test(name)===false){
+      return res.status(406).send({
+        "status":406,
+        "error": 'name must be alphabets only'
+      })
+    }
     // check if headquaters address is provided
-    if (!req.body.hqAddress) {
+    if (!hqAddress) {
       return res.status(412).send({
         status: 412,
         error: "Headquaters's address is required"
       });
     }
     const party = {
-      id: parties.length + 1,
-      name: req.body.name,
-      AKA: req.body.AKA,
-      hqAddress: req.body.hqAddress,
-      logoUrl: req.body.logoUrl
+      "id": parties.length + 1,
+      "name": name,
+      "AKA": AKA,
+      "hqAddress": hqAddress,
+      "logoUrl": logoUrl
     };
-    // add party details to the data structure
+    /**
+
+    * Add the part object to the the data array
+    * create an  unique id
+    * @return {object} - The party object
+
+    */
     parties.push(party);
     return res.status(201).send({
-      status: 201,
-      data: party,
-      message: 'You have added a political party'
+      "status": 201,
+      "data": party,
+      "message": 'You have added a political party'
     });
   }
+
+   /**
+  * Get all parties
+  * @return {object} - array of all parties with the status code
+  */
 
   static getAllParties(req, res) {
     if (parties) {
       return res.status(200).send({
-        status: 200,
-        data: parties,
-        message: 'parties retrieved successfully'
+        'status': 200,
+        "data": parties,
+        "message": 'parties retrieved successfully'
       });
     }
     if (!parties) {
       return res.status(400).send({
-        status: 400,
-        error: 'parties does not exist'
-      });
-    }
+        "status":400,
+        "error": 'parties does not exist'
+      })
+    };
   }
+
+  /**
+  * Get a party
+  * @param {integer} - id of the party
+  * @return {object} -An party that has that id  with the status code
+  */
 
   static getParty(req, res) {
     // force all id string to integer
@@ -58,9 +88,9 @@ class partyController {
       if (party.id === id) {
         partyFound = party;
         return res.status(200).send({
-          status: 200,
-          data: party,
-          message: 'Political party retrieved succesfully'
+          "status": 200,
+          "data": party,
+          "message": 'Political party retrieved succesfully'
         });
       }
     });
@@ -71,6 +101,11 @@ class partyController {
       });
     }
   }
+  /**
+  * Delete a party
+  * @param {integer} - id of the party
+  * @return {object} -An object with status code and message
+  */
 
   static deleteParty(req, res) {
     const id = parseInt(req.params.id, 10);
@@ -80,20 +115,25 @@ class partyController {
         partyFound = party;
         parties.splice(index, 1);
         return res.status(200).send({
-          status: 200,
-          data: {
-            message: 'party deleted successfully'
+          "status": 200,
+          "data": {
+            "message": 'party deleted successfully'
           }
         });
       }
     });
     if (!partyFound) {
       return res.status(404).send({
-        status: 404,
-        error: 'party does not exist'
+        "status": 404,
+        "error": 'party does not exist'
       });
     }
   }
+   /**
+  * Edit party name
+  * @param {integer} - id of the party
+  * @return {object} -An party that has has a new name
+  */
 
   static editPartyName(req, res) {
     const id = parseInt(req.params.id, 10);
@@ -102,24 +142,30 @@ class partyController {
       if (party.id === id) {
         partyFound = party;
         partyFound.name = req.body.name || partyFound.name;
+        if(/^[a-zA-Z]+$/.test(partyFound.name)===false){
+          return res.status(406).send({
+            "status":406,
+            "error": 'name must be alphabets only'
+          });}
         return res.status(201).send({
-          status: 201,
-          data: {
-            id: partyFound.id,
-            name: partyFound.name
-          },
-          party: partyFound,
-          message: 'Party Name edited'
-        });
-      }
+          "status": 201,
+          "data": {
+            "id": partyFound.id,
+            "name": partyFound.name
+          }, "message": 'Party Name edited'
+        });}
     });
     if (!partyFound) {
       return res.status(404).send({
-        status: 404,
-        error: 'party does not exist'
+        'status': 404,
+        "error": 'Party does not exist'
       });
     }
   }
 }
 
+<<<<<<< HEAD
 export default partyController;
+=======
+export default partyController;
+>>>>>>> 2ffd4e67b9b936273f22bf5cc07d345319d155cc
