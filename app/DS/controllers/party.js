@@ -13,30 +13,30 @@ class partyController {
       // check if name is provided
     if (!name) {
       return res.status(412).send({
-        status: 412,
-        error: ' name is required'
+        "status":412,
+        "error": " name is required"
       });
     }
     // check if
     if(/^[a-zA-Z]+$/.test(name)===false){
       return res.status(406).send({
-        status:406,
-        error: 'name must be alphabets only'
+        "status":406,
+        "error": 'name must be alphabets only'
       })
     }
     // check if headquaters address is provided
     if (!hqAddress) {
       return res.status(412).send({
-        status: 412,
-        error: "Headquaters's address is required"
+        "status": 412,
+        "error": "Headquaters's address is required"
       });
     }
     const party = {
-      id: parties.length + 1,
-      name: name,
-      AKA: AKA,
-      hqAddress: hqAddress,
-      logoUrl: logoUrl
+      "id": parties.length + 1,
+      "name": name,
+      "AKA": AKA,
+      "hqAddress": hqAddress,
+      "logoUrl": logoUrl
     };
     /**
 
@@ -47,9 +47,9 @@ class partyController {
     */
     parties.push(party);
     return res.status(201).send({
-      status: 201,
-      data: party,
-      message: 'You have added a political party'
+      "status": 201,
+      "data": party,
+      "message": 'You have added a political party'
     });
   }
 
@@ -61,9 +61,9 @@ class partyController {
   static getAllParties(req, res) {
     if (parties) {
       return res.status(200).send({
-        status: 200,
-        data: parties,
-        message: 'parties retrieved successfully'
+        'status': 200,
+        "data": parties,
+        "message": 'parties retrieved successfully'
       });
     }
     if (!parties) {
@@ -88,16 +88,44 @@ class partyController {
       if (party.id === id) {
         partyFound = party;
         return res.status(200).send({
-          status: 200,
-          data: party,
-          message: 'Political party retrieved succesfully'
+          "status": 200,
+          "data": party,
+          "message": 'Political party retrieved succesfully'
         });
       }
     });
     if (!partyFound) {
       return res.status(404).send({
-        status: 404,
-        error: 'Party Not Found'
+        "status": 404,
+        "error": 'Party Not Found',
+      })
+    }
+  }
+  /**
+  * Delete a party
+  * @param {integer} - id of the party
+  * @return {object} -An object with status code and message
+  */
+
+  static deleteParty(req, res) {
+    const id = parseInt(req.params.id, 10);
+    let partyFound;
+    parties.filter((party, index) => {
+      if (party.id === id) {
+        partyFound = party;
+        parties.splice(index, 1);
+        return res.status(200).send({
+          "status": 200,
+          "data": {
+            "message": 'party deleted successfully'
+          }
+        });
+      }
+    });
+    if (!partyFound) {
+      return res.status(404).send({
+        "status": 404,
+        "error": 'party does not exist'
       });
     }
   }
