@@ -31,36 +31,47 @@ petitionButton.onclick = () => {
 /** get hamburger and nav bar for small screen sizes */
 const icon = document.getElementsByClassName('background_icon')[0];
 const smallLink = document.getElementsByClassName('nav_horizontal_small');
+<<<<<<< HEAD
 
 const icon = document.getElementsByClassName('background_icon')[0]
 const smallLink = document.getElementsByClassName('nav_horizontal_small')
+=======
+>>>>>>> fix(endpoints): fix create party endpoint
 
-icon.onclick =()=>{
-  if(icon.className === "background_icon"){
-    icon.className='background_icon1';
-    for (let i=0; i< smallLink.length ; i++ ){
-      smallLink[i].style.display='block'
+/** Make changes to Icon type */
+icon.onclick = () => {
+  if (icon.className === 'background_icon') {
+    icon.className = 'background_icon1';
+    for (let i = 0; i < smallLink.length; i++) {
+      smallLink[i].style.display = 'block';
+    }
+  } else {
+    icon.className = 'background_icon';
+    for (let i = 0; i < smallLink.length; i++) {
+      smallLink[i].style.display = 'none';
     }
   }
-  else{
-    icon.className='background_icon'
-    for (let i=0; i< smallLink.length ; i++ ){
-      smallLink[i].style.display='none'
-    }
-  }
+};
+/** Functionality for upload and preview image */
+const uploadButton = document.querySelector('.button_btn');
+const fileInfo = document.querySelector('.button_upload');
+const realInput = document.getElementById('realInput');
 
+<<<<<<< HEAD
 }
 
+=======
+>>>>>>> fix(endpoints): fix create party endpoint
 uploadButton.addEventListener('click', () => {
   realInput.click();
 });
-realInput.addEventListener("change", () => {
-  let reader = new FileReader();
-  reader.onload =()=>{
-		let previewed= document.getElementById("pix");
-		previewed.src= reader.result;
-    }
-  reader.readAsDataURL(event.target.files[0])
+realInput.addEventListener('change', () => {
+  const reader = new FileReader();
+  reader.onload = () => {
+    const previewed = document.getElementById('pix');
+    previewed.src = reader.result;
+  };
+  reader.readAsDataURL(event.target.files[0]);
 });
 /** Seed data structure for front end */
 const info = [
