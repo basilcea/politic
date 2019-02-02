@@ -40,8 +40,6 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.15.0",
-    "@babel/register": "^7.0.0",
-    "babel-eslint": "^10.0.1",
     "nodemon": "^1.18.9"
   }
 }
