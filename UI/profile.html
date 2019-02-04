@@ -18,16 +18,43 @@
 	</head>
 	<body>
 		<div class="layout_large background_body">
+
+      <!-- Navigation Bar for  small screen sizes-->
+      <div class="layout_smallNav">
+        <ul class="nav_tabs_small">
+          <li class="nav_horizontal_small">
+            <a class="others_full" href="home.html">Home</a>
+          </li>
+          <a class="background_icon" href="javascript:void(0)" ></a>
+          <li class="nav_horizontal_small">
+            <a class="others_full" href="profile.html">Your Profile</a>
+          </li>
+          <li class="nav_horizontal_small">
+            <a class="others_full" href="admin.html">Admin</a>
+          </li>
+          <li class="nav_horizontal_small">
+            <a class="others_full" href="candidate.html">Candidacy</a>
+          </li>
+          <li class="nav_horizontal_small">
+            <a class="others_full" href="index.html">Log out</a>
+          </li>
+        </ul>
+      </div>
+
+      <!--Navigation Bar for large screen sizes-->
+
+      <!--Logo-->
 			<div class="layout_header">
 				<img class="others_logo" src="STATIC/logo.png" alt="logo"/>
-			</div>
+      </div>
+      <!--Menu Buttons-->
 			<div class="layout_nav">
 				<ul class="nav_tabs">
 					<li class="nav_horizontal">
 						<a class="nav_menuButton" href="home.html">Home</a>
 					</li>
 					<li class="nav_horizontal">
-							<a class="nav_active" href="profile.html">Your Profile</a>
+						<a class="nav_active" href="profile.html">Your Profile</a>
 					</li>
 					<li class="nav_horizontal">
 						<a class="nav_menubutton" href="admin.html">Admin</a>
@@ -36,16 +63,20 @@
 						<a class="nav_menuButton" href="candidate.html">Candidacy</a>
 					</li>
 				</ul>
-			</div>
+      </div>
+      <!---Logout button for large screen sizes-->
 			<div class="layout_navVert">
 				<ul class="nav_tabs">
 					<li class="nav_horizontal">
-						<a class="nav_menuButton" href="index.html">Logout</a>
+            <a class="nav_menuButton" href="index.html">Logout</a>
+          </li>
 				</ul>
-			</div>
+      </div>
+      <!--tabs button-->
 			<div class="layout_centered1 card_party">
 				<button type="button">View Profile</button>
-				<button type="button">Edit Profile</button>
+        <button type="button">Edit Profile</button>
+      <!-- profile buuton-->
 				<div id="run">
 					<form>
 						<p class="text_centered">View Profile</p>
@@ -59,19 +90,21 @@
 						<p>Email:<span class="text_styled "> basilcea@yahoo.co.uk</span></p>
 						<p>Phone Number: <span class="text_styled ">+9 (0) 2346790</span></p>
 						</div>
-					</form>
+          </form>
+          <!-- voting activites by user-->
 					<div class="layout_activity">
 						<p class="text_centered">Vote Activites</p>
 							Below is a list of all your standing votes in the present election.
-								<table id="voteActivity">
-									<tr class="layout_th">
-										<th>Type of Office</th>
-										<th>Name of Office</th>
-										<th>Candidate</th>
-									</tr>
-								</table>
-						</div>
-				</div>
+            <table id="voteActivity">
+              <tr class="layout_th">
+                <th>Type of Office</th>
+                <th>Name of Office</th>
+                <th>Candidate</th>
+              </tr>
+            </table>
+					</div>
+        </div>
+        <!--edit profile div-->
 				<div id="petition">
 					<form>
 						<p class="text_centered">Edit Profile</p>

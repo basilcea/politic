@@ -12,7 +12,7 @@ client
   .then(() => {
     console.log('Connection Successful.');
   })
-  .catch(error => {
+  .catch((error) => {
     console.log('Connection Not Successful.', error);
   });
 
