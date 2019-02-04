@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const client = new pg.Client({
-  connectionString: process.env.postgresURL
+  connectionString: process.env.postgresDevURL
 });
 
 client

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import client from '../connect';
-import {redisClient} from '../connect'
+import client from '../migrate';
+import {redisClient} from '../migrate'
 import 'dotenv';
 
 const auth = {
@@ -33,7 +33,9 @@ const auth = {
             }
             req.user = {
                 userId: decrypt.userId,
-                isAdmin: decrypt.isAdmin};
+                isCandidate: decrypt.isCandidate,
+                isAdmin: decrypt.isAdmin
+                };
             next();
         }catch(error){
             return res.status(400).send(error);

@@ -10,6 +10,7 @@ export const users = [
     "passportUrl":" '../../UI/Static/basil.jpg'" ,
     "password":"'nichjel2'",
     "password2":"'nichjel2'",
+    "registerAs":"'politician'",
     "isCandidate": false,
     "isAdmin": true
   },
@@ -22,6 +23,7 @@ export const users = [
     "passportUrl":"'../../UI/Static/thsu.jpg'" ,
     "password":"'nichjel4'",
     "password2":"'nichjel4'",
+    "registerAs":"'voter'",
     "isCandidate": false,
     "isAdmin": false
   },
@@ -34,6 +36,7 @@ export const users = [
     "passportUrl": "'../../UI/Static/bright.jpg'",
     "password":"'nichjel1'",
     "password2":"'nichjel1'",
+    "registerAs":"'politician'",
     "isCandidate": false,
     "isAdmin": false
   }

@@ -1,4 +1,4 @@
-import client from '../connect';
+import client from '../migrate';
 /**
 * Delete user table
 * @async
@@ -26,13 +26,13 @@ export const createUserTable = async function () {
         CREATE TABLE IF NOT EXISTS users(
           id Serial PRIMARY KEY,
           firstname VARCHAR(20) not null,
-          lastname VARCHAR(20) not null,
+          lastname VARCHAR(20),
           othername VARCHAR(30),
           email VARCHAR(40) UNIQUE not null,
           phoneNumber VARCHAR(11),
           passportUrl TEXT,
           password VARCHAR(255) UNIQUE not null,
-          password2 VARCHAR(255) UNIQUE not null,
+          registerAs text not null,
           isCandidate BOOLEAN,
           isAdmin BOOLEAN
         )`);

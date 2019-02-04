@@ -1,4 +1,4 @@
-import client from '../connect';
+import client from '../migrate';
 const seed = async function(dbTable, dataArray){
   try{
     const getTable = `SELECT table_name FROM information_schema.tables
