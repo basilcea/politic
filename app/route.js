@@ -6,7 +6,7 @@ import auth from './middleware/auth'
 const router = express.Router();
 //users route
 router.post('/auth/signup', userController.signup)
-
+router.post('/auth/login', userController.login)
 /*
 
 //Admin route

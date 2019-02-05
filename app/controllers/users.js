@@ -118,5 +118,58 @@ class userController {
       });
     }
   }
+  static async login( req, res ) {
+  // login user similar to get user
+
+  if (!req.body.email) {
+    return res.status(412).json({
+      "status" : 412,
+      'error': 'Email is required'});
+  }
+  if (!req.body.password) {
+    return res.status(412).json({
+      "status": 412,
+      'error': 'Password is required'});
+  }
+  // check if the email is valid
+  if (!authHelper.isValidEmail(req.body.email)) {
+    return res.status(400
+    ).json({
+      "status": 400,
+      'error': 'Please enter a valid email address' });
+  }
+  const getUser = 'SELECT * FROM users WHERE email = $1';
+  try {
+    //
+    const { rows } = await pool.query(getUser, [req.body.email]);
+    if (!rows[0]) {
+      return res.status(404).json({
+        "status": 404,
+        'error': 'Email does not exist'});
+    }
+    // check if the inputted password is the same password created
+    if(!authHelper.comparePassword(rows[0].password, req.body.password)) {
+      return res.status(400).json({
+        "status": 400,
+        "error" : 'Incorrect password' });
+    }
+    // generate a token for the user
+    const token = authHelper.generateToken(rows[0].userid, rows[0].isadmin, rows[0].username);
+    // check if token
+    return res.status(200).json({
+      "status":200,
+      "data":[{
+        "token":token,
+        "user": rows[0]
+       }],
+    });
+    // yet to implement validation for already login in
+  } catch(error) {
+    return res.status(501).json({
+      "status": 501,
+      "error": error.toString()
+    })
+  }
+}
 }
 export default userController
