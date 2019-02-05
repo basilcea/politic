@@ -1,4 +1,4 @@
-import client from '../migrate';
+import pool from '../migrate';
 import authHelper  from '../helpers/auth';
 import 'dotenv';
 class userController {
@@ -12,9 +12,9 @@ class userController {
     const loginUser = `SELECT * FROM users WHERE email = $1`;
     const hashPassword = authHelper.hashPassword(req.body.password);
     const getUser =`SELECT firstname from users`;
-    const users= await client.query(getUser);
+    const users= await pool.query(getUser);
     const getEmail=`SELECT email from users`;
-    const email= await client.query(getEmail);
+    const email= await pool.query(getEmail);
     const values = [
         req.body.firstname,
         req.body.lastname,
@@ -96,9 +96,9 @@ class userController {
     // insert user details into the database
     try {
 
-      await client.query(createUser, values);
+      await pool.query(createUser, values);
 
-      const { rows } = await client.query(loginUser, [req.body.email]);
+      const { rows } = await pool.query(loginUser, [req.body.email]);
 
       // generate a user token for that user id
       const token = authHelper .generateToken(rows[0].userid, rows[0].isadmin, rows[0].username)

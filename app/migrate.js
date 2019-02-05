@@ -1,14 +1,14 @@
-import pg from 'pg';
+import {Pool, client} from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const client = new pg.Client({
-  connectionString: process.env.postgresDevURL
+const pool = new Pool({
+  connectionString: process.env.NODE_ENV==='test'? process.env.TEST_DATABASE : process.env.DATABASE_URL,
+  ssl:true,
 });
 
-client
-  .connect()
+pool.query('SELECT NOW()')
   .then(() => {
     console.log('Connection Successful.');
   })
@@ -16,4 +16,5 @@ client
     console.log('Connection Not Successful.', error);
   });
 
-export default client;
+
+export default pool;
