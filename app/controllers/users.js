@@ -1,6 +1,7 @@
 import pool from '../migrate';
 import authHelper  from '../helpers/auth';
 import 'dotenv';
+import "@babel/polyfill"
 class userController {
   /*---------------- User methods ---------------------------*/
 

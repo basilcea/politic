@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
-import client from '../migrate';
-import {redisClient} from '../migrate'
+import pool from '../migrate';
 import 'dotenv';
 
 const auth = {
@@ -10,17 +9,6 @@ const auth = {
         if(!token) {
             return res.status(400).send({ 'message': 'You need to Login' });
         }
-        const invalid = (callback) => {
-            redisClient.lrange('token', 0,100, (err,result)=> {
-                return callback(result)
-            });
-         }
-        invalid((result)=>{
-            if (result.indexOf(token) > -1){
-                return res.status(400).json({'Message':'Invalid Token'})
-            }
-
-        })
         try{
             const decrypt = await jwt.verify(token, process.env.SECRET);
             const getUser ='SELECT * FROM users WHERE userId= $1';
