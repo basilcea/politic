@@ -5,7 +5,7 @@ dotenv.config();
 
 const pool = new Pool({
   connectionString: process.env.NODE_ENV==='test'? process.env.TEST_DATABASE : process.env.DATABASE_URL,
-  ssl:true,
+  ssl:false
 });
 
 pool.query('SELECT NOW()')
