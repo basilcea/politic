@@ -118,7 +118,7 @@ class userController {
     if (!req.body.registerAs) {
       return res.status(412).json({
         "status":412,
-        'error':'You need to register As'
+        'error':'Register as field is required'
       })
     }
     /** try and catch async block */
