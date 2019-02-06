@@ -18,6 +18,9 @@ const authHelper  = {
     isValidNumber(number){
         return /^\d+$/.test(number)
     },
+    isValidPhone(number){
+      return /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(number)
+    },
     isValidPassword(password){
         return /(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$/.test(password)
         /*must be between 6 and  15 characters containing at least one letter and one digit */

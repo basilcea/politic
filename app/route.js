@@ -23,22 +23,4 @@ router.patch('/parties/:id/name', auth.checkToken, partyController.patchPartyNam
 router.delete('/parties/:id', auth.checkToken, partyController.deleteParty)
 router.post('/office/:id/register', auth.checkToken, candidateController.makeCandidate)
 
-/*
-//Admin route
-// make Admin
-// make candiddates
-
-// parties route
-router.post('/parties', partyController.createParty);
-router.get('/parties', partyController.getAllParties);
-router.get('/parties/:id', partyController.getParty);
-router.delete('/parties/:id', partyController.deleteParty);
-router.patch('/parties/:id/name', partyController.editPartyName);
-
-// office routes
-
-router.post('/offices', officeController.createOffice);
-router.get('/offices', officeController.getAllOffices);
-router.get('/offices/:id', officeController.getOffice);*/
-
 export default router;
