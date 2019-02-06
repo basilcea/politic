@@ -1,6 +1,4 @@
-import seed from "../helpers/seed";
-
-export const offices = [
+const offices = [
   {
     "type": " 'Federal'",
     "name": " 'PresidentNigeria'"
@@ -23,5 +21,5 @@ export const offices = [
   }
 ];
 
-export const seedOffices= seed('offices',offices)
+export default offices
 

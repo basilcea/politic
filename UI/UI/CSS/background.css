@@ -1,0 +1,37 @@
+.background_banner{
+	min-height:100%;
+	background-image:url('../STATIC/banner.jpg');
+	background-size:cover;
+}
+.background_body{
+	background-color:gainsboro;
+}
+.background_footer{
+	background-color:#28495b;
+	height:80px;
+}
+.background_icon, .background_icon1{
+  display:none
+}
+
+@media screen and (max-width: 600px){
+.background_icon{
+  display:block;
+  width:20vw;
+  height:10vw;
+  float:right;
+  background-size: 100% 100%;
+  background-image: url('../STATIC/ham1_hover.jpg');
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.background_icon1{
+  display:block;
+  width:20vw;
+  height:10vw;
+  float:right;
+  background-size: 100% 100%;
+  background-image: url('../STATIC/ham.jpg');
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+}

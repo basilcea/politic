@@ -8,8 +8,8 @@ class userController {
   // create User
   static async signup( req, res ) {
     const createUser = `INSERT INTO users(firstname, lastname, othername, email,phoneNumber, passportURL,
-    password,registerAs,isAdmin, isCandidate)
-    VALUES($1, $2, $3,$4, $5, $6 ,$7, $8, $9, $10)`;
+    password,registerAs,isAdmin)
+    VALUES($1, $2, $3,$4, $5, $6 ,$7, $8, $9)`;
     const loginUser = `SELECT * FROM users WHERE email = $1`;
     const hashPassword = authHelper.hashPassword(req.body.password);
     const getUser =`SELECT firstname from users`;
@@ -26,48 +26,51 @@ class userController {
         hashPassword,
         req.body.registerAs,
         false,
-        false,
       ];
 
-    // check if email and password is inputted
-    if (!req.body.firstname) {
-      return res.status(412).json({
-        "status": 412,
-        "error" :'First name is required'
-      });
-    }
-    if(!authHelper.isValidName(req.body.firstname)){
-      return res.status(406).json({
-        "status":406,
-        "error":"First name must be alphabets"
-      })
-    }
-    if(!authHelper.isValidName(req.body.lastname)){
-      return res.status(406).json({
-        "status":406,
-        "error":"Last name must be alphabets"
-      })
-    }
-    if(!authHelper.isValidName(req.body.othername)){
-      return res.status(406).json({
-        "status":406,
-        "error":"Other name must be alphabets"
-      })
-    }
-    if (!req.body.email) {
-      return res.status(412).json({
-        "status": 412,
-        "error": 'Email is required'
-      });
-    }
+      // need to do if one requirement fails then others shouldnt work.
 
-    if(authHelper .isUniqueEmail(req.body.email,email.rows[0]) !== null){
+    // check if email and password is inputted
+
+
+      if (!req.body.firstname) {
+        return res.status(412).json({
+          "status": 412,
+          "error" :'First name is required'
+        });
+      }
+      if(!authHelper.isValidName(req.body.firstname)){
+        return res.status(406).json({
+          "status":406,
+          "error":"First name must be alphabets"
+        })
+      }
+      if(!authHelper.isValidName(req.body.lastname)){
+        return res.status(406).json({
+          "status":406,
+          "error":"Last name must be alphabets"
+        })
+      }
+      if(!authHelper.isValidName(req.body.othername)){
+        return res.status(406).json({
+          "status":406,
+          "error":"Other name must be alphabets"
+        })
+      }
+      if (!req.body.email) {
+        return res.status(412).json({
+          "status": 412,
+          "error": 'Email is required'
+        });
+      }
+    console.log(authHelper.isUniqueEmail(req.body.email, email))
+    if(authHelper.isUniqueEmail(req.body.email, email) !== null){
      return res.status(422).json({
        "status":422,
        "error":'Email already exists'
      })
     }
-    if (!authHelper .isValidEmail(req.body.email)) {
+    if (!authHelper.isValidEmail(req.body.email)) {
       return res.status(400).json({
         "status":400,
         "error": 'Please enter a valid email address'
@@ -102,7 +105,7 @@ class userController {
       const { rows } = await pool.query(loginUser, [req.body.email]);
 
       // generate a user token for that user id
-      const token = authHelper .generateToken(rows[0].userid, rows[0].isadmin, rows[0].username)
+      const token = authHelper .generateToken(rows[0].id, rows[0].isadmin)
       return res.status(201).json({
         "status": "SIGN UP SUCCESFUL",
         "data":[{
@@ -121,55 +124,55 @@ class userController {
   static async login( req, res ) {
   // login user similar to get user
 
-  if (!req.body.email) {
-    return res.status(412).json({
-      "status" : 412,
-      'error': 'Email is required'});
-  }
-  if (!req.body.password) {
-    return res.status(412).json({
-      "status": 412,
-      'error': 'Password is required'});
-  }
-  // check if the email is valid
-  if (!authHelper.isValidEmail(req.body.email)) {
-    return res.status(400
-    ).json({
-      "status": 400,
-      'error': 'Please enter a valid email address' });
-  }
-  const getUser = 'SELECT * FROM users WHERE email = $1';
-  try {
-    //
-    const { rows } = await pool.query(getUser, [req.body.email]);
-    if (!rows[0]) {
-      return res.status(404).json({
-        "status": 404,
-        'error': 'Email does not exist'});
+    if (!req.body.email) {
+      return res.status(412).json({
+        "status" : 412,
+        'error': 'Email is required'});
     }
-    // check if the inputted password is the same password created
-    if(!authHelper.comparePassword(rows[0].password, req.body.password)) {
+    if (!req.body.password) {
+      return res.status(412).json({
+        "status": 412,
+        'error': 'Password is required'});
+    }
+    // check if the email is valid
+    if (!authHelper.isValidEmail(req.body.email)) {
       return res.status(400).json({
         "status": 400,
-        "error" : 'Incorrect password' });
+        'error': 'Please enter a valid email address' });
     }
-    // generate a token for the user
-    const token = authHelper.generateToken(rows[0].userid, rows[0].isadmin, rows[0].username);
-    // check if token
-    return res.status(200).json({
-      "status":200,
-      "data":[{
-        "token":token,
-        "user": rows[0]
-       }],
-    });
-    // yet to implement validation for already login in
-  } catch(error) {
-    return res.status(501).json({
-      "status": 501,
-      "error": error.toString()
-    })
+    const getUser = 'SELECT * FROM users WHERE email = $1';
+    try {
+      //
+      const { rows } = await pool.query(getUser, [req.body.email]);
+      if (!rows[0]) {
+        return res.status(404).json({
+          "status": 404,
+          'error': 'Email does not exist'});
+      }
+      // check if the inputted password is the same password created
+      if(!authHelper.comparePassword(rows[0].password, req.body.password)) {
+        return res.status(400).json({
+          "status": 400,
+          "error" : 'Incorrect password' });
+      }
+      // generate a token for the user
+      const token = authHelper.generateToken(rows[0].id, rows[0].isadmin);
+      // check if token
+      return res.status(200).json({
+        "status":200,
+        "data":[{
+          "token":token,
+          "user":rows[0]
+        }],
+      });
+    } catch(error) {
+      return res.status(501).json({
+        "status": 501,
+        "error": error.toString()
+      })
+    }
   }
-}
+
+
 }
 export default userController

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Politico- Your right to choose</title>
+		<meta charset="UTF-8">
+		<meta name="author" content="Cea">
+		<meta name="viewport" content ="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href ="./CSS/card.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/layout.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/background.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/button.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/text.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/form.css">
+    <link rel="stylesheet" type="text/css" href ="./CSS/nav.css">
+    <link rel="stylesheet" type="text/css" href ="./CSS/others.css">
+	</head>
+	<body>
+		<div class="background_banner">
+      <div class="layout_smallNav">
+        <ul class="nav_tabs_small">
+          <li class="nav_horizontal_small"><a class="others_full" id="sign" href="#signup">Sign up</a></li>
+          <a href="javascript:void(0)" class="background_icon" id='hamburger'></a>
+          <li class="nav_horizontal_small"><a class="others_full" id="log">Login</a></li>
+        </ul>
+      </div>
+
+			<div class="layout_header1">
+				<img class="others_img3" src="STATIC/logo.png" alt="logo">
+      </div>
+      <div class="layout_fix"></div>
+			<div class="card_login">
+				<button type="button" >Sign Up</button>
+				<button type="button">Login</button>
+
+				<!--Sign Up form-->
+
+      <div id="signup">
+        <form id="form1">
+          <p class='text_centered'>Sign up on Politico</p>
+          <input type="text" placeholder="First Name" required>
+          <input type="text" placeholder="Last Name" required>
+          <input type="text" placeholder="Other Names">
+          <input type="email" placeholder="Email" required>
+          <input type="text" placeholder ="Phone Number">
+          <input type="password" placeholder="Password" required>
+          <input type ="password" placeholder="Confirm Password"required>
+          <br/>
+          <select id="usertype" name="userType" >
+            <option value ="" disabled selected>-- Register as --</option>
+            <option value="voter"> Voter </option>
+            <option value="politician">Politician  </option>
+          </select>
+          <input type="submit" id="signedin" value="Sign Up">
+          <p class="text_small"><a id="loginLink">Already have an account? Login</a></p>
+        </form>
+      </div>
+
+				<!--Login Form-->
+
+      <div id="login">
+        <form id="form2">
+          <p class='text_centered'>Login with Email</p>
+          <input type="email" placeholder="Email" >
+          <input type="password" placeholder="Password" >
+          <p class="text_small"><a id="resetLink">Forgot Password?</a></p>
+          <input type="submit" id="enter" value="Login">
+          <p class="text_small"><a id="signupLink">Don't have an account? Sign up</a></p>
+        </form>
+      </div>
+
+				<!--Reset Password Form-->
+
+      <div id="reset">
+        <form id="form3">
+          <p class='text_centered'>Enter your registered email address and a reset link will be sent</p>
+          <input type="email" placeholder="email" required>
+          <input type="submit"  id="reseted" value="Submit" >
+        </form>
+          <p class="text_small"><a id="backLink" href=''>Go back to Login </a></p>
+      </div>
+			</div>
+		</div>
+		<script src="./JS/index.js"></script>
+  </body>
+</html>
