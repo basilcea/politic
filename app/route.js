@@ -1,9 +1,17 @@
 import express from 'express';
 
-import partyController from './DS/controllers/party';
-import officeController from './DS/controllers/office';
+import userController from './controllers/users';
+import auth from './middleware/auth'
 
 const router = express.Router();
+//users route
+router.post('/auth/signup', userController.signup)
+
+/*
+
+//Admin route
+// make Admin
+// make candiddates
 
 // parties route
 router.post('/parties', partyController.createParty);
@@ -16,6 +24,6 @@ router.patch('/parties/:id/name', partyController.editPartyName);
 
 router.post('/offices', officeController.createOffice);
 router.get('/offices', officeController.getAllOffices);
-router.get('/offices/:id', officeController.getOffice);
+router.get('/offices/:id', officeController.getOffice);*/
 
 export default router;

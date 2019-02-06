@@ -9,7 +9,8 @@
     "lint": "eslint **/*.js --fix",
     "start": "babel-node -- app/server.js",
     "dev": "nodemon app/server.js --exec babel-node --",
-    "connect": "babel-node ./app/DB/models/dbModel"
+    "migrate": "babel-node ./app/models/dbModel",
+    "seed": "babel-node ./app/seeds/seed"
   },
   "repository": {
     "type": "git",
@@ -23,22 +24,23 @@
   },
   "homepage": "https://github.com/basilcea/politico#readme",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.3",
-    "chai": "^4.2.0",
-    "chai-http": "^4.2.1",
-    "cross-env": "^5.2.0",
-    "dotenv": "^6.2.0",
-    "express": "^4.16.4",
-    "jsonwebtoken": "^8.4.0",
-    "mocha": "^5.2.0",
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
     "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.3.1",
     "@babel/register": "^7.0.0",
-    "pg": "^7.8.0"
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "heroku-cli": "^7.0.9",
+    "jsonwebtoken": "^8.4.0",
+    "mocha": "^5.2.0",
+    "pg": "^7.8.0",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -50,6 +52,7 @@
     "babel-eslint": "^10.0.1",
     "chai-change": "^2.1.2",
     "coveralls": "^3.0.2",
+    "cross-env": "^5.2.0",
     "eslint": "^5.12.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
