@@ -1,5 +1,6 @@
-import client from '../migrate';
+import pool from '../migrate';
 const seed = async function(dbTable, dataArray){
+   const client = await pool.connect()
   try{
     const getTable = `SELECT table_name FROM information_schema.tables
     WHERE table_type='BASE TABLE'
@@ -18,6 +19,7 @@ const seed = async function(dbTable, dataArray){
           await client.query(insert)
         }console.log('seeded')
       } }
+      client.release()
   }catch(err){
     console.log(err)
   }

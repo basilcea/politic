@@ -1,4 +1,12 @@
 import pool from '../migrate';
+import seed from "../helpers/seed";
+import candidates from '../seed/candidates'
+import users from '../seed/users'
+import offices from '../seed/offices'
+import parties from '../seed/parties'
+import votes from '../seed/votes'
+import petitions from '../seed/petitions'
+
 /**
 * Delete user table
 * @async
@@ -24,7 +32,7 @@ export const dropUserTable = async function () {
 export const createUserTable = async function () {
   try {
 
-    await pool.query(`
+    const userTable = await pool.query(`
       CREATE TABLE IF NOT EXISTS users(
         id Serial PRIMARY KEY,
         firstname VARCHAR(20) not null,
@@ -35,10 +43,10 @@ export const createUserTable = async function () {
         passportUrl TEXT,
         password VARCHAR(255) UNIQUE not null,
         registerAs text not null,
-        isCandidate BOOLEAN,
         isAdmin BOOLEAN
       )`);
     console.log('User table created');
+    seed("users",users)
   } catch (err) {
     console.log(err);
   }
@@ -77,6 +85,7 @@ export const createPartyTable = async function () {
         )`
     );
     console.log('Party table created');
+     seed("parties",parties)
   } catch (err) {
     console.log(err);
   }
@@ -109,13 +118,15 @@ export const createVoteTable = async function () {
 
     await pool.query(`
       CREATE TABLE IF NOT EXISTS votes(
-        id serial PRIMARY KEY,
+        id serial unique,
         createdOn timestamp Default Current_timeStamp,
-        createdBy Integer references users(id) ON DELETE CASCADE,
-        office Integer references offices(id) On DELETE CASCADE,
-        candidate Integer references candidates(id) ON DELETE CASCADE
+        createdBy Integer references users(id) ON DELETE CASCADE not null,
+        office Integer references offices(id) On DELETE CASCADE  not null,
+        candidate Integer references candidates(id) ON DELETE CASCADE not null,
+        Constraint votes_id_pkey  PRIMARY KEY (createdBy, office)
       )`);
     console.log('Votes table created');
+    seed("votes",votes)
   } catch (err) {
     console.log(err);
   }
@@ -149,10 +160,11 @@ export const createOfficeTable = async function () {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS offices(
         id serial PRIMARY KEY,
-        type varchar(255),
-        name Varchar(255)
+        type varchar(255) not null,
+        name Varchar(255) not null
       )`);
     console.log('offices table created');
+    seed("offices",offices)
   } catch (err) {
     console.log(err);
   }
@@ -186,12 +198,14 @@ export const createCandidateTable = async function () {
 
     await pool.query(`
       CREATE TABLE IF NOT EXISTS candidates(
-        id serial PRIMARY KEY,
-        office integer references offices(id) ON DELETE CASCADE,
-        party integer references parties(id) ON DELETE CASCADE,
-        candidate integer references parties(id) ON DELETE CASCADE
+        id serial Unique,
+        office integer references offices(id) ON DELETE CASCADE not null,
+        party integer references parties(id) ON DELETE CASCADE not null,
+        candidate integer references users(id) ON DELETE CASCADE not null,
+        Constraint candidate_id_pkey PRIMARY KEY (office ,candidate)
       )`);
     console.log('candidates table created');
+    seed("candidates",candidates);
   } catch (err) {
     console.log(err);
   }
@@ -227,12 +241,13 @@ export const createPetitionTable = async function () {
       CREATE TABLE IF NOT EXISTS petitions(
         id serial PRIMARY KEY,
         createdOn timestamp Default Current_timeStamp,
-        createdBy Integer references users(id) ON DELETE CASCADE,
-        office Integer references offices(id) On DELETE CASCADE,
-        subject text ,
-        body text
+        createdBy Integer references users(id) ON DELETE CASCADE not null,
+        office Integer references offices(id) On DELETE CASCADE not null,
+        subject text not null ,
+        body text not null
       )`);
     console.log('petitions table created');
+     seed("petitions",petitions);
   } catch (err) {
     console.log(err);
   }
@@ -247,12 +262,14 @@ export const createPetitionTable = async function () {
 
 export const dropAllTables = async function () {
   try {
-    await dropUserTable();
-    await dropPartyTable();
-    await dropCandidateTable();
-    await dropVoteTable();
     await dropPetitionTable();
-    await dropOfficeTable();
+    await dropVoteTable();
+    await dropCandidateTable();
+    await dropPartyTable();
+    await dropOfficeTable()
+    await dropUserTable();
+    ;
+
     console.log('All Tables deleted');
   } catch (err) {
     console.log(err);
@@ -269,12 +286,11 @@ export const createAllTables = async function () {
   try {
     await dropAllTables();
     await createUserTable();
-    await createPartyTable();
     await createOfficeTable();
+    await createPartyTable();
     await createCandidateTable();
     await createVoteTable();
     await createPetitionTable();
-
     console.log('All Tables created');
   } catch (err) {
     console.log(err);

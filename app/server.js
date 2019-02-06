@@ -11,12 +11,15 @@ server.use(bodyParser.urlencoded({ extended: false }));
 server.use('/api/v1', router);
 
 server.get('/', function(req,res){
-  res.status(200)
-  res.json('This is the default route')
+  res.status(200).json({
+    "status":200,
+    "data":['This is the default route']
+    })
   })
 server.all('*', function(req,res){
-  res.status(404)
-  res.json({ status:404, title:"Not Found", Msg: 'Route Not Found'})
+  res.status(404).json({
+    "status":404,
+    "error": 'Route Not Found'})
   })
 
 const PORT = process.env.PORT || 3000;
