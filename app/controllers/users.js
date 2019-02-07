@@ -5,7 +5,6 @@ import "@babel/polyfill"
 /**
   * Represents a controller  class for all user specific acitvities
   * @class userController
-  * @method signup
  */
 
 class userController {
@@ -16,8 +15,7 @@ class userController {
     * @async requestPromises
     * @method signup
     * @params {object} request - The form data to be inputted
-    * @return {object} response - The status code and data to be outputted if input passes validation
-    * @return {object} response - The status code and error message to be outputted fails validation.
+    * @return {object} response - The status code and data.
     *
    */
   static async signup( req, res ) {
@@ -95,10 +93,22 @@ class userController {
         "error": 'Please enter a valid email address'
       });
     }
+    if (!req.body.phoneNumber) {
+      return res.status(412).json({
+        "status": 412,
+        "error" :'Phone Number is required'
+      });
+    }
     if(!authHelper.isValidPhone(req.body.phoneNumber)){
       return res.status(406).json({
         "status":406,
-        "error":"invalid format. Use +(234)  "
+        "error":"invalid format.Must be 11 digits. Start with 0"
+      })
+    }
+    if(/^.*\.(jpg|JPG|PNG|png)$/.test(passportUrl) ===false){
+      return res.status(406).json({
+      "status": 406,
+      "error": "Only .JPG or .PNG Accepted"
       })
     }
     if (!req.body.password) {
@@ -143,6 +153,14 @@ class userController {
       });
     }
   }
+  /**
+    * Login  a user
+    * @async requestPromises
+    * @method login
+    * @params {object} request - The form data to be inputted
+    * @return {object} response - The status code and data including login token.
+    *
+   */
   static async login( req, res ) {
   // login user similar to get user
 
@@ -194,7 +212,5 @@ class userController {
       })
     }
   }
-
-
 }
 export default userController

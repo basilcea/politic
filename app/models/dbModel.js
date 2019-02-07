@@ -39,7 +39,7 @@ export const createUserTable = async function () {
         lastname VARCHAR(20),
         othername VARCHAR(30),
         email VARCHAR(40) UNIQUE not null,
-        phoneNumber VARCHAR(11),
+        phoneNumber VARCHAR(11) not null,
         passportUrl TEXT,
         password VARCHAR(255) UNIQUE not null,
         registerAs text not null,

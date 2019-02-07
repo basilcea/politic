@@ -19,7 +19,7 @@ const authHelper  = {
         return /^\d+$/.test(number)
     },
     isValidPhone(number){
-      return /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(number)
+      return /^[0]\d{10}$/.test(number)
     },
     isValidPassword(password){
         return /(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$/.test(password)

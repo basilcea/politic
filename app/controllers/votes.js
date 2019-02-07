@@ -3,22 +3,22 @@ import authHelper  from '../helpers/auth';
 import 'dotenv';
 import "@babel/polyfill"
 
+/**
+  * Represents a controller  class for all candidate specific acitvities
+  * @class candidateController
+ */
 
 class votesController {
+/**
+    * Create  a vote
+    * @async requestPromises
+    * @method vote
+    * @return {object} response - The status code and data.
+    *
+   */
   static async vote(req,res){
-    // check if candidate exist
-    // check if voter exist for that office
-    //if not input a candidate
 
-
-    const Candidates = `Select * from candidates where id = ${req.body.candidate}`
-    const getOffice =`Select office from votes where createdby = ${req.user.id}`
-    const postVote =`INSERT INTO votes(office,candidate)
-    VALUES($1 , $2 )`
-    const values =[
-      req.body.office,
-      req.body.candidate
-    ]
+    const user = req.user.id
     try{
 
       const officeId = Number(req.body.office)
@@ -29,24 +29,25 @@ class votesController {
           "error": "office input not valid"
         })
       }
-
-      const checkOffice =await pool.query(getOffice)
+      // get all offices voted by a particular user
+      const getOffice =`Select office from votes where createdBy = $1 AND office = $2`
+      const checkOffice =await pool.query(getOffice,[user,officeId])
       if(checkOffice.rows[0]){
         return res.status(405).json({
           "status": 405,
           "error" : "You have already voted for this office"
         })
       }
-console.log('here')
       const candidateId = Number(req.body.candidate)
-
       if(!authHelper.isValidNumber(candidateId)){
         return res.status(406).json({
           "status": 406,
           "error": "candidate input not valid"
         })
       }
-      const getCandidate = await pool.query(Candidates)
+      // check that the candidates exist
+      const Candidacy = `Select * from candidates where id = $1`
+      const getCandidate = await pool.query(Candidacy , [candidateId])
       if(!getCandidate.rows[0]){
         return res.status(404).json({
           "status":404,
@@ -54,13 +55,19 @@ console.log('here')
         })
       }
 
+
+    const postVote =`INSERT INTO votes(office,candidate ,createdBy)
+    VALUES($1, $2 ,$3)`
+    const values =[officeId, candidateId , user]
+    console.log(officeId, candidateId , user)
       const posting = await pool.query(postVote, values)
+      const getVotes = await pool.query(`SELECT * from votes`)
       return res.status(201).json({
         "status" : 201,
         "data": {
-          "office":posting.rows[0].office,
-          "candidate": posting.rows[0].candidate,
-          "voter": req.user.id
+          "office":getVotes.rows[0].office,
+          "candidate": getVotes.rows[0].candidate,
+          "voter": user
         }
       })
     } catch(err){
@@ -71,10 +78,4 @@ console.log('here')
     }
   }
 }
-
-
-
-
-
-
 export default votesController

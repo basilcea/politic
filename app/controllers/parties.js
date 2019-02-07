@@ -4,19 +4,24 @@ import 'dotenv';
 import "@babel/polyfill"
 
 
-/** Class representing controllers for offices endpoints */
+/**
+  * Represents a controller  class for all candidate specific acitvities
+  * @class partyController
+ */
 class partyController {
   /**
   * Create an office
   * @param {string} - name of office
   * @param {string} - type of office
+  * @method createParty
+  * @return
   */
   static async createParty(req, res) {
     const sendParty =`INSERT INTO parties (name, AKA ,hqAddress, logoUrl)
     VALUES($1,$2 ,$3 ,$4)`
     const selectParty=`Select * from parties`
     const values =[req.body.name, req.body.AKA ,req.body.hqAddress, req.body.logoUrl]
-     const {id, name, AKA, hqAddress, logoUrl} = req.body;
+    const {id, name, AKA, hqAddress, logoUrl} = req.body;
 
     try{
       if(req.user.isAdmin===false){
@@ -31,16 +36,40 @@ class partyController {
           "error": 'name of party is required'
        });
       }
+    if(/^[a-zA-Z_]*$/.test(name)===false){
+      return res.status(406).json({
+        "status": 406,
+        "error": "Not accepted. Name must contain only letters and underscores"
+      })
+    }
      if (!hqAddress) {
       return res.status(412).json({
         "status": 412,
         "error": 'Address is required'
         });
       }
+      if(/^[A-Za-z0-9 ]+$/.test(hqAddress)===false){
+      return res.status(406).json({
+        "status": 406,
+        "error": "Not accepted. Name must contain only letters, Numbers and spaces,"
+      })
+    }
+      if(!authHelper.isValidName(req.body.AKA)){
+        return res.status(406).json({
+          "status":406,
+          "error": "Must be letters only"
+        })
+      }
       if(!logoUrl){
         return res.status(412).json({
           "status":412,
           "error": 'Logo url is required'
+        })
+      }
+      if(/^.*\.(jpg|JPG|PNG|png)$/.test(logoUrl) ===false){
+        return res.status(406).json({
+        "status": 406,
+        "error": "Only .JPG or .PNG Accepted"
         })
       }
        /**
@@ -94,14 +123,20 @@ class partyController {
   }
 
    /**
-  * Get an office
-  * @param {integer} - id of the office
-  * @return {object} -An office with the id
+  * Get a party
+  * @param {integer} - id of the party
+  * @return {object} - The party that has the specified id
   */
 
   static async getParty(req, res) {
     // force all id string to integer
-    const id = parseInt(req.params.id, 10);
+    const id = Number(req.params.id);
+     if(!authHelper.isValidNumber(id)){
+      return res.status(406).json({
+        "status":406,
+        "error" : "Input not valid. Value must be a number"
+      })
+    }
     const partyById =`SELECT * from parties where id =$1`
     try{
       const {rows} = await pool.query(partyById , [req.params.id])
@@ -123,8 +158,20 @@ class partyController {
     }
 
   }
+
+   /**
+  * Patch a partyname
+  * @param {integer} - id of the party
+  * @return {object} - The party that has the specified id with new name
+  */
   static async patchPartyName(req,res){
-    const id  = parseInt(req.params.id ,10);
+    const id  = Number(req.params.id);
+    if(!authHelper.isValidNumber(id)){
+      return res.status(406).json({
+        "status":406,
+        "error" : "Input not valid. Value must be a number"
+      })
+    }
     const partyName =`SELECT name from parties where id=$1`
     const {rows} =  await pool.query(partyName, [req.params.id])
     const updateName =`Update parties
@@ -156,8 +203,19 @@ class partyController {
       })
     }
   }
+   /**
+  * Delete a party
+  * @param {integer} - id of the party
+  * @return {object} - The satus code and message to show delte action completed
+  */
   static async deleteParty(req, res){
-    const id = parseInt( req.params.id ,10)
+    const id = Number( req.params.id)
+    if(!authHelper.isValidNumber(id)){
+      return res.status(406).json({
+        "status":406,
+        "error" : "Input not valid. Value must be a number"
+      })
+    }
     try{
       if(req.user.isAdmin ===false){
         return res.status(401).json({

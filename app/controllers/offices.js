@@ -3,14 +3,19 @@ import authHelper  from '../helpers/auth';
 import 'dotenv';
 import "@babel/polyfill"
 
-
-/** Class representing controllers for offices endpoints */
+/**
+  * Represents a controller  class for all office endpoints
+  * @class officeController
+ */
 class officeController {
   /**
-  * Create an office
-  * @param {string} - name of office
-  * @param {string} - type of office
-  */
+    * Create  a user
+    * @async requestPromises
+    * @method signup
+    * @params {object} request - The form data to be inputted
+    * @return {object} response - The status code and data.
+    *
+   */
   static async createOffice(req, res) {
     const {id, type, name} = req.body
     const sendoffice =`INSERT INTO offices (type ,name)
@@ -56,7 +61,7 @@ class officeController {
     */
       await pool.query(sendoffice, values)
       const AllOffices =await pool.query(selectOffice)
-      const createdOffice = AllOffices.rows[AllOffices.rowCount -1]
+      const createdOffice = AllOffices.rows[AllOffices.rowCount-1]
       return res.status(201).json({
         "status":201,
         "data":createdOffice
@@ -69,9 +74,6 @@ class officeController {
       })
     }
   }
-
-
-
 
    /**
   * Get all offices
@@ -107,7 +109,15 @@ class officeController {
 
   static async getOffice(req, res) {
     // force all id string to integer
-    const id = parseInt(req.params.id, 10);
+    const id = Number(req.params.id);
+
+    // validate that string is a number
+    if(!authHelper.isValidNumber(id)){
+      return res.status(406).json({
+        "status":406,
+        "error" : "Input not valid. Value must be a number"
+      })
+    }
     const officeById =`SELECT * from offices where id =$1`
     try{
       const {rows} = await pool.query(officeById , [req.params.id])
@@ -128,6 +138,37 @@ class officeController {
       })
     }
 
+  }
+
+  /**
+  * Get office result
+  * @param {integer} - id of the office
+  * @return {object} -All  office with the id
+  */
+  static async getOfficeResults(req, res){
+    const officeId = Number(req.params.id)
+    // check if input string is valid.
+    if(!authHelper.isValidNumber(officeId)){
+      return res.status(406).json({
+        "status":406,
+        "error" : "Input not valid. Value must be a number"
+      })
+    }
+    const selectResult =`SELECT office, candidate , count(candidate) result  from votes
+    where office = $1  Group BY (candidate ,office) `
+    try{
+      const getResult = await pool.query(selectResult ,[req.params.id])
+      return res.status(200).json({
+        "status":200,
+        "data": getResult.rows
+      })
+
+    }catch(err){
+      return res.status(501).json({
+        "status": 501,
+        "error":err.toString()
+      })
+    }
   }
 }
 export default officeController

@@ -68,5 +68,8 @@
   },
   "directories": {
     "test": "test"
+  },
+  "engines":{
+    "node": "11.x"
   }
 }
