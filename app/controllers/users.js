@@ -29,7 +29,7 @@ class userController {
     const loginUser = `SELECT * FROM users WHERE email = $1`;
 
     // hashpassword from helper class
-    const hashPassword = authHelper.hashPassword(req.body.password);
+
     const getUser =`SELECT firstname from users`;
     const users= await pool.query(getUser);
     const getEmail=`SELECT email from users`;
@@ -117,8 +117,8 @@ class userController {
         "error": 'Password is required'
       });
     }
-
-    if (!authHelper .isValidPassword(req.body.password)) {
+    const hashPassword = authHelper.hashPassword(req.body.password);
+    if (!authHelper.isValidPassword(req.body.password)) {
       return res.status(400).json({
         "status":400,
         "error": 'Please enter a valid password',
