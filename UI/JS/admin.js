@@ -111,12 +111,6 @@ uploadButton.addEventListener('click', () => {
 
 // wheh file upload button is clicked b
 realInput.addEventListener('change', () => {
-  // change the value of the uplaoaded file by spliting it
-  const name = realInput.value.split(/\\|\//).pop();
-  // truncate it if is more than 12digits
-  const truncated = name.length > 12 ? name.substr(name.length - 12) : name;
-  //
-  fileInfo.innerHTML = truncated;
   // read the value of the uploaded document.
   const reader = new FileReader();
   reader.onload = () => {
