@@ -44,7 +44,7 @@ class userController {
         req.body.passportURL,
         hashPassword,
         req.body.registerAs,
-        false,
+        req.body.isAdmin,
       ];
       /** check if firstname is given */
 
