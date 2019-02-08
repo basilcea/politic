@@ -29,10 +29,16 @@ const authHelper  = {
       return /^[a-zA-Z]+$/.test(name)
     },
     isUniqueEmail(columnValue,query){
-        let allEmails = query.rows.map (a=>a.email)
-        if(query === undefined || allEmails.includes(columnValue)===false){
+        let allValue = query.rows.map (a=>a.email)
+        if(query === undefined || allValue.includes(columnValue)===false){
             return null
-        }
+      }
+    },
+     isUniquePhone(columnValue,query){
+        let allValue = query.rows.map (a=>a.phonenumber)
+        if(query === undefined || allValue.includes(columnValue)===false){
+            return null
+      }
     },
     generateToken(id,isAdmin) {
         const token = jwt.sign(

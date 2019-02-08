@@ -138,6 +138,8 @@ class userController {
         'error':'Register as field is required'
       })
     }
+    req.body.isAdmin.trim()
+
     /** try and catch async block */
     try {
       await pool.query(createUser, values);
