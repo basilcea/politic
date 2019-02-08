@@ -6,6 +6,12 @@ body{
   margin:0;
   padding:0;
 }
+a{
+  cursor: pointer;
+}
+a:hover{
+  color:#d92121
+}
 table{
   margin-top:3%;
   border-collapse:collapse;
