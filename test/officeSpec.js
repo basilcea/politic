@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app/server';
@@ -15,7 +16,7 @@ chai.use(chaiHttp);
 */
 const testOffice1 = {
   type: 'officetype',
-  name: 'officeName'
+  name: 'officeName',
 
 };
 /**
@@ -29,19 +30,19 @@ const testOffice1 = {
 describe('POST /offices', () => {
   const testOffice2 = {
     type: '',
-    name: 'officeName'
+    name: 'officeName',
   };
   const testOffice3 = {
     type: 'federal',
-    name: ''
+    name: '',
   };
   const testOffice4 = {
     type: 1,
-    name: ''
+    name: '',
   };
-  const testOffice5= {
+  const testOffice5 = {
     type: 'federal',
-    name: 1
+    name: 1,
   };
   it('should fail if office has no type', (done) => {
     chai.request(app)
@@ -61,7 +62,7 @@ describe('POST /offices', () => {
       .post('/api/v1/offices')
       .send(testOffice4)
       .end((err, res) => {
-        expect(/^[a-zA-Z]+$/.test(testOffice4.name)).to.be.false
+        expect(/^[a-zA-Z]+$/.test(testOffice4.name)).to.be.false;
         expect(res).to.have.status(406);
         expect(res.body).to.have.property('status');
         expect(res.body.status).to.equal(406);
@@ -90,7 +91,7 @@ describe('POST /offices', () => {
       .post('/api/v1/offices')
       .send(testOffice5)
       .end((err, res) => {
-        expect(/^[a-zA-Z]+$/.test(testOffice5.name)).to.be.false
+        expect(/^[a-zA-Z]+$/.test(testOffice5.name)).to.be.false;
         expect(res).to.have.status(406);
         expect(res.body).to.have.property('status');
         expect(res.body.status).to.equal(406);
@@ -149,7 +150,7 @@ describe('Get /offices', () => {
         if ((res.body.data) !== null) {
           expect(res.body).to.have.property('data');
           expect(res.body.data).to.be.an('array');
-          expect(res.body.data[0]).to.have.keys('id', 'type', 'name',);
+          expect(res.body.data[0]).to.have.keys('id', 'type', 'name');
         }
         done();
       });
@@ -246,5 +247,3 @@ describe('Get /offices/<office-id>', () => {
       });
   });
 });
-
-

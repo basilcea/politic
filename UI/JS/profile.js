@@ -1,3 +1,6 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-plusplus */
+/* eslint-disable no-undef */
 
 /** Get the various divs */
 const run = document.getElementById('run');
@@ -48,7 +51,6 @@ icon.onclick = () => {
 };
 /** Functionality for upload and preview image */
 const uploadButton = document.querySelector('.button_btn');
-const fileInfo = document.querySelector('.button_upload');
 const realInput = document.getElementById('realInput');
 
 uploadButton.addEventListener('click', () => {
@@ -67,28 +69,28 @@ const info = [
   {
     Candidate: 'Prosper Umeytinwa-PDP',
     Type: 'Federal',
-    Office: 'President-Nigeria'
+    Office: 'President-Nigeria',
   },
   {
     Candidate: 'Chris Nwanba-APC',
     Type: 'State',
-    Office: 'Governor-Anambara'
+    Office: 'Governor-Anambara',
   },
   {
     Candidate: 'Celestine Omin-PDP',
     Type: 'Legislative',
-    Office: 'Senator-Anambara-Central'
+    Office: 'Senator-Anambara-Central',
   },
   {
     Candidate: 'Ire Aderikon-FDP',
     Type: 'Legislative',
-    Office: 'Representative-Anambara-Federal-Constituency-IV'
+    Office: 'Representative-Anambara-Federal-Constituency-IV',
   },
   {
     Candidate: 'Adaku Nyom-KOWA',
     Type: 'Local Government',
-    Office: 'Chairman-Nnewi-North'
-  }
+    Office: 'Chairman-Nnewi-North',
+  },
 ];
 
 /** Input seed database into table */

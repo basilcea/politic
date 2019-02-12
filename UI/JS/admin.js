@@ -1,3 +1,5 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-undef */
 /** Get divs by their office */
 const createParty = document.getElementById('create');
 const editParty = document.getElementById('edit');
@@ -101,7 +103,6 @@ for (let i = 0; i < par.length; i++) {
 
 /** image upload and preview */
 const uploadButton = document.querySelector('.button_btn');
-const fileInfo = document.querySelector('.button_upload');
 const realInput = document.getElementById('realInput');
 
 uploadButton.addEventListener('click', () => {
@@ -117,5 +118,6 @@ realInput.addEventListener('change', () => {
     const previewed = document.getElementById('uploaded');
     previewed.src = reader.result;
   };
+  // eslint-disable-next-line no-restricted-globals
   reader.readAsDataURL(event.target.files[0]);
 });

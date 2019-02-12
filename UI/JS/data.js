@@ -1,13 +1,16 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable prefer-destructuring */
+/* eslint-disable no-undef */
 /** seeD data structure */
 // list of political offices by their types
 const offices = [
   {
     Type: ['--Select Type of Office--'],
-    Office: ['-- Select Office --']
+    Office: ['-- Select Office --'],
   },
   {
     Type: ['Federal'],
-    Office: ['President-Nigeria']
+    Office: ['President-Nigeria'],
   },
   {
     Type: ['State'],
@@ -46,8 +49,8 @@ const offices = [
       'Governor-Sokoto',
       'Governor-Taraba',
       'Governor-Yobe',
-      'Governor-Zamfara'
-    ]
+      'Governor-Zamfara',
+    ],
   },
   {
     Type: ['Legislative'],
@@ -522,8 +525,8 @@ const offices = [
       'Representative-Zamfara-Federal-Constituency-VII',
       'Representative-Zamfara-Federal-Constituency-VIII',
       'Representative-Zamfara-Federal-Constituency-IX',
-      'Representative-Zamfara-Federal-Constituency-X'
-    ]
+      'Representative-Zamfara-Federal-Constituency-X',
+    ],
   },
   {
     Type: ['Local Government'],
@@ -1301,9 +1304,9 @@ const offices = [
       'Chairman-Shinkafi',
       'Chairman-Talata-Mafara',
       'Chairman-Chafe',
-      'Chairman-Zurmi'
-    ]
-  }
+      'Chairman-Zurmi',
+    ],
+  },
 ];
 
 const Candidacy = [
@@ -1318,8 +1321,8 @@ const Candidacy = [
       'Adedeji Adeleke-LP',
       'Prince Julius Adewale-UDP',
       'Adelusi Adeluyi-KOWA',
-      'Solomon Olamilekan Adeola-AP'
-    ]
+      'Solomon Olamilekan Adeola-AP',
+    ],
   },
   {
     Office: 'Governor-Abia',
@@ -1355,8 +1358,8 @@ const Candidacy = [
       'Janet Nwadiogo Mokelu-APDA',
       'Tony Momoh-AP',
       'Patrick Abba Moro-AAP',
-      'Najaatu Bala Muhammad-ADC'
-    ]
+      'Najaatu Bala Muhammad-ADC',
+    ],
   },
   {
     Office: 'Senator-Abia-North',
@@ -1392,8 +1395,8 @@ const Candidacy = [
       'Janet Nwadiogo Mokelu-APDA',
       'Tony Momoh-AP',
       'Patrick Abba Moro-AAP',
-      'Najaatu Bala Muhammad-ADC'
-    ]
+      'Najaatu Bala Muhammad-ADC',
+    ],
   },
   {
     Office: 'Chairman-Aba-North',
@@ -1429,9 +1432,9 @@ const Candidacy = [
       'Janet Nwadiogo Mokelu-APDA',
       'Tony Momoh-AP',
       'Patrick Abba Moro-AAP',
-      'Najaatu Bala Muhammad-ADC'
-    ]
-  }
+      'Najaatu Bala Muhammad-ADC',
+    ],
+  },
 ];
 const Parties = [
   '-- Select Party--',
@@ -1464,13 +1467,14 @@ const Parties = [
   'Social Democratic Party (SDP)',
   'United Progressive Party (UPP)',
   '	United Democratic Party (UDP)',
-  'Unity Party of Nigeria (UPN)'
+  'Unity Party of Nigeria (UPN)',
 ];
 
 /** Create options for datalist or select list with the first option disabled, serving as placeholder */
 
 const createOptions = (element, values) => {
   const options = document.createElement('option');
+  // eslint-disable-next-line prefer-destructuring
   options.value = values[0];
   options.text = values[0];
   element.add(options);

@@ -18,7 +18,7 @@ const testParty1 = {
   name: 'partyName',
   AKA: 'pN',
   hqAddress: 'partyAddress',
-  logoUrl: 'partyAddress'
+  logoUrl: 'partyAddress',
 };
 
 /**
@@ -34,19 +34,19 @@ describe('POST /parties', () => {
     name: '',
     AKA: 'pN',
     hqAddress: '',
-    logoUrl: 'urlAddress'
+    logoUrl: 'urlAddress',
   };
   const testParty3 = {
     name: 'partyName',
     AKA: 'pN',
     hqAddress: '',
-    logoUrl: 'urlAddress'
+    logoUrl: 'urlAddress',
   };
   const testParty4 = {
     name: '1',
     AKA: 'pN',
     hqAddress: 'partyaddress',
-    logoUrl: 'urlAddress'
+    logoUrl: 'urlAddress',
   };
   it('should fail if party has no name', (done) => {
     chai
@@ -70,7 +70,7 @@ describe('POST /parties', () => {
       .post('/api/v1/parties')
       .send(testParty4)
       .end((err, res) => {
-        expect(/^[a-zA-Z]+$/.test(testParty4.name)).to.be.false
+        expect(/^[a-zA-Z]+$/.test(testParty4.name)).to.be.false;
         expect(res).to.have.status(406);
         expect(res.body).to.have.property('status');
         expect(res.body.status).to.equal(406);
@@ -121,21 +121,20 @@ describe('POST /parties', () => {
         done();
       });
   });
-  it("should have fail if there is no party", function(done){
+  it('should have fail if there is no party', (done) => {
     chai.request(app)
-    .get('/api/v1/parties/1')
-    .end(function(err,res){
-      if((res.body.data)===null){
-        expect(res.body).to.have.status(404)
-        expect(res.body).to.have.property('status')
-        expect(res.body.status).to.equal(404)
-        expect(res.body).to.have.property('error').which.is.a('string')
-      }
-      done()
-    });
+      .get('/api/v1/parties/1')
+      .end((err, res) => {
+        if ((res.body.data) === null) {
+          expect(res.body).to.have.status(404);
+          expect(res.body).to.have.property('status');
+          expect(res.body.status).to.equal(404);
+          expect(res.body).to.have.property('error').which.is.a('string');
+        }
+        done();
+      });
   });
-
-})
+});
 
 /**
 * test for getting all parties
@@ -289,10 +288,10 @@ describe('Get /parties/<party-id>', () => {
 */
 describe('Patch /parties/<party-id>/name', () => {
   const testParty4 = {
-    name: 'newPartyName'
+    name: 'newPartyName',
   };
   const testParty5 = {
-    name: 1
+    name: 1,
   };
   it('should fail if party name is not an alphabet', (done) => {
     chai
@@ -300,7 +299,7 @@ describe('Patch /parties/<party-id>/name', () => {
       .post('/api/v1/parties')
       .send(testParty5)
       .end((err, res) => {
-        expect(/^[a-zA-Z]+$/.test(testParty5.name)).to.be.false
+        expect(/^[a-zA-Z]+$/.test(testParty5.name)).to.be.false;
         expect(res).to.have.status(406);
         expect(res.body).to.have.property('status');
         expect(res.body.status).to.equal(406);
@@ -350,7 +349,7 @@ describe('Patch /parties/<party-id>/name', () => {
       .request(app)
       .patch('/api/v1/parties/10/name')
       .end((err, res) => {
-        console.log(res.body.data)
+        console.log(res.body.data);
         if (res.body.data === undefined) {
           expect(res.body).to.have.status(404);
           expect(res.body).to.have.property('status');
@@ -412,7 +411,3 @@ describe('Delete /parties/<party-id>', () => {
       });
   });
 });
-
-
-
-

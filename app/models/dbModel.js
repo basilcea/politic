@@ -1,11 +1,12 @@
+/* eslint-disable func-names */
 import pool from '../migrate';
-import seed from "../helpers/seed";
-import candidates from '../seed/candidates'
-import users from '../seed/users'
-import offices from '../seed/offices'
-import parties from '../seed/parties'
-import votes from '../seed/votes'
-import petitions from '../seed/petitions'
+import seed from '../helpers/seed';
+import candidates from '../seed/candidates';
+import users from '../seed/users';
+import offices from '../seed/offices';
+import parties from '../seed/parties';
+import votes from '../seed/votes';
+import petitions from '../seed/petitions';
 
 /**
 * Delete user table
@@ -15,7 +16,6 @@ import petitions from '../seed/petitions'
 */
 export const dropUserTable = async function () {
   try {
-
     await pool.query('DROP TABLE IF EXISTS users CASCADE');
     console.log('User table deleted');
   } catch (err) {
@@ -29,10 +29,10 @@ export const dropUserTable = async function () {
 * @return {Promise<string>} user table created
 */
 
+// eslint-disable-next-line func-names
 export const createUserTable = async function () {
   try {
-
-    const userTable = await pool.query(`
+    await pool.query(`
       CREATE TABLE IF NOT EXISTS users(
         id Serial PRIMARY KEY,
         firstname VARCHAR(20) not null,
@@ -46,7 +46,7 @@ export const createUserTable = async function () {
         isAdmin BOOLEAN
       )`);
     console.log('User table created');
-    seed("users",users)
+    seed('users', users);
   } catch (err) {
     console.log(err);
   }
@@ -59,7 +59,6 @@ export const createUserTable = async function () {
 */
 export const dropPartyTable = async function () {
   try {
-
     await pool.query('DROP TABLE IF EXISTS parties CASCADE');
     console.log('party table deleted');
   } catch (err) {
@@ -74,7 +73,6 @@ export const dropPartyTable = async function () {
 */
 export const createPartyTable = async function () {
   try {
-
     await pool.query(
       `CREATE TABLE IF NOT EXISTS parties(
           id Serial PRIMARY KEY,
@@ -82,10 +80,10 @@ export const createPartyTable = async function () {
           AKA VARCHAR(50),
           hqAddress VARCHAR(400) not null,
           logoUrl TEXT not null
-        )`
+        )`,
     );
     console.log('Party table created');
-     seed("parties",parties)
+    seed('parties', parties);
   } catch (err) {
     console.log(err);
   }
@@ -98,7 +96,6 @@ export const createPartyTable = async function () {
 */
 export const dropVoteTable = async function () {
   try {
-
     await pool.query('DROP TABLE IF EXISTS votes CASCADE');
     console.log('votes table deleted');
   } catch (err) {
@@ -115,7 +112,6 @@ export const dropVoteTable = async function () {
 
 export const createVoteTable = async function () {
   try {
-
     await pool.query(`
       CREATE TABLE IF NOT EXISTS votes(
         id serial unique,
@@ -126,7 +122,7 @@ export const createVoteTable = async function () {
         Constraint votes_id_pkey  PRIMARY KEY (createdBy, office)
       )`);
     console.log('Votes table created');
-    seed("votes",votes)
+    seed('votes', votes);
   } catch (err) {
     console.log(err);
   }
@@ -140,7 +136,6 @@ export const createVoteTable = async function () {
 
 export const dropOfficeTable = async function () {
   try {
-
     await pool.query('DROP TABLE IF EXISTS offices CASCADE');
     console.log('offices table deleted');
   } catch (err) {
@@ -156,7 +151,6 @@ export const dropOfficeTable = async function () {
 
 export const createOfficeTable = async function () {
   try {
-
     await pool.query(`
       CREATE TABLE IF NOT EXISTS offices(
         id serial PRIMARY KEY,
@@ -164,7 +158,7 @@ export const createOfficeTable = async function () {
         name Varchar(255) not null
       )`);
     console.log('offices table created');
-    seed("offices",offices)
+    seed('offices', offices);
   } catch (err) {
     console.log(err);
   }
@@ -179,7 +173,6 @@ export const createOfficeTable = async function () {
 
 export const dropCandidateTable = async function () {
   try {
-
     await pool.query('DROP TABLE IF EXISTS candidates CASCADE');
     console.log('candidates table deleted');
   } catch (err) {
@@ -195,7 +188,6 @@ export const dropCandidateTable = async function () {
 */
 export const createCandidateTable = async function () {
   try {
-
     await pool.query(`
       CREATE TABLE IF NOT EXISTS candidates(
         id serial Unique,
@@ -205,7 +197,7 @@ export const createCandidateTable = async function () {
         Constraint candidate_id_pkey PRIMARY KEY (office ,candidate)
       )`);
     console.log('candidates table created');
-    seed("candidates",candidates);
+    seed('candidates', candidates);
   } catch (err) {
     console.log(err);
   }
@@ -220,7 +212,6 @@ export const createCandidateTable = async function () {
 
 export const dropPetitionTable = async function () {
   try {
-
     await pool.query('DROP TABLE IF EXISTS petitions');
     console.log('petitions table deleted');
   } catch (err) {
@@ -236,7 +227,6 @@ export const dropPetitionTable = async function () {
 */
 export const createPetitionTable = async function () {
   try {
-
     await pool.query(`
       CREATE TABLE IF NOT EXISTS petitions(
         id serial PRIMARY KEY,
@@ -247,7 +237,7 @@ export const createPetitionTable = async function () {
         body text not null
       )`);
     console.log('petitions table created');
-     seed("petitions",petitions);
+    seed('petitions', petitions);
   } catch (err) {
     console.log(err);
   }
@@ -266,9 +256,9 @@ export const dropAllTables = async function () {
     await dropVoteTable();
     await dropCandidateTable();
     await dropPartyTable();
-    await dropOfficeTable()
+    await dropOfficeTable();
     await dropUserTable();
-    ;
+
 
     console.log('All Tables deleted');
   } catch (err) {

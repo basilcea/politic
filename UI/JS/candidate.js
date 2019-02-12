@@ -1,3 +1,5 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-undef */
 /** Get Divs by their Id */
 const run = document.getElementById('run');
 const petition = document.getElementById('petition');

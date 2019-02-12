@@ -1,3 +1,7 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-plusplus */
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-undef */
 /** Get Divs by their Id */
 const login = document.getElementById('login');
 const logon = document.getElementById('log');
