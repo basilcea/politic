@@ -83,8 +83,9 @@ tr:hover{
   background-color:#28495b
 }
 .layout_header1{
-  grid-area:2/1/3/3;
-  padding: 5vh 5vw;
+  grid-area:1/1/2/3;
+  padding: 2vw 5vw;
+  padding-bottom: 4vw;
 }
 .layout_nav{
 	grid-area:2/3/3/6;
@@ -118,6 +119,13 @@ tr:hover{
 .layout_td{
 	width:30%;
 }
+.layout_p{
+  padding:0% 20%;
+  margin:0;
+  font-size:20px;
+  color:white;
+}
+
 @media screen and (max-width: 600px){
   .layout_party{
     grid-area:4/1/5/7;
@@ -126,6 +134,9 @@ tr:hover{
   .layout_smallNav{
     background-color: #28495b;
     margin:0;
+  }
+  .layout_fix{
+    height:5vw;
   }
   .layout_vote{
     grid-area:5/1/6/7;
@@ -141,7 +152,7 @@ tr:hover{
   }
   .layout_header1{
     grid-area:2/1/3/7;
-    margin:0;
+    margin-bottom:5%;
     height:5vh;
     float:left;
     display:block;

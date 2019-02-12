@@ -11,9 +11,8 @@ cache:
 env:
   global:
     - CC_TEST_REPORTER_ID=05a0eb4ea8fb6257ff0cb1a2d9fb472040683937cd84e4c61dddfff8199bf8c6
-    - PGPORT=5433
 before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -c 'create database politico_test;' -U postgres
   - npm install -g nyc
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
