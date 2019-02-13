@@ -27,10 +27,9 @@
 	padding-left:3%;
 	padding-right:0;
 	outline:0;
-	min-height:70vh ;
 	margin:5% 1%;
-	background-color:grey;
-	opacity:0.7;
+	background-color:lightslategray;
+	
 }
 @media screen and (max-width:600px){
   .card_login , .card_party{

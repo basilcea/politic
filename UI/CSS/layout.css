@@ -51,25 +51,29 @@ tr:hover{
 }
 .layout_left1{
 	float:left;
-	width:25%;
+	width:20%;
 	left:0%;
 }
 .layout_left2{
 	float:left;
-	left:25%;
-	width:25%;
+	left:20%;
+	width:20%;
 }
 .layout_left3{
 	float:left;
-	left:50%;
-	width:25%;
+	left:40%;
+	width:20%;
 }
 .layout_left4{
 	float:left;
-	left:75%;
-	width:25%;
+	left:60%;
+	width:20%;
 }
-
+.layout_left5{
+	float:left;
+	left:80%;
+	width:20%;
+}
 .layout_block{
 	display:block;
 }
@@ -79,7 +83,7 @@ tr:hover{
 }
 .layout_header{
   grid-area:2/1/3/3;
-  padding: 5vh 5vw;
+  padding: 5vh 4vw;
   background-color:#28495b
 }
 .layout_header1{
@@ -88,7 +92,7 @@ tr:hover{
   padding-bottom: 4vw;
 }
 .layout_nav{
-	grid-area:2/3/3/6;
+	grid-area:2/3/3/7;
 	background-color:#28495b;
 }
 .layout_navVert{
@@ -99,8 +103,8 @@ tr:hover{
 	grid-area: 3/2/4/6;
 }
 .layout_party{
-	grid-area:4/1/5/5;
-	margin:5%;
+	grid-area:5/1/6/7;
+	margin:3%;
 }
 .layout_vote{
 	grid-area:4/5/5/7;
@@ -115,6 +119,10 @@ tr:hover{
 	border-bottom:2px solid grey;
 	text-align:center;
 
+}
+.layout_toast{
+  grid-area:3/1/4/7;
+  float:right;
 }
 .layout_td{
 	width:30%;
