@@ -3,33 +3,169 @@
 /* eslint-disable no-undef */
 
 /** Get the various divs */
-const run = document.getElementById('run');
-const petition = document.getElementById('petition');
+const viewProfile = document.getElementById('view');
+const editProfile = document.getElementById('edit');
+const voteActivity = document.getElementById('activity');
+const deleteProfile = document.getElementById('delete');
+const changePassword = document.getElementById('change');
 
-/** Get the  the run and petition buttons */
+/** Get the buttons */
 const buttons = document.querySelectorAll('button');
-const runButton = buttons[0];
-const petitionButton = buttons[1];
+const Button0 = buttons[0];
+const Button1 = buttons[1];
+const Button2 = buttons[2];
+const Button3 = buttons[3];
+const Button4 = buttons[4];
+const Button5 = buttons[5];
+const Button6 = buttons[6];
+const Button7 = buttons[7];
+const Button8 = buttons[8];
+const Button9 = buttons[9];
 
-/** Style the run and petition buttons by attaching */
-runButton.className = 'button_active3';
-petitionButton.className = 'button_login3';
-petition.className = 'layout_none';
+/** Style buttons by */
+Button0.className = 'button_active3';
+Button1.className = 'button_login3';
+Button2.className = 'button_login3';
+Button3.className = 'button_login3';
+Button4.className = 'button_login3';
+Button5.className = 'button_active3';
+Button6.className = 'button_login3';
+Button7.className = 'button_login3';
+Button8.className = 'button_login3';
+Button9.className = 'button_login3';
+editProfile.className = 'layout_none';
+voteActivity.className = 'layout_none';
+deleteProfile.className = 'layout_none';
+changePassword.className = 'layout_none';
 
-/** When run button is clicked it should make return only run div and makes changes to the button */
-runButton.onclick = () => {
-  runButton.className = 'button_active3';
-  petitionButton.className = 'button_login3';
-  run.className = 'layout_block';
-  petition.className = 'layout_none';
+Button0.onclick = () => {
+  Button0.className = 'button_active3';
+  Button1.className = 'button_login3';
+  Button2.className = 'button_login3';
+  Button3.className = 'button_login3';
+  Button4.className = 'button_login3';
+  viewProfile.className = 'layout_block';
+  editProfile.className = 'layout_none';
+  voteActivity.className = 'layout_none';
+  deleteProfile.className = 'layout_none';
+  changePassword.className = 'layout_none';
 };
-/** When petition button is clicked  */
-petitionButton.onclick = () => {
-  petitionButton.className = 'button_active3';
-  runButton.className = 'button_login3';
-  run.className = 'layout_none';
-  petition.className = 'layout_block';
+
+Button1.onclick = () => {
+  Button0.className = 'button_login3';
+  Button1.className = 'button_active3';
+  Button2.className = 'button_login3';
+  Button3.className = 'button_login3';
+  Button4.className = 'button_login3';
+  viewProfile.className = 'layout_none';
+  editProfile.className = 'layout_block';
+  voteActivity.className = 'layout_none';
+  deleteProfile.className = 'layout_none';
+  changePassword.className = 'layout_none';
 };
+
+Button2.onclick = () => {
+  Button0.className = 'button_login3';
+  Button1.className = 'button_login3';
+  Button2.className = 'button_active3';
+  Button3.className = 'button_login3';
+  Button4.className = 'button_login3';
+  viewProfile.className = 'layout_none';
+  editProfile.className = 'layout_none';
+  voteActivity.className = 'layout_block';
+  deleteProfile.className = 'layout_none';
+  changePassword.className = 'layout_none';
+};
+
+Button3.onclick = () => {
+  Button0.className = 'button_login3';
+  Button1.className = 'button_login3';
+  Button2.className = 'button_login3';
+  Button3.className = 'button_active3';
+  Button4.className = 'button_login3';
+  viewProfile.className = 'layout_none';
+  editProfile.className = 'layout_none';
+  voteActivity.className = 'layout_none';
+  deleteProfile.className = 'layout_none';
+  changePassword.className = 'layout_block';
+};
+Button4.onclick = () => {
+  Button0.className = 'button_login3';
+  Button1.className = 'button_login3';
+  Button2.className = 'button_login3';
+  Button3.className = 'button_login3';
+  Button4.className = 'button_active3';
+  viewProfile.className = 'layout_none';
+  editProfile.className = 'layout_none';
+  voteActivity.className = 'layout_none';
+  deleteProfile.className = 'layout_block';
+  changePassword.className = 'layout_none';
+};
+
+Button5.onclick = () => {
+  Button5.className = 'button_active3';
+  Button6.className = 'button_login3';
+  Button7.className = 'button_login3';
+  Button8.className = 'button_login3';
+  Button9.className = 'button_login3';
+  viewProfile.className = 'layout_block';
+  editProfile.className = 'layout_none';
+  voteActivity.className = 'layout_none';
+  deleteProfile.className = 'layout_none';
+  changePassword.className = 'layout_none';
+};
+
+Button6.onclick = () => {
+  Button5.className = 'button_login3';
+  Button6.className = 'button_active3';
+  Button7.className = 'button_login3';
+  Button8.className = 'button_login3';
+  Button9.className = 'button_login3';
+  viewProfile.className = 'layout_none';
+  editProfile.className = 'layout_block';
+  voteActivity.className = 'layout_none';
+  deleteProfile.className = 'layout_none';
+  changePassword.className = 'layout_none';
+};
+
+Button7.onclick = () => {
+  Button5.className = 'button_login3';
+  Button6.className = 'button_login3';
+  Button7.className = 'button_active3';
+  Button8.className = 'button_login3';
+  Button9.className = 'button_login3';
+  viewProfile.className = 'layout_none';
+  editProfile.className = 'layout_none';
+  voteActivity.className = 'layout_block';
+  deleteProfile.className = 'layout_none';
+  changePassword.className = 'layout_none';
+};
+
+Button8.onclick = () => {
+  Button5.className = 'button_login3';
+  Button6.className = 'button_login3';
+  Button7.className = 'button_login3';
+  Button8.className = 'button_active3';
+  Button9.className = 'button_login3';
+  viewProfile.className = 'layout_none';
+  editProfile.className = 'layout_none';
+  voteActivity.className = 'layout_none';
+  deleteProfile.className = 'layout_none';
+  changePassword.className = 'layout_block';
+};
+Button9.onclick = () => {
+  Button5.className = 'button_login3';
+  Button6.className = 'button_login3';
+  Button7.className = 'button_login3';
+  Button8.className = 'button_login3';
+  Button9.className = 'button_active3';
+  viewProfile.className = 'layout_none';
+  editProfile.className = 'layout_none';
+  voteActivity.className = 'layout_none';
+  deleteProfile.className = 'layout_block';
+  changePassword.className = 'layout_none';
+};
+
 
 /** get hamburger and nav bar for small screen sizes */
 const icon = document.getElementsByClassName('background_icon')[0];
@@ -97,7 +233,7 @@ const info = [
 const values = Object.values(info);
 const valuesArray = Object.values(values);
 const table = document.getElementById('voteActivity');
-for (let i = 0; i <= info.length; i++) {
+for (let i = 0; i < info.length; i++) {
   const tr = document.createElement('tr');
   table.appendChild(tr);
   for (let j = 0; j < 3; j++) {

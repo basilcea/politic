@@ -14,10 +14,10 @@
 	transition: 0.3s;
 	padding:5px;
 	outline:0;
-	min-height:70vh ;
-	margin:5% 10%;
-	background-color:grey;
-	opacity:0.7;
+	min-height:60vh ;
+	margin:2% 0%;
+	margin-right:5%;
+	background-color:lightslategray;
 }
 .card_wider{
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -38,9 +38,12 @@
   }
 }
 @media screen and (max-width: 1040px) and (min-width:601px){
-  .card_login , .card_party{
+  .card_login {
     margin:0% 5%;
     width: 88%;
 
-  }
+	}
+	.card_party{
+		min-height:50vw;
+	}
 }

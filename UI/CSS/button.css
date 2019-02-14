@@ -19,7 +19,10 @@
   width:24.1%;
 }
 .button_active3{
-  width:49.1%;
+  width:100%;
+  text-align:left;
+  padding:10% 20%;
+  border-bottom:0.2px solid grey;
 }
 .button_login,.button_login2 ,.button_login3 {
 	margin:0;
@@ -38,7 +41,10 @@
 	width:24.1%;
 }
 .button_login3{
-	width:49.1%;
+  width:100%;
+  text-align:left;
+  padding:10% 20%;
+  border-bottom:0.2px solid grey;
 }
 .button_login:hover,.button_login2:hover,.button_login3:hover{
 	background-color:#d92121;
@@ -70,6 +76,25 @@
   .button_active2,.button_login2{
     font-size:2.8vw;
     width:24%;
+  }
+  .button_active,.button_active2 ,.button_active3,.button_login,.button_login2,.button_login3{
+    font-size:12px;
+    width:11vw;
+    padding:0%;
+    padding-left:2%;
+    margin-right:7%;
+    margin-bottom:2%;
+    background-color:inherit;
+    color:#28495b;
+    border:none;
+  }
+  .button_active:last-of-type,.button_active2:last-of-type,.button_active3:last-of-type,.button_login:last-of-type,.button_login2:last-of-type,.button_login3:last-of-type{
+    margin-right:0;
+  }
+
+  .button_active,.button_active2,.button_active3{
+    box-shadow:none;
+    color:#d92121;
   }
 }
 @media screen and (min-width:601px) and (max-width:1040px){

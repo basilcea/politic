@@ -3,6 +3,8 @@
 	<head>
 		<title>Politico- Your right to choose</title>
 		<meta charset="UTF-8">
+		<meta name="description" content="Question and Answer Forum">
+		<meta name="keywords" content="ask, question, answer">
 		<meta name="author" content="Cea">
 		<meta name="viewport" content ="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href ="./CSS/card.css">
@@ -11,21 +13,25 @@
 		<link rel="stylesheet" type="text/css" href ="./CSS/button.css">
 		<link rel="stylesheet" type="text/css" href ="./CSS/text.css">
 		<link rel="stylesheet" type="text/css" href ="./CSS/form.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/nav.css">
 		<link rel="stylesheet" type="text/css" href ="./CSS/others.css">
-    <link rel="stylesheet" type="text/css" href ="./CSS/nav.css">
-    <link rel="stylesheet" type="text/css" href ="./CSS/fadeIn.css">
 	</head>
 	<body>
 		<div class="layout_large background_body">
-      <div class="layout_smallNav">
+
+			<!-- Navigation Bar for  small screen sizes-->
+			<div class="layout_smallNav">
           <ul class="nav_tabs_small">
               <li class="nav_horizontal_small">
                 <a class="others_full" href="home.html">Home</a>
               </li>
               <a  class="background_icon" href="javascript:void(0)" ></a>
               <li class="nav_horizontal_small">
-                <a class="others_full" href="profile.html">Your Profile</a>
-              </li>
+                <a class="others_full" href="profile.html">Profile</a>
+							</li>
+							<li class="nav_horizontal_small">
+									<a class="others_full" href="vote.html">Vote</a>
+								</li>
               <li class="nav_horizontal_small">
                 <a class="others_full" href="admin.html">Admin</a>
               </li>
@@ -37,69 +43,99 @@
                 </li>
             </ul>
       </div>
+      <!--Navigation Bar for large screen sizes-->
+
+			<!--Logo-->
 			<div class="layout_header">
-				<img class="others_img3" src="STATIC/logo.png" alt="logo"/>
-      </div>
-			<!--Navigation tabs-->
-
+				<a href='home.html'><img class="others_logo" src="STATIC/logo.png" alt="logo"/></a>
+			</div>
+			<!--Menu Buttons-->
 			<div class="layout_nav">
-				<ul class="nav_tabs">
-					<li class="nav_horizontal">
-						<a class="nav_active" href="home.html">Home</a>
-          </li>
-					<li class="nav_horizontal">
-						<a class="nav_menuButton" href="profile.html">Your Profile</a>
+					<ul class="nav_tabs">
+						<li class="nav_horizontal">
+							<a class="nav_menuButton" href="home.html">Home</a>
+						</li>
+						<li class="nav_horizontal">
+							<a class="nav_menuButton" href="profile.html">Profile</a>
+						</li>
 					</li>
 					<li class="nav_horizontal">
-						<a class="nav_menuButton" href="admin.html">Admin</a>
-					</li>
-					<li class="nav_horizontal">
-						<a class="nav_menuButton" href="candidate.html">Candidacy</a>
-          </li>
-        </ul>
+							<a class="nav_active" href="vote.html">Vote</a>
+						</li>
+						<li class="nav_horizontal">
+							<a class="nav_menuButton" href="admin.html">Admin</a>
+						</li>
+						<li class="nav_horizontal">
+							<a class="nav_menuButton" href="candidate.html">Candidacy</a>
+						<li class="nav_horizontal">
+								<a class="nav_menuButton" href="index.html">Logout</a>
+							</li>
+					</ul>
+				</div>
+			<!--tabs button-->
+			<div class="layout_side">
+					<button type="button">Cast Vote</button>
+					<button type="button">Search Politicians</button>
+					<button type="button">Check Results</button>
 			</div>
-
-			<!--Logout tab-->
-
-			<div class="layout_navVert">
-				<ul class="nav_tabs">
-					<li class="nav_horizontal">
-						<a class="nav_menuButton" href="index.html">Logout</a>
-					</li>
-				</ul>
+			<div class="layout_small">
+					<button type="button">Cast Vote</button>
+					<button type="button">Search Politicians</button>
+					<button type="button">Check Results</button>
 			</div>
+		<!-- profile buuton-->
+			<div class="layout_centered1 card_party">
+				<div id="cast">
+					<form>
+						<p class="text_centered">View Profile</p>
+						<div class="layout_right">
+						<img  id ="uploaded" class="others_img" src="STATIC/avatar.png" alt="logo">
+						</div>
+						<div class="others_profile">
+						<p>First Name:<span class='text_straight'>Ogbonna</span></p>
+						<p>Last Name:<span class="text_straight">Basil</span></p>
+						<p>Other Name:<span class="text_straight">Cea</span></p>
+						<p>Email:<span class="text_straight "> basilcea@yahoo.co.uk</span></p>
+						<p>Phone: <span class="text_straight ">+9 (0) 2346790</span></p>
+						</div>
+					</form>
+				</div>
 
-			<!--Search and Vote-->
-
-			<div  class="layout_vote card_wider">
-				<h2  class="text_centered">Search Politicians</h2>
-				<form id="searchForm">
-					<p>Name of Political Office</p>
-					<select id="searchList" name="politicians" form="searchForm">
-						<!--input names of political offices from database.js-->
-					</select>
-					<input type =submit value="search">
-				</form>
-				<h2 class="text_centered">Cast Your Vote</h2>
-				<form id="voteForm">
-						<p>Type of Political Office</p>
-						<select name="type" form="voteForm" id="selectType">
-							<!--input types of political offices from database.js-->
-						</select>
-						<p> Name of Political Office</p>
-						<select name="office" form="voteForm" id="selectOffice">
-							<!--input names of political offices from database.js-->
-						</select>
-						<p>Name of Candidate</p>
-						<select name="candidate" form="voteForm" id="selectCandidate">
-								<!--input names of candidates from database.js-->
-						</select>
-          </form>
-				<button id="vote" button type ="submit" form="voteType">Vote</button>
-        <div id='snackbar'><p id="message">You have voted successfully</p></div>
+          <!-- voting activites div-->
+				<div id='search' class="layout_activity">
+					<p class="text_centered">Vote Activites</p> 
+					<table id="voteActivity">
+						<tr class="layout_th">
+							<th>Type of Office</th>
+							<th>Name of Office</th>
+							<th>Candidate</th>
+						</tr>
+					</table>
+				</div>
+		
+        <!--edit profile div-->
+				<div id="results">
+					<form>
+						<p class="text_centered">Edit Profile</p>
+						<div class="layout_left">
+							<img  id ="pix" class="others_img" src="STATIC/avatar.png" alt="logo">
+							<br><br>
+							<button type="button" class="button_btn">Browse Logo</button>
+						</div>
+						<input type ="file" class="layout_none" id="realInput" name="profileFile"  accept="STATIC/*">
+						<input type="text" class="form_halfed" placeholder="First Name">
+						<input type="text" class="form_halfed" placeholder="Last Name">
+						<input type="text" class="form_halfed" placeholder="Other Name">
+						<input type="email" class="form_halfed" placeholder="Email">
+						<input type="text" class="form_halfed" placeholder="Phone Number">
+						<input type="submit" value="Submit">
+					</form>
+				</div>
 			</div>
 		</div>
-		<footer class="background_footer">All rights Reserved &copy 2019 . Your right to choose</footer>
-    <script src="./JS/data.js"></script>
-    <script src="./JS/home.js"></script>
+		<footer class="background_footer">
+      All rights Reserved &copy 2019 .</br> Your right to choose
+    </footer>
+		<script src="./JS/profile.js"></script>
 	</body>
+</html>

@@ -63,6 +63,10 @@ select{
   .form_halfed{
     float:none;
     width:100%
-  }
+	}
+	form{
+		padding: 5% 7%;
+		width:85%;
+	}
 
 }
