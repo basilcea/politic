@@ -109,10 +109,6 @@ tr:hover{
 	grid-area:5/1/6/13;
 	margin:3%;
 }
-.layout_vote{
-	grid-area:4/7/5/13;
-	margin:12% 2%;
-}
 .layout_activity{
 	padding:0% 8%;
 }

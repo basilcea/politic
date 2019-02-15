@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 /* eslint-disable no-plusplus */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-undef */
@@ -53,7 +54,7 @@ const offices = [
     ],
   },
   {
-    Type: ['Legislative'],
+    Type: ['Legislative-Senator'],
     Office: [
       'Senator-Abia-North',
       'Senator-Abia-Central',
