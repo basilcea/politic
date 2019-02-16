@@ -229,6 +229,20 @@ Button7.onclick = () => {
   deleteOffice.className = 'layout_block';
 };
 
+const small = window.matchMedia('(max-width:600px)');
+
+if (small.matches) {
+  const button = officeDiv.querySelectorAll('button');
+  const buttin = partyDiv.querySelectorAll('button');
+
+  for (let i = 0; i < button.length; i++) {
+    button[i].className = 'layout_none';
+  }
+  for (let j = 0; j < buttin.length - 2; j++) {
+    buttin[j].className = 'layout_none';
+  }
+}
+
 
 /** ----------for small screen sizes */
 

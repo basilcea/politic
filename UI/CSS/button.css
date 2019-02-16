@@ -109,9 +109,6 @@
     box-shadow:none;
     color:#d92121;
   }
-  .button_active4, .button_login4{
-    display:none;
-  }
   .button_active5,.button_login5{
     width:7vw;
     margin:0% 3%;

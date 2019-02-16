@@ -3,6 +3,8 @@
 	<head>
 		<title>Politico- Your right to choose</title>
 		<meta charset="UTF-8">
+		<meta name="description" content="Question and Answer Forum">
+		<meta name="keywords" content="ask, question, answer">
 		<meta name="author" content="Cea">
 		<meta name="viewport" content ="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href ="./CSS/card.css">
@@ -16,56 +18,73 @@
 	</head>
 	<body>
 		<div class="layout_large background_body">
-      <div class="layout_smallNav">
-          <ul class="nav_tabs_small">
-            <li class="nav_horizontal_small">
-              <a class="others_full" href="home.html">Home</a>
-            </li>
-            <a class="background_icon" href="javascript:void(0)" ></a>
-            <li class="nav_horizontal_small">
-              <a class="others_full" href="profile.html">Your Profile</a>
-            </li>
-            <li class="nav_horizontal_small">
-              <a class="others_full" href="admin.html">Admin</a>
-            </li>
-            <li class="nav_horizontal_small">
-              <a class="others_full" href="candidate.html">Candidacy</a>
-            </li>
-            <li class="nav_horizontal_small">
-              <a class="others_full" href="index.html">Log out</a>
-              </li>
-          </ul>
-      </div>
 
+			<!-- Navigation Bar for  small screen sizes-->
+			<div class="layout_smallNav">
+          <ul class="nav_tabs_small">
+              <li class="nav_horizontal_small">
+                <a class="others_full" href="home.html">Home</a>
+              </li>
+              <a  class="background_icon" href="javascript:void(0)" ></a>
+              <li class="nav_horizontal_small">
+                <a class="others_full" href="profile.html">Profile</a>
+							</li>
+							<li class="nav_horizontal_small">
+									<a class="others_full" href="vote.html">Vote</a>
+								</li>
+              <li class="nav_horizontal_small">
+                <a class="others_full" href="admin.html">Admin</a>
+              </li>
+              <li class="nav_horizontal_small">
+                <a class="others_full" href="candidate.html">Candidacy</a>
+              </li>
+              <li class="nav_horizontal_small">
+                  <a class="others_full" href="index.html">Log out</a>
+                </li>
+            </ul>
+      </div>
+      <!--Navigation Bar for large screen sizes-->
+
+			<!--Logo-->
 			<div class="layout_header">
-				<img class="others_logo" src="STATIC/logo.png" alt="logo"/>
+				<a href='home.html'><img class="others_logo" src="STATIC/logo.png" alt="logo"/></a>
 			</div>
+			<!--Menu Buttons-->
 			<div class="layout_nav">
-				<ul class="nav_tabs">
-					<li class="nav_horizontal">
-						<a class="nav_menuButton" href="home.html">Home</a>
+					<ul class="nav_tabs">
+						<li class="nav_horizontal">
+							<a class="nav_menuButton" href="home.html">Home</a>
+						</li>
+						<li class="nav_horizontal">
+							<a class="nav_menuButton" href="profile.html">Profile</a>
+						</li>
 					</li>
 					<li class="nav_horizontal">
-						<a class="nav_menuButton" href="profile.html">Your Profile</a>
-					</li>
-					<li class="nav_horizontal">
-						<a class="nav_menubutton" href="admin.html">Admin</a>
-					</li>
-					<li class="nav_horizontal">
-						<a class="nav_active" href="candidate.html">Candidacy</a>
-					</li>
-				</ul>
+							<a class="nav_menuButton" href="vote.html">Vote</a>
+						</li>
+						<li class="nav_horizontal">
+							<a class="nav_menuButton" href="admin.html">Admin</a>
+						</li>
+						<li class="nav_horizontal">
+							<a class="nav_active" href="candidate.html">Candidacy</a>
+						<li class="nav_horizontal">
+								<a class="nav_menuButton" href="index.html">Logout</a>
+							</li>
+					</ul>
+				</div>
+			<!--tabs button-->
+			<div class="layout_side">
+					<button type="button">Express Interest</button>
+					<button type="button">Create Petition</button>
+					<button type="button">Make Candidate</button>
+					
 			</div>
-			<div class="layout_navVert">
-				<ul class="nav_tabs">
-					<li class="nav_horizontal">
-						<a class="nav_menuButton" href="index.html">Logout</a>
-					</li>
-				</ul>
+			<div class='layout_small'>
+				<button type ='button'>Express Interest</button>
+				<button type="button">Create Petition</button>
+				<button type="button">Make Candidate</button>
 			</div>
 			<div class="layout_centered1 card_party">
-				<button type="button" href="admin.html#create">Run For Office</button>
-				<button type="button" href="admin.html#edit">Petition</button>
 				<div id="run">
 					<form id="searchForm">
 						<p>Run for an Office</p>
@@ -87,6 +106,31 @@
 						<input type="text" name="complaintSubject" placeholder="Subject of Complaint">
 						<textarea class="others_textArea2" name="complaint" placeholder="Type your complains here..." rows=15 cols=12 required></textarea>
 						<input type="submit" value="submit">
+					</form>
+				</div>
+				<div id ='candidate'>
+					<form>
+						<p>Make A politician Candidate</p>
+							<select id="offices">
+								<option value="" disabled selected>-- Select Type Of Office --</option>
+								<option value="Federal">Federal</option>
+								<option value="Legislative">Legislative</option>
+								<option value="State">State</option>
+								<option value="Local Government">Local Government </option>
+							</select>
+							<select id="candidateOffice" name="party" form="editParty">
+							</select>
+							<select id="candidateDetails" name="party" form="editParty">
+							</select>
+							<p> Edit Details</p>
+							<input type ='text' placeholder ='Candidate Name'>
+							<select id="candidateParty" name="party" form="editParty">
+								</select>
+							<select id="candidateDetails" name="party" form="editParty">
+							</select>
+							<select id="candidateDetails" name="party" form="editParty">
+							</select>
+							<input type ='submit' value ='Approve'>
 					</form>
 				</div>
 			</div>
