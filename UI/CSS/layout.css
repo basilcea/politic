@@ -109,6 +109,9 @@ tr:hover{
 	grid-area:5/1/6/13;
 	margin:3%;
 }
+.layout_inline{
+  display:inline;
+}
 .layout_activity{
 	padding:0% 8%;
 }
