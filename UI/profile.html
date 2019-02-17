@@ -19,93 +19,106 @@
 	<body>
 		<div class="layout_large background_body">
 
-      <!-- Navigation Bar for  small screen sizes-->
-      <div class="layout_smallNav">
-        <ul class="nav_tabs_small">
-          <li class="nav_horizontal_small">
-            <a class="others_full" href="home.html">Home</a>
-          </li>
-          <a class="background_icon" href="javascript:void(0)" ></a>
-          <li class="nav_horizontal_small">
-            <a class="others_full" href="profile.html">Your Profile</a>
-          </li>
-          <li class="nav_horizontal_small">
-            <a class="others_full" href="admin.html">Admin</a>
-          </li>
-          <li class="nav_horizontal_small">
-            <a class="others_full" href="candidate.html">Candidacy</a>
-          </li>
-          <li class="nav_horizontal_small">
-            <a class="others_full" href="index.html">Log out</a>
-          </li>
-        </ul>
+			<!-- Navigation Bar for  small screen sizes-->
+			<div class="layout_smallNav">
+          <ul class="nav_tabs_small">
+              <li class="nav_horizontal_small">
+                <a class="others_full" href="home.html">Home</a>
+              </li>
+              <a  class="background_icon" href="javascript:void(0)" ></a>
+              <li class="nav_horizontal_small">
+                <a class="others_full" href="profile.html">Profile</a>
+							</li>
+							<li class="nav_horizontal_small">
+									<a class="others_full" href="vote.html">Vote</a>
+								</li>
+              <li class="nav_horizontal_small">
+                <a class="others_full" href="admin.html">Admin</a>
+              </li>
+              <li class="nav_horizontal_small">
+                <a class="others_full" href="candidate.html">Candidacy</a>
+              </li>
+              <li class="nav_horizontal_small">
+                  <a class="others_full" href="index.html">Log out</a>
+                </li>
+            </ul>
       </div>
-
       <!--Navigation Bar for large screen sizes-->
 
-      <!--Logo-->
+			<!--Logo-->
 			<div class="layout_header">
-				<img class="others_logo" src="STATIC/logo.png" alt="logo"/>
-      </div>
-      <!--Menu Buttons-->
+				<a href='home.html'><img class="others_logo" src="STATIC/logo.png" alt="logo"/></a>
+			</div>
+			<!--Menu Buttons-->
 			<div class="layout_nav">
-				<ul class="nav_tabs">
-					<li class="nav_horizontal">
-						<a class="nav_menuButton" href="home.html">Home</a>
+					<ul class="nav_tabs">
+						<li class="nav_horizontal">
+							<a class="nav_menuButton" href="home.html">Home</a>
+						</li>
+						<li class="nav_horizontal">
+							<a class="nav_active" href="profile.html">Profile</a>
+						</li>
 					</li>
 					<li class="nav_horizontal">
-						<a class="nav_active" href="profile.html">Your Profile</a>
-					</li>
-					<li class="nav_horizontal">
-						<a class="nav_menubutton" href="admin.html">Admin</a>
-					</li>
-					<li class="nav_horizontal">
-						<a class="nav_menuButton" href="candidate.html">Candidacy</a>
-					</li>
-				</ul>
-      </div>
-      <!---Logout button for large screen sizes-->
-			<div class="layout_navVert">
-				<ul class="nav_tabs">
-					<li class="nav_horizontal">
-            <a class="nav_menuButton" href="index.html">Logout</a>
-          </li>
-				</ul>
-      </div>
-      <!--tabs button-->
+							<a class="nav_menuButton" href="vote.html">Vote</a>
+						</li>
+						<li class="nav_horizontal">
+							<a class="nav_menuButton" href="admin.html">Admin</a>
+						</li>
+						<li class="nav_horizontal">
+							<a class="nav_menuButton" href="candidate.html">Candidacy</a>
+						<li class="nav_horizontal">
+								<a class="nav_menuButton" href="index.html">Logout</a>
+							</li>
+					</ul>
+				</div>
+			<!--tabs button-->
+			<div class="layout_side">
+					<button type="button">View Profile</button>
+					<button type="button">Edit Profile</button>
+					<button type="button">Vote Activities</button>
+					<button type="button">Change Password</button>
+					<button type="button">Delete Profile</button>
+			</div>
+			<div class="layout_small">
+					<button type="button">View Profile</button>
+					<button type="button">Edit Profile</button>
+					<button type="button">Vote Activities</button>
+					<button type="button">Change Password</button>
+					<button type="button">Delete Profile</button>
+			</div>
+		<!-- profile buuton-->
 			<div class="layout_centered1 card_party">
-				<button type="button">View Profile</button>
-        <button type="button">Edit Profile</button>
-      <!-- profile buuton-->
-				<div id="run">
+				<div id="view">
 					<form>
 						<p class="text_centered">View Profile</p>
 						<div class="layout_right">
 						<img  id ="uploaded" class="others_img" src="STATIC/avatar.png" alt="logo">
 						</div>
 						<div class="others_profile">
-						<p>First Name:<span class="text_styled">Ogbonna</span></p>
-						<p>Last Name:<span class="text_styled">Basil</span></p>
-						<p>Other Name:<span class="text_styled">Cea</span></p>
-						<p>Email:<span class="text_styled "> basilcea@yahoo.co.uk</span></p>
-						<p>Phone Number: <span class="text_styled ">+9 (0) 2346790</span></p>
+						<p>First Name:<span class='text_straight'>Ogbonna</span></p>
+						<p>Last Name:<span class="text_straight">Basil</span></p>
+						<p>Other Name:<span class="text_straight">Cea</span></p>
+						<p>Email:<span class="text_straight "> basilcea@yahoo.co.uk</span></p>
+						<p>Phone: <span class="text_straight ">+9 (0) 2346790</span></p>
 						</div>
-          </form>
-          <!-- voting activites by user-->
-					<div class="layout_activity">
-						<p class="text_centered">Vote Activites</p>
-							Below is a list of all your standing votes in the present election.
-            <table id="voteActivity">
-              <tr class="layout_th">
-                <th>Type of Office</th>
-                <th>Name of Office</th>
-                <th>Candidate</th>
-              </tr>
-            </table>
-					</div>
-        </div>
+					</form>
+				</div>
+
+          <!-- voting activites div-->
+				<div id='activity' class="layout_activity">
+					<p class="text_centered">Vote Activites</p> 
+					<table id="voteActivity">
+						<tr class="layout_th">
+							<th>Type of Office</th>
+							<th>Name of Office</th>
+							<th>Candidate</th>
+						</tr>
+					</table>
+				</div>
+		
         <!--edit profile div-->
-				<div id="petition">
+				<div id="edit">
 					<form>
 						<p class="text_centered">Edit Profile</p>
 						<div class="layout_left">
@@ -122,10 +135,31 @@
 						<input type="submit" value="Submit">
 					</form>
 				</div>
+				<div id='change'>
+					<form>
+						<p class='text_centered'>Change Password</p>
+						<input type ='password' placeholder='Old Password'>
+						<input type ='password' placeholder='New Password'>
+						<input type ='password' placeholder ='Confirm New Password'>
+						<input type ='submit' value ='change'>
+					</form>
+				</div>
+				<div id="delete">
+					<form>
+							<p class='text_centered'>Please Read Carefully. This Is Not Your Usual YIDI YADA</p>
+							<p>Deleting your profile is irrevocable.Your voting activites will be deleted. This means your votes will no longer be counted. All political offices voted for will also lose one vote count.
+							<p>Do you still wish to delete your profile?</p>
+							<input type="checkbox" name="Agreement" value="delete" required> Yes, I want to delete my profile.
+							<input type='text' placeholder = 'firstname' required>
+							<input type='password' placeholder = 'password' required>
+
+							<input type="submit" value="I understand, Delete">
+					</form>
+				</div>
 			</div>
 		</div>
 		<footer class="background_footer">
-      All rights Reserved &copy 2019 . Your right to choose
+      All rights Reserved &copy 2019 .</br> Your right to choose
     </footer>
 		<script src="./JS/profile.js"></script>
 	</body>

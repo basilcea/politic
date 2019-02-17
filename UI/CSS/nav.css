@@ -22,6 +22,7 @@ a{
 .nav_menuButton{
 	padding:2vh 2vw;
 	border:none;
+	color:white;
 	text-decoration:none;
 	font-weight:bold;
 }
@@ -35,7 +36,7 @@ a{
 	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 .nav_menuButton:hover{
-	color:white;
+	color:black;
 	border-bottom:2px solid #d92121;
 	border-radius:5px;
 }
@@ -51,10 +52,11 @@ a{
     display:none;
     float:left;
     padding:2vw 5vw;
-    width:70%;
+		width:70%;
+		border-bottom:0.5px solid #28495b;
     height:6vw;
     outline:none;
-    font-size:20px;
+    font-size:16px;
     background-color:#d92121;
     opacity:0.7
   }
@@ -71,4 +73,13 @@ a{
 	display: block;
 
   }
+}
+@media screen and (min-width: 601px) and (max-width :875px){
+	.nav_horizontal{
+		padding: 6vw 0.5vw;
+	}
+	.nav_menuButton{
+		padding-left :0.5vw;
+		padding-right :0.5vw;
+	}
 }

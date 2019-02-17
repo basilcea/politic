@@ -1,11 +1,15 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable no-restricted-globals */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-undef */
-/** Get Divs by their Id */
-const run = document.getElementById('run');
-const petition = document.getElementById('petition');
-const candidate = document.getElementById('candidate');
 
-/** Get all buttons on the page */
+/** Get the various divs */
+const castVote = document.getElementById('cast');
+const searchPoliticians = document.getElementById('search');
+const checkResults = document.getElementById('check');
+
+
+/** Get the buttons */
 const buttons = document.querySelectorAll('button');
 const Button0 = buttons[0];
 const Button1 = buttons[1];
@@ -14,88 +18,75 @@ const Button3 = buttons[3];
 const Button4 = buttons[4];
 const Button5 = buttons[5];
 
-/**  Assign css classes to  each button to design the buttons
-    Display run div as default div, hide others. */
 
+/** Style buttons by */
 Button0.className = 'button_active3';
 Button1.className = 'button_login3';
 Button2.className = 'button_login3';
 Button3.className = 'button_active4';
 Button4.className = 'button_login4';
 Button5.className = 'button_login4';
-petition.className = 'layout_none';
-candidate.className = 'layout_none';
+checkResults.className = 'layout_none';
+searchPoliticians.className = 'layout_none';
 
-/** Trigger event when run button is clicked,
-    Display only run div, hide others.
-    change style of run button to active. */
 Button0.onclick = () => {
   Button0.className = 'button_active3';
   Button1.className = 'button_login3';
   Button2.className = 'button_login3';
-  run.className = 'layout_block';
-  petition.className = 'layout_none';
-  candidate.className = 'layout_none';
+  castVote.className = 'layout_block';
+  searchPoliticians.className = 'layout_none';
+  checkResults.className = 'layout_none';
 };
-/** Trigger event when run button is clicked,
-    Display only petition div, hide others.
-    change style of petition button to active. */
+
 Button1.onclick = () => {
   Button0.className = 'button_login3';
   Button1.className = 'button_active3';
   Button2.className = 'button_login3';
-  run.className = 'layout_none';
-  petition.className = 'layout_block';
-  candidate.className = 'layout_none';
+  castVote.className = 'layout_none';
+  searchPoliticians.className = 'layout_block';
+  checkResults.className = 'layout_none';
 };
-
 
 Button2.onclick = () => {
   Button0.className = 'button_login3';
   Button1.className = 'button_login3';
   Button2.className = 'button_active3';
-  run.className = 'layout_none';
-  petition.className = 'layout_none';
-  candidate.className = 'layout_block';
+  castVote.className = 'layout_none';
+  searchPoliticians.className = 'layout_none';
+  checkResults.className = 'layout_block';
 };
 
 Button3.onclick = () => {
   Button3.className = 'button_active4';
   Button4.className = 'button_login4';
   Button5.className = 'button_login4';
-  run.className = 'layout_block';
-  petition.className = 'layout_none';
-  candidate.className = 'layout_none';
+  castVote.className = 'layout_block';
+  searchPoliticians.className = 'layout_none';
+  checkResults.className = 'layout_none';
 };
-/** Trigger event when run button is clicked,
-    Display only petition div, hide others.
-    change style of petition button to active. */
 Button4.onclick = () => {
   Button3.className = 'button_login4';
   Button4.className = 'button_active4';
   Button5.className = 'button_login4';
-  run.className = 'layout_none';
-  petition.className = 'layout_block';
-  candidate.className = 'layout_none';
+  castVote.className = 'layout_none';
+  searchPoliticians.className = 'layout_block';
+  checkResults.className = 'layout_none';
 };
-
 
 Button5.onclick = () => {
   Button3.className = 'button_login4';
   Button4.className = 'button_login4';
   Button5.className = 'button_active4';
-  run.className = 'layout_none';
-  petition.className = 'layout_none';
-  candidate.className = 'layout_block';
-};
-/** Center all paragragphs */
-const par = document.querySelectorAll('p');
-for (let i = 0; i < par.length; i++) {
-  par[i].className = 'text_centered';
+  castVote.className = 'layout_none';
+  searchPoliticians.className = 'layout_none';
+  checkResults.className = 'layout_block';
 }
+
+/** get hamburger and nav bar for small screen sizes */
 const icon = document.getElementsByClassName('background_icon')[0];
 const smallLink = document.getElementsByClassName('nav_horizontal_small');
 
+/** Make changes to Icon type */
 icon.onclick = () => {
   if (icon.className === 'background_icon') {
     icon.className = 'background_icon1';
@@ -109,3 +100,22 @@ icon.onclick = () => {
     }
   }
 };
+
+
+
+/* eslint-disable no-undef */
+/** implement toast for vote */
+const vote = document.getElementById('vote');
+vote.onclick = () => {
+  const x = document.getElementById('snackbar');
+
+  // Add the "show" class to DIV
+  x.className = 'show';
+
+  // After 3 seconds, remove the show class from DIV
+  setTimeout(() => {
+    x.className = x.className.replace('show', '');
+  }, 3000);
+};
+
+// courtesy w3schools

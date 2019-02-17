@@ -15,6 +15,7 @@
 		<link rel="stylesheet" type="text/css" href ="./CSS/form.css">
 		<link rel="stylesheet" type="text/css" href ="./CSS/nav.css">
 		<link rel="stylesheet" type="text/css" href ="./CSS/others.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/fadeIn.css">
 	</head>
 	<body>
 		<div class="layout_large background_body">
@@ -60,13 +61,13 @@
 						</li>
 					</li>
 					<li class="nav_horizontal">
-							<a class="nav_menuButton" href="vote.html">Vote</a>
+							<a class="nav_active" href="vote.html">Vote</a>
 						</li>
 						<li class="nav_horizontal">
 							<a class="nav_menuButton" href="admin.html">Admin</a>
 						</li>
 						<li class="nav_horizontal">
-							<a class="nav_active" href="candidate.html">Candidacy</a>
+							<a class="nav_menuButton" href="candidate.html">Candidacy</a>
 						<li class="nav_horizontal">
 								<a class="nav_menuButton" href="index.html">Logout</a>
 							</li>
@@ -74,69 +75,74 @@
 				</div>
 			<!--tabs button-->
 			<div class="layout_side">
-					<button type="button">Express Interest</button>
-					<button type="button">Create Petition</button>
-					<button type="button">Make Candidate</button>
-					
+					<button type="button">Cast Vote</button>
+					<button type="button">Search Politicians</button>
+					<button type="button">Check Results</button>
 			</div>
-			<div class='layout_small'>
-				<button type ='button'>Express Interest</button>
-				<button type="button">Create Petition</button>
-				<button type="button">Make Candidate</button>
+			<div class="layout_small">
+					<button type="button">Cast Vote</button>
+					<button type="button">Search Politicians</button>
+					<button type="button">Check Results</button>
 			</div>
+		<!-- profile buuton-->
 			<div class="layout_centered1 card_party">
-				<div id="run">
-					<form id="searchForm">
-						<p>Run for an Office</p>
-						<select id="searchList" name="office" form="searchForm">
-							<!--input names of political offices from database.js-->
-						</select>
-						<select id="candidatePart1" name="party" form="searchForm">
-						</select>
-						<input type =submit value="submit">
-					</form>
-				</div>
-				<div id="petition">
-					<form>
-						<p>Electoral Petition</p>
-            <br><br>
-            <select id="pList" name="office" form="searchForm">
-							<!--input names of political offices from database.js-->
-						</select>
-						<input type="text" name="complaintSubject" placeholder="Subject of Complaint">
-						<textarea class="others_textArea2" name="complaint" placeholder="Type your complains here..." rows=15 cols=12 required></textarea>
-						<input type="submit" value="submit">
-					</form>
-				</div>
-				<div id ='candidate'>
-					<form>
-						<p>Make A politician Candidate</p>
-							<select id="offices">
-								<option value="" disabled selected>-- Select Type Of Office --</option>
-								<option value="Federal">Federal</option>
-								<option value="Legislative">Legislative</option>
-								<option value="State">State</option>
-								<option value="Local Government">Local Government </option>
-							</select>
-							<select id="candidateOffice" name="party" form="editParty">
-							</select>
-							<select id="candidateDetails" name="party" form="editParty">
-							</select>
-							<p> Edit Details</p>
-							<input type ='text' placeholder ='Candidate Name'>
-							<select id="candidateParty" name="party" form="editParty">
+				<div id="cast">
+						<h2 class="text_centered">Cast Your Vote</h2>
+						<form class="voteForm">
+								<p>Type of Political Office</p>
+								<select name="type" form="voteForm" id="selectType">
+									<!--input types of political offices from database.js-->
 								</select>
-							<select id="candidateDetails" name="party" form="editParty">
-							</select>
-							<select id="candidateDetails" name="party" form="editParty">
-							</select>
-							<input type ='submit' value ='Approve'>
-					</form>
+								<p> Name of Political Office</p>
+								<select name="office" form="voteForm" id="selectOffice">
+									<!--input names of political offices from database.js-->
+								</select>
+								<p>Name of Candidate</p>
+								<select name="candidate" form="voteForm" id="selectCandidate">
+										<!--input names of candidates from database.js-->
+								</select>
+							</form>
+						<button id="vote" button type ="submit" form="voteType">Vote</button>
+						<div id='snackbar'><p id="message">You have voted successfully</p></div>
 				</div>
+				<div id ='search'>
+						<h2 class="text_centered">Search for Politicians</h2>
+						<form class="voteForm">
+							<p>Type of Political Office</p>
+							<select name="type" form="voteForm" id="selectType">
+								<!--input types of political offices from database.js-->
+							</select>
+							<p> Name of Political Office</p>
+							<select name="office" form="voteForm" id="selectOffice">
+								<!--input names of political offices from database.js-->
+							</select>
+							<input type ='submit' value='Search'>
+						</form>
+				</div>
+				<div id ='check'>
+						<h2 class="text_centered">Check Results</h2>
+						<form class="voteForm">
+							<p>Type of Political Office</p>
+							<select name="type" form="voteForm" id="selectType">
+								<!--input types of political offices from database.js-->
+							</select>
+							<p> Name of Political Office</p>
+							<select name="office" form="voteForm" id="selectOffice">
+								<!--input names of political offices from database.js-->
+							</select>
+							<input type ='submit' value='Check Results'>
+						</form>
+				</div>
+				</div>
+
+       
+		
 			</div>
 		</div>
-		<footer class="background_footer">All rights Reserved &copy 2019 .<br> Your right to choose</footer>
-		<script src="./JS/candidate.js"></script>
-    <script src="./JS/data.js"></script>
+		<footer class="background_footer">
+      All rights Reserved &copy 2019 .</br> Your right to choose
+		</footer>
+		<script src="./JS/vote.js"></script>
+		<script src="./JS/data.js"></script>
 	</body>
 </html>

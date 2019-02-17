@@ -22,17 +22,3 @@ icon.onclick = () => {
     }
   }
 };
-
-/** implement toast for vote */
-const vote = document.getElementById('vote');
-vote.onclick = () => {
-  const x = document.getElementById('snackbar');
-
-  // Add the "show" class to DIV
-  x.className = 'show';
-
-  // After 3 seconds, remove the show class from DIV
-  setTimeout(() => { x.className = x.className.replace('show', ''); }, 3000);
-};
-
-// courtesy w3schools tutorials
