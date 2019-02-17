@@ -101,8 +101,6 @@ icon.onclick = () => {
   }
 };
 
-
-
 /* eslint-disable no-undef */
 /** implement toast for vote */
 const vote = document.getElementById('vote');
