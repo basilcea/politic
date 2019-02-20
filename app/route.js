@@ -29,7 +29,7 @@ router.post('/office/:id/register', auth.checkToken, candidateController.makeCan
 router.post('/parties', auth.checkToken, partyController.createParty);
 router.get('/parties', auth.checkToken, partyController.getAllParties);
 router.get('/parties/:id', auth.checkToken, partyController.getParty);
-router.patch('/parties/:id/name', auth.checkToken, partyController.patchPartyName);
+router.patch('/parties/:id/:value', auth.checkToken, partyController.editParty);
 router.delete('/parties/:id', auth.checkToken, partyController.deleteParty);
 
 
