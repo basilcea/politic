@@ -38,4 +38,5 @@ router.get('/petitions', auth.checkToken, petitionController.getUserPetition);
 router.get('/petitions/:id', auth.checkToken, petitionController.getAPetition);
 router.post('/petitions', auth.checkToken, petitionController.createPetition);
 router.put('/petitions/:id', auth.checkToken, petitionController.editPetition);
+router.delete('/petitions/:id', auth.checkToken, petitionController.deletePetition);
 export default router;

@@ -119,8 +119,17 @@ class petitionController {
 
   static async getUserPetition(req, res) {
     try {
-      const getpetitions = 'SELECT * from petitions where createdBy =$1';
-      const { rows } = await pool.query(getpetitions, [req.user.id]);
+      const getallpetitions = 'SELECT * from petitions';
+
+      const getuserpetitions = 'SELECT * from petitions where createdBy =$1';
+      if (req.user.isAdmin === true) {
+        const { rows } = await pool.query(getallpetitions);
+        return res.status(200).json({
+          'status': 200,
+          'data': rows,
+        });
+      }
+      const { rows } = await pool.query(getuserpetitions, [req.user.id]);
       if (!rows[0]) {
         return res.status(401).json({
           'status': 401,
@@ -141,27 +150,91 @@ class petitionController {
 
   static async getAPetition(req, res) {
     try {
-      const getpetitions = 'SELECT * from petitions where createdBy =$1';
-      const { rows } = await pool.query(getpetitions, [req.user.id]);
+      const id = Number(req.params.id);
+      validation.check(id, validation.id, res);
+      const petition = 'Select * from petitions where id =$1';
       if (!rows[0]) {
+        return res.status(404).json({
+          'status': 404,
+          'error': ' Petition not Found',
+        });
+      }
+      if (req.user.isAdmin === true) {
+        const { rows } = await pool.query(petition, [id]);
+        return res.status(200).json({
+          'status': 200,
+          'data': rows[0],
+        });
+      }
+
+      const getpetitions = 'SELECT * from petitions where createdBy =$1 AND id= $2';
+      const userPetition = await pool.query(getpetitions, [req.user.id, id]);
+      if (!userPetition.rows[0]) {
         return res.status(401).json({
           'status': 401,
           'error': 'Unauthorized',
         });
       }
-      const id = Number(req.params.id);
-      validation.check(id, validation.id, res);
-      const petition = 'Select * from petitions where id =$1';
-      const checkPetition = await pool.query(petition, [id]);
-
       return res.status(200).json({
         'status': 200,
-        'data': checkPetition.rows[0],
+        'data': userPetition.rows[0],
       });
     } catch (err) {
       return res.status(500).json({
         status: 500,
         error: err.toString(),
+      });
+    }
+  }
+
+  /**
+  * Delete a petition
+  * @param {integer} - id of the party
+  * @return {object} - The status code and message to show delete action completed
+  */
+  static async deletePetition(req, res) {
+    const id = Number(req.params.id);
+    validation.check(id, validation.id, res);
+    const getPetition = 'Select * from petitions where id =$1';
+    const { rows } = await pool.query(getPetition, [id]);
+    if (!rows[0]) {
+      return res.status(404).json({
+        'status': 404,
+        'error': 'Petition not found',
+      });
+    }
+    const deleting = 'Delete from petitions where id=$1';
+    if (req.user.isAdmin === true) {
+      await pool.query(deleting, [id]);
+      return res.status(200).json({
+        'status': 200,
+        'data': {
+          'message': 'petition deleted succesfully',
+        },
+      });
+    }
+
+    const getpetitions = 'SELECT * from petitions where createdBy =$1';
+    const checkPetition = await pool.query(getpetitions, [req.user.id]);
+    if (!checkPetition.rows[0]) {
+      return res.status(401).json({
+        'status': 401,
+        'error': 'Unauthorized',
+      });
+    }
+
+    try {
+      await pool.query(deleting, [id]);
+      return res.status(200).json({
+        'status': 200,
+        'data': {
+          'message': 'petition deleted succesfully',
+        },
+      });
+    } catch (err) {
+      return res.status(501).json({
+        'status': 501,
+        'error': err.toString(),
       });
     }
   }
