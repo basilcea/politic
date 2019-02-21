@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default-member */
 import express from 'express';
 
 import userController from './controllers/users';
@@ -6,6 +7,7 @@ import officeDB from './controllers/offices';
 import partyDB from './controllers/parties';
 import candidateController from './controllers/candidate';
 import petitionController from './controllers/petition';
+import interestController from './controllers/interest';
 import partyDS from './DS/controllers/party';
 import officeDS from './DS/controllers/office';
 
@@ -39,4 +41,6 @@ router.get('/petitions/:id', auth.checkToken, petitionController.getAPetition);
 router.post('/petitions', auth.checkToken, petitionController.createPetition);
 router.put('/petitions/:id', auth.checkToken, petitionController.editPetition);
 router.delete('/petitions/:id', auth.checkToken, petitionController.deletePetition);
+
+router.post('/interests', auth.checkToken, interestController.createInterest);
 export default router;
