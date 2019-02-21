@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable quote-props */
 import joi from 'joi';
 
@@ -117,7 +118,22 @@ const urlError = (x) => {
   }
 };
 
-
+const idError = (x) => {
+  switch (x[0].type) {
+    case 'any.empty': {
+      return new Error('id is required');
+    }
+    case 'number.integer': {
+      return new Error('Id must be an integer');
+    }
+    case 'number.positive': {
+      return new Error('Id must be positive');
+    }
+    default: {
+      return new Error('Id has some error');
+    }
+  }
+};
 const requiredName = joi.string().trim().regex(/^[a-zA-Z]+$/)
   .min(2)
   .max(30)
@@ -139,7 +155,8 @@ const requiredOffice = joi.string().trim().regex(/^[a-z A-Z_]+$/).required()
   .error(OfficeNameError);
 
 
-export const id = joi.number().integer().positive().error(new Error('Id must be a positive integer'));
+export const id = joi.number().integer().positive().error(idError);
+export const string = joi.string().error(new Error('value must be a string'));
 
 export const value = joi.string().regex(/^[a-zA-Z]+$/).error(new Error('Parameter must be Letters only'));
 
@@ -195,6 +212,14 @@ export const createCandidateSchema = joi.object().keys({
 
 });
 
+
+export const createPetitionSchema = joi.object().keys({
+  office: id.required(),
+  subject: string.required(),
+  body: string.required(),
+  evidence: joi.array().items(joi.string().allow('').uri()),
+});
+
 export const createVote = joi.object().keys({
   office: id,
   candidate: id,
@@ -202,7 +227,7 @@ export const createVote = joi.object().keys({
 });
 
 export const check = (data, schema, res) => {
-  joi.validate(data, schema, (err) => {
+  joi.validate(data, schema, { stripUnknown: true }, (err) => {
     if (err) {
       return res.status(422).json({
         'status': 422,

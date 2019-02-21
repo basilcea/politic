@@ -1,8 +1,6 @@
 /* eslint-disable quote-props */
 import pool from '../migrate';
 import authHelper from '../helpers/auth';
-import 'dotenv';
-import '@babel/polyfill';
 import * as validation from '../helpers/schema';
 
 /**

@@ -5,6 +5,7 @@ import votesController from './controllers/votes';
 import officeDB from './controllers/offices';
 import partyDB from './controllers/parties';
 import candidateController from './controllers/candidate';
+import petitionController from './controllers/petition';
 import partyDS from './DS/controllers/party';
 import officeDS from './DS/controllers/office';
 
@@ -32,5 +33,5 @@ router.get('/parties/:id', auth.checkToken, partyController.getParty);
 router.patch('/parties/:id/:value', auth.checkToken, partyController.editParty);
 router.delete('/parties/:id', auth.checkToken, partyController.deleteParty);
 
-
+router.post('/petitions', auth.checkToken, petitionController.createPetition);
 export default router;

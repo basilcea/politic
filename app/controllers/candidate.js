@@ -23,7 +23,7 @@ class candidateController {
 
   static async makeCandidate(req, res) {
     // check if candidates exists
-
+    const checkInterest = 'SELECT * from interests where interest = $1';
     const checkCandidate = 'SELECT * from candidates where id = $1';
     const checkOffice = 'SELECT * from offices where id= $1';
     const checkUser = 'SELECT * from users where id = $1';
@@ -42,6 +42,7 @@ class candidateController {
       const officeId = Number(req.body.office);
       const candidateId = Number(req.body.user);
       const partyId = Number(req.body.party);
+
       validation.check(userId, validation.id, res);
       // check if  user exists
       const { rows } = await pool.query(checkUser, [userId]);
@@ -49,6 +50,14 @@ class candidateController {
         return res.status(404).json({
           'status': 404,
           'error': 'User not found',
+        });
+      }
+      // check if the user has expressed interest
+      const politician = await pool.query(checkInterest, [userId]);
+      if (!politician.rows[0]) {
+        return res.status(404).json({
+          'status': 404,
+          'error': 'User has not expressed interest',
         });
       }
       // check if office exist
@@ -68,17 +77,13 @@ class candidateController {
           'error': 'Candidate already exists',
         });
       }
-      
-      validation.check(partyId, validation.id, res);
 
+      validation.check(partyId, validation.id, res);
       await pool.query(insertCandidate, [officeId, candidateId, partyId]);
       const inserted = await pool.query('SELECT * from candidates');
       return res.status(201).json({
         'status': 201,
-        'data': {
-          'office': inserted.rows[inserted.rowCount - 1].office,
-          'user': inserted.rows[inserted.rowCount - 1].candidate,
-        },
+        'data': inserted.rows[inserted.rowCount - 1]
       });
     } catch (err) {
       return res.status(500).json({
