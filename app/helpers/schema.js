@@ -4,8 +4,11 @@ import joi from 'joi';
 
 const nameError = (x) => {
   switch (x[0].type) {
+    case 'any.required': {
+      return new Error('Name field is required');
+    }
     case 'any.empty': {
-      return new Error('Name is required ');
+      return new Error('Name cannot be empty');
     }
     case 'string.regex.base': {
       return new Error('Invalid format. Name Must be letters only');
@@ -24,8 +27,11 @@ const nameError = (x) => {
 
 const EmailError = (x) => {
   switch (x[0].type) {
+    case 'any.required': {
+      return new Error('Email field is required');
+    }
     case 'any.empty': {
-      return new Error('Email is required ');
+      return new Error('Email cannot be empty');
     }
     case 'string.email': {
       return new Error('Invalid email Format');
@@ -38,8 +44,11 @@ const EmailError = (x) => {
 
 const PasswordError = (x) => {
   switch (x[0].type) {
+    case 'any.required': {
+      return new Error('Password field is required');
+    }
     case 'any.empty': {
-      return new Error('Password is required ');
+      return new Error('Password cannot be empty');
     }
     case 'string.regex.base': {
       return new Error('Invalid format. Must be between 6 and 15 digits  contining letters and numbers');
@@ -52,8 +61,11 @@ const PasswordError = (x) => {
 
 const PhoneError = (x) => {
   switch (x[0].type) {
+    case 'any.required': {
+      return new Error('Phone Number field is required');
+    }
     case 'any.empty': {
-      return new Error('Phone number is required ');
+      return new Error('Phone number cannot be empty');
     }
     case 'string.regex.base': {
       return new Error('Invalid format. Must be between 11 digits and starts with 0');
@@ -66,8 +78,11 @@ const PhoneError = (x) => {
 
 const OfficeTypeError = (x) => {
   switch (x[0].type) {
+    case 'any.required': {
+      return new Error('Type of office fielc is required');
+    }
     case 'any.empty': {
-      return new Error('Type of office is required ');
+      return new Error('Type of office is not empty');
     }
     case 'string.regex.base': {
       return new Error('Invalid format. Type of office must letters only');
@@ -79,8 +94,11 @@ const OfficeTypeError = (x) => {
 };
 const OfficeNameError = (x) => {
   switch (x[0].type) {
+    case 'any.required': {
+      return new Error('Office name field is required');
+    }
     case 'any.empty': {
-      return new Error('Name is required ');
+      return new Error('Office name cannot be empty');
     }
     case 'string.regex.base': {
       return new Error('Invalid format. Name must contain only letters, spaces and underscores only');
@@ -93,8 +111,11 @@ const OfficeNameError = (x) => {
 
 const hqAddressError = (x) => {
   switch (x[0].type) {
+    case 'any.required': {
+      return new Error('Address field is required');
+    }
     case 'any.empty': {
-      return new Error('Address is required');
+      return new Error('Address is not empty');
     }
     case 'string.regex.base': {
       return new Error('Invalid format. Name must contain only letters, Numbers and spaces only');
@@ -106,8 +127,11 @@ const hqAddressError = (x) => {
 };
 const urlError = (x) => {
   switch (x[0].type) {
+    case 'any.required': {
+      return new Error('Logo url field is required');
+    }
     case 'any.empty': {
-      return new Error('logo url is required');
+      return new Error('logo url cannot be empty');
     }
     case 'string.uri': {
       return new Error('Invalid format of URL');
@@ -120,8 +144,11 @@ const urlError = (x) => {
 
 const idError = (x) => {
   switch (x[0].type) {
+    case 'any.required': {
+      return new Error('Id field is required');
+    }
     case 'any.empty': {
-      return new Error('id is required');
+      return new Error('Id cannot be empty');
     }
     case 'number.integer': {
       return new Error('Id must be an integer');
@@ -134,7 +161,7 @@ const idError = (x) => {
     }
   }
 };
-const requiredName = joi.string().trim().regex(/^[a-zA-Z]+$/)
+const requiredName = joi.string().trim().invalid('').regex(/^[a-zA-Z]+$/)
   .min(2)
   .max(30)
   .required()
@@ -144,18 +171,23 @@ const name = joi.string().trim().regex(/^[a-zA-Z]+$/).min(2)
   .max(30)
   .error(nameError);
 
-const email = joi.string().email().required().error(EmailError);
+const email = joi.string().email().invalid('').required()
+.error(EmailError);
 
-const password = joi.string().strip().regex(/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$/).required()
+const password = joi.string().invalid('').regex(/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$/).required()
   .error(PasswordError);
 
-const requiredType = joi.string().trim().regex(/^[a-zA-Z]+$/).required()
+const requiredType = joi.string().invalid('').trim().regex(/^[a-zA-Z]+$/)
+.required()
   .error(OfficeTypeError);
-const requiredOffice = joi.string().trim().regex(/^[a-z A-Z_]+$/).required()
+const requiredOffice = joi.string().invalid('').trim().regex(/^[a-z A-Z_]+$/)
+.required()
   .error(OfficeNameError);
 
 
-export const id = joi.number().integer().positive().error(idError);
+export const id = joi.number().invalid('').required().integer()
+  .positive()
+  .error(idError);
 export const string = joi.string().error(new Error('value must be a string'));
 
 export const value = joi.string().regex(/^[a-zA-Z]+$/).error(new Error('Parameter must be Letters only'));
@@ -205,16 +237,16 @@ export const createOfficeSchema = joi.object().keys({
 });
 
 export const createCandidateSchema = joi.object().keys({
-  userId: id.required(),
-  officeId: id.required(),
-  candidateId: id.required(),
-  partyId: id.required(),
+  userId: id,
+  officeId: id,
+  candidateId: id,
+  partyId: id,
 
 });
 
 
 export const createPetitionSchema = joi.object().keys({
-  office: id.required(),
+  office: id,
   subject: string.required(),
   body: string.required(),
   evidence: joi.array().items(joi.string().allow('').uri()).single(),
@@ -226,6 +258,12 @@ export const editPetitionSchema = joi.object().keys({
   body: string.allow(''),
   evidence: joi.array().items(joi.string().uri().allow('')).single(),
 });
+
+export const createInterestSchema = joi.object().keys({
+  office: id,
+  party: id,
+});
+
 
 export const createVote = joi.object().keys({
   office: id,

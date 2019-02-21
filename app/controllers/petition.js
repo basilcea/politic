@@ -18,8 +18,9 @@ class petitionController {
   */
   static async createPetition(req, res) {
     const {
-      office, subject, body, evidence,
-    } = req.body;
+ office, subject, body, evidence 
+} = req.body;
+    console.log(req.body);
     const getUser = 'Select * from users where id= $1 AND registeras =$2';
     const checkPolitician = await pool.query(getUser, [req.user.id, 'politician']);
     if (!checkPolitician.rows[0]) {
