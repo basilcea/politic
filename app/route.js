@@ -33,6 +33,7 @@ router.get('/parties/:id', auth.checkToken, partyController.getParty);
 router.patch('/parties/:id/:value', auth.checkToken, partyController.editParty);
 router.delete('/parties/:id', auth.checkToken, partyController.deleteParty);
 
+router.get('/petitions', auth.checkToken, petitionController.getUserPetition);
 router.post('/petitions', auth.checkToken, petitionController.createPetition);
 router.put('/petitions/:id', auth.checkToken, petitionController.editPetition);
 export default router;
