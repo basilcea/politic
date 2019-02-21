@@ -25,6 +25,7 @@ router.post('/offices', auth.checkToken, officeController.createOffice);
 router.get('/offices', auth.checkToken, officeController.getAllOffices);
 router.get('/office/:id/result', auth.checkToken, officeController.getOfficeResults);
 router.get('/offices/:id', auth.checkToken, officeController.getOffice);
+
 router.post('/office/:id/register', auth.checkToken, candidateController.makeCandidate);
 
 router.post('/parties', auth.checkToken, partyController.createParty);
@@ -34,6 +35,7 @@ router.patch('/parties/:id/:value', auth.checkToken, partyController.editParty);
 router.delete('/parties/:id', auth.checkToken, partyController.deleteParty);
 
 router.get('/petitions', auth.checkToken, petitionController.getUserPetition);
+router.get('/petitions/:id', auth.checkToken, petitionController.getAPetition);
 router.post('/petitions', auth.checkToken, petitionController.createPetition);
 router.put('/petitions/:id', auth.checkToken, petitionController.editPetition);
 export default router;

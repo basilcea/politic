@@ -80,9 +80,9 @@ class petitionController {
     const petition = 'SELECT * from petitions where id=$1';
     const { rows } = await pool.query(petition, [id]);
     if (!rows[0]) {
-      return res.status(404).json({
-        'status': 404,
-        'error': 'Petition not found',
+      return res.status(401).json({
+        'status': 401,
+        'error': 'Unauthorized',
       });
     }
     const {
@@ -122,14 +122,41 @@ class petitionController {
       const getpetitions = 'SELECT * from petitions where createdBy =$1';
       const { rows } = await pool.query(getpetitions, [req.user.id]);
       if (!rows[0]) {
-        return res.status(404).json({
-          'status': 404,
-          'error': 'No petitions found',
+        return res.status(401).json({
+          'status': 401,
+          'error': 'Unauthorized',
         });
       }
       return res.status(200).json({
         'status': 200,
         'data': rows,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        status: 500,
+        error: err.toString(),
+      });
+    }
+  }
+
+  static async getAPetition(req, res) {
+    try {
+      const getpetitions = 'SELECT * from petitions where createdBy =$1';
+      const { rows } = await pool.query(getpetitions, [req.user.id]);
+      if (!rows[0]) {
+        return res.status(401).json({
+          'status': 401,
+          'error': 'Unauthorized',
+        });
+      }
+      const id = Number(req.params.id);
+      validation.check(id, validation.id, res);
+      const petition = 'Select * from petitions where id =$1';
+      const checkPetition = await pool.query(petition, [id]);
+
+      return res.status(200).json({
+        'status': 200,
+        'data': checkPetition.rows[0],
       });
     } catch (err) {
       return res.status(500).json({
