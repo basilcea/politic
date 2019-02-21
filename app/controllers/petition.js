@@ -97,7 +97,6 @@ class petitionController {
       body.trim() || rows[0].body,
       [evidence] || rows[0].evidence,
       id];
-    console.log(rows[0].evidence);
     try {
       const updatedPetition = await pool.query(updatePetition, values);
       return res.status(201).json({
@@ -114,6 +113,28 @@ class petitionController {
       return res.status(501).json({
         'status': 501,
         'error': err.toString(),
+      });
+    }
+  }
+
+  static async getUserPetition(req, res) {
+    try {
+      const getpetitions = 'SELECT * from petitions where createdBy =$1';
+      const { rows } = await pool.query(getpetitions, [req.user.id]);
+      if (!rows[0]) {
+        return res.status(404).json({
+          'status': 404,
+          'error': 'No petitions found',
+        });
+      }
+      return res.status(200).json({
+        'status': 200,
+        'data': rows,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        status: 500,
+        error: err.toString(),
       });
     }
   }
