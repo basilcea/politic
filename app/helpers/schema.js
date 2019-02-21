@@ -217,7 +217,14 @@ export const createPetitionSchema = joi.object().keys({
   office: id.required(),
   subject: string.required(),
   body: string.required(),
-  evidence: joi.array().items(joi.string().allow('').uri()),
+  evidence: joi.array().items(joi.string().allow('').uri()).single(),
+});
+
+export const editPetitionSchema = joi.object().keys({
+  office: id.allow(''),
+  subject: string.allow(''),
+  body: string.allow(''),
+  evidence: joi.array().items(joi.string().uri().allow('')).single(),
 });
 
 export const createVote = joi.object().keys({
