@@ -34,4 +34,5 @@ router.patch('/parties/:id/:value', auth.checkToken, partyController.editParty);
 router.delete('/parties/:id', auth.checkToken, partyController.deleteParty);
 
 router.post('/petitions', auth.checkToken, petitionController.createPetition);
+router.put('/petitions/:id', auth.checkToken, petitionController.editPetition);
 export default router;

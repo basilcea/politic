@@ -132,6 +132,7 @@ class partyController {
     }
     const id = Number(req.params.id);
     // eslint-disable-next-line prefer-destructuring
+    validation.check(id, validation.id, res);
     validation.check(req.body, validation.editPartySchema, res);
     const { name, hqAddress, logoUrl } = req.body;
     const value = req.params.value;
