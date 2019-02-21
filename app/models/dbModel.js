@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable func-names */
 import pool from '../migrate';
 import seed from '../helpers/seed';
@@ -7,6 +8,7 @@ import offices from '../seed/offices';
 import parties from '../seed/parties';
 import votes from '../seed/votes';
 import petitions from '../seed/petitions';
+import interests from '../seed/interests';
 
 /**
 * Delete user table
@@ -80,7 +82,7 @@ export const createPartyTable = async function () {
           AKA VARCHAR(50),
           hqAddress VARCHAR(400) not null,
           logoUrl TEXT not null
-        )`,
+        )`
     );
     console.log('Party table created');
     seed('parties', parties);
@@ -88,6 +90,7 @@ export const createPartyTable = async function () {
     console.log(err);
   }
 };
+
 /**
 * Delete vote table
 * @async
@@ -164,6 +167,48 @@ export const createOfficeTable = async function () {
   }
 };
 
+
+/**
+* Delete interest table
+* @async
+* @function dropInterestTable
+* @return {Promise<string>} candidates table deleted
+*/
+
+export const dropInterestTable = async function () {
+  try {
+    await pool.query('DROP TABLE IF EXISTS interest CASCADE');
+    console.log('interest table deleted');
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
+/**
+* Create interest table
+* @async
+* @function createInterestTable
+* @return {Promise<string>} party table created
+*/
+
+export const createInterestTable = async function () {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS interests(
+        id serial Unique,
+        office integer references offices(id) ON DELETE CASCADE not null,
+        party integer references parties(id) ON DELETE CASCADE not null,
+        interest integer references users(id) ON DELETE CASCADE not null,
+        Constraint interest_id_pkey PRIMARY KEY (id , interest)
+      )`);
+    console.log('interest table created');
+    seed('interests', interests);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 /**
 * Delete Candidate table
 * @async
@@ -233,8 +278,9 @@ export const createPetitionTable = async function () {
         createdOn timestamp Default Current_timeStamp,
         createdBy Integer references users(id) ON DELETE CASCADE not null,
         office Integer references offices(id) On DELETE CASCADE not null,
-        subject text not null ,
-        body text not null
+        subject text not null,
+        body text not null,
+        evidence text [] 
       )`);
     console.log('petitions table created');
     seed('petitions', petitions);
@@ -254,6 +300,7 @@ export const dropAllTables = async function () {
   try {
     await dropPetitionTable();
     await dropVoteTable();
+    await dropInterestTable();
     await dropCandidateTable();
     await dropPartyTable();
     await dropOfficeTable();
@@ -278,6 +325,7 @@ export const createAllTables = async function () {
     await createUserTable();
     await createOfficeTable();
     await createPartyTable();
+    await createInterestTable();
     await createCandidateTable();
     await createVoteTable();
     await createPetitionTable();
