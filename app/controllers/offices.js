@@ -162,5 +162,39 @@ class officeController {
       })
     }
   }
+
+  static async deleteOffice(req, res) {
+    if (req.user.isAdmin !== true) {
+      return res.status(401).json({
+        status: 401,
+        error: 'Unauthorized',
+      });
+    }
+    const id = Number(req.params.id);
+    validation.check(id, validation.id, res);
+    try {
+      const getParty = 'Select * from offices where id =$1';
+      const { rows } = await pool.query(getParty, [id]);
+      if (!rows[0]) {
+        return res.status(404).json({
+          'status': 404,
+          'error': 'Office not found',
+        });
+      }
+      const deleting = 'Delete from offices where id=$1';
+      await pool.query(deleting, [id]);
+      return res.status(200).json({
+        'status': 200,
+        'data': {
+          'message': 'office deleted succesfully',
+        },
+      });
+    } catch (err) {
+      return res.status(501).json({
+        'status': 501,
+        'error': err.toString(),
+      });
+    }
+  }
 }
 export default officeController;

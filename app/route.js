@@ -35,6 +35,7 @@ router.post('/offices', auth.checkToken, officeController.createOffice);
 router.get('/offices', auth.checkToken, officeController.getAllOffices);
 router.get('/offices/:id', auth.checkToken, officeController.getOffice);
 router.patch('/offices/:id', auth.checkToken, officeController.editOffice);
+router.delete('/offices/:id', auth.checkToken, officeController.deleteOffice);
 
 router.post('/office/:id/register', auth.checkToken, candidateController.makeCandidate);
 router.get('/office/:id/candidates', auth.checkToken, candidateController.searchCandidate);
