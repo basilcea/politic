@@ -20,8 +20,8 @@ const router = express.Router();
 
 router.post('/auth/signup', userController.signup);
 router.post('/auth/login', userController.login);
-//router.post('/auth/reset', userController.resetPassword);
-//router.get('/auth/logout', userController.logout);
+// router.post('/auth/reset', userController.resetPassword);
+// router.get('/auth/logout', userController.logout);
 
 router.post('/votes', auth.checkToken, votesController.vote);
 
@@ -31,6 +31,7 @@ router.get('/office/:id/result', auth.checkToken, officeController.getOfficeResu
 router.get('/offices/:id', auth.checkToken, officeController.getOffice);
 
 router.post('/office/:id/register', auth.checkToken, candidateController.makeCandidate);
+router.get('/office/:id/candidates', auth.checkToken, candidateController.searchCandidate);
 
 router.post('/parties', auth.checkToken, partyController.createParty);
 router.get('/parties', auth.checkToken, partyController.getAllParties);

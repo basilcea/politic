@@ -83,7 +83,7 @@ class candidateController {
       const inserted = await pool.query('SELECT * from candidates');
       return res.status(201).json({
         'status': 201,
-        'data': inserted.rows[inserted.rowCount - 1]
+        'data': inserted.rows[inserted.rowCount - 1],
       });
     } catch (err) {
       return res.status(500).json({
@@ -91,6 +91,32 @@ class candidateController {
         'error': err.toString(),
       });
     }
+  }
+
+  static async searchCandidate(req, res) {
+    const id = Number(req.params.id);
+    validation.check(id, validation.id, res);
+    try {
+      const candidate = 'Select candidate from candidates where office= $1';
+      const { rows } = await pool.query(candidate, [id]);
+      if (!rows) {
+        return res.status(404).json({
+          'status': 404,
+          'error': 'No candidate found for this office',
+        })
+      }
+        return res.status(200).json({
+          'status': 200,
+          'data': rows,
+        });
+
+    } catch (err) {
+      return res.status(500).json({
+        'status': 500,
+        'error': err.toString(),
+      });
+    }
+
   }
 }
 export default candidateController;
