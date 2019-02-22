@@ -103,12 +103,12 @@ class candidateController {
         return res.status(404).json({
           'status': 404,
           'error': 'No candidate found for this office',
-        })
-      }
-        return res.status(200).json({
-          'status': 200,
-          'data': rows,
         });
+      }
+      return res.status(200).json({
+        'status': 200,
+        'data': rows,
+      });
 
     } catch (err) {
       return res.status(500).json({
@@ -117,6 +117,48 @@ class candidateController {
       });
     }
 
+  }
+
+  static async editCandidate(req, res) {
+    try {
+      const id = Number(req.params.id);
+      validation.check(id, validation.id, res);
+      if (req.user.isAdmin === false) {
+        return res.status(401).json({
+          'status': 401,
+          'error': 'Unauthorized',
+        });
+      }
+      const getCandidates = 'Select * from candidates where id =$1';
+      const { rows } = await pool.query(getCandidates, [id]);
+      if (!rows[0]) {
+        return res.status(404).json({
+          'status': 404,
+          'error': 'Candidate not found',
+        });
+      }
+      const {
+        office, party,
+      } = req.body;
+
+      validation.check(req.body, validation.editInterestSchema, res);
+      const updateCandidate = 'Update candidates SET office = $1 , party =$2  where id = $3 returning *';
+      const values = [
+        office || rows[0].office,
+        party || rows[0].party,
+        id];
+      const updatedCandidate = await pool.query(updateCandidate, values);
+      return res.status(201).json({
+        'status': 201,
+        'data': updatedCandidate.rows[0],
+      });
+
+    } catch (err) {
+      return res.status(500).json({
+        'status': 500,
+        'error': err.toString(),
+      });
+    }
   }
 }
 export default candidateController;

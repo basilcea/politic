@@ -24,14 +24,16 @@ router.post('/auth/login', userController.login);
 // router.get('/auth/logout', userController.logout);
 
 router.post('/votes', auth.checkToken, votesController.vote);
+router.get('/office/:id/result', auth.checkToken, officeController.getOfficeResults);
 
 router.post('/offices', auth.checkToken, officeController.createOffice);
 router.get('/offices', auth.checkToken, officeController.getAllOffices);
-router.get('/office/:id/result', auth.checkToken, officeController.getOfficeResults);
 router.get('/offices/:id', auth.checkToken, officeController.getOffice);
 
 router.post('/office/:id/register', auth.checkToken, candidateController.makeCandidate);
 router.get('/office/:id/candidates', auth.checkToken, candidateController.searchCandidate);
+router.put('/candidates/:id', auth.checkToken, candidateController.editCandidate);
+
 
 router.post('/parties', auth.checkToken, partyController.createParty);
 router.get('/parties', auth.checkToken, partyController.getAllParties);
