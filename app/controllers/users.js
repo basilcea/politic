@@ -86,7 +86,7 @@ class userController {
     const getUser = 'SELECT * FROM users WHERE email = $1';
     try {
       //
-      validation.check(req.body, validation.loginSchema,res);
+      validation.check(req.body, validation.loginSchema, res);
       const { email, password } = req.body;
       const { rows } = await pool.query(getUser, [email]);
       if (!rows[0]) {
@@ -119,5 +119,151 @@ class userController {
       });
     }
   }
+
+  static async editProfile(req, res) {
+    const {
+      firstname, lastname, othername, email, phoneNumber, registerAs, passportUrl,
+    } = req.body;
+    validation.check(req.body, validation.editProfileSchema, res);
+    const getUser = 'SELECT * from users where id = $1';
+    const { rows } = await pool.query(getUser, [req.user.id]);
+    if (!rows[0]) {
+      return res.status(401).json({
+        'status': 401,
+        'error': 'Unauthorized',
+      });
+    }
+
+    try {
+      const updateUser = `UPDATE users
+    SET firstname =$1, lastname =$2, othername =$3, email=$4, phonenumber=$5, registeras=$6, passporturl=$7 ,isAdmin=$8
+    WHERE id = $9 returning *`;
+      [
+        firstname || rows[0].firstname,
+        lastname || rows[0].lastname,
+        othername || rows[0].othername,
+        email || rows[0].email,
+        phoneNumber || rows[0].phonenumber,
+        registerAs || rows[0].registeras,
+        passportUrl || rows[0].passporturl,
+        req.user.isAdmin || rows[0].isadmin,
+        req.user.id,
+      ];
+
+      const getEmail = 'SELECT email, phonenumber from users';
+      const emailing = await pool.query(getEmail);
+      if (authHelper.isUniqueEmail(email, emailing) !== null) {
+        return res.status(422).json({
+          'status': 422,
+          'error': 'Email already exists',
+        });
+      }
+
+      if (authHelper.isUniquePhone(phoneNumber, emailing) !== null) {
+        return res.status(422).json({
+          'status': 422,
+          'error': 'phoneNumber already exists',
+        });
+      }
+      if (req.user.isAdmin === true && registerAs === 'politician') {
+        const response = await pool.query(updateUser,
+          [
+            firstname || rows[0].firstname,
+            lastname || rows[0].lastname,
+            othername || rows[0].othername,
+            email || rows[0].email,
+            phoneNumber || rows[0].phonenumber,
+            registerAs || rows[0].registeras,
+            passportUrl || rows[0].passporturl,
+            false,
+            req.user.id,
+          ]);
+
+        res.status(200).json({
+          'status': 200,
+          'data': {
+            '': response.rows,
+            'message': 'You are no longer an admin as admin cannot be a politician',
+          },
+        });
+      }
+
+      const getInterest = 'Select interest from interests where interest=$1';
+      const interest = await pool.query(getInterest, [req.user.id]);
+
+      if (registerAs === 'voter' && interest.rows[0] !== undefined) {
+        const deleteInterest = 'Delete from interests where interest =$1';
+        await pool.query(deleteInterest, [req.user.id]);
+        const newResponse = await pool.query(updateUser,
+          [
+            firstname || rows[0].firstname,
+            lastname || rows[0].lastname,
+            othername || rows[0].othername,
+            email || rows[0].email,
+            phoneNumber || rows[0].phonenumber,
+            registerAs || rows[0].registeras,
+            passportUrl || rows[0].passporturl,
+            rows[0].isAdmin,
+            req.user.id,
+          ]);
+        res.status(200).json({
+          'status': 200,
+          'data': {
+            '': newResponse.rows,
+            'message': 'All political interest removed',
+          },
+        });
+      }
+      const getCandidate = 'Select candidate from candidates where candidate=$1';
+      const candidate = await pool.query(getCandidate, [req.user.id]);
+      if (candidate.rows[0] !== undefined) {
+        const anotherResponse = await pool.query(updateUser,
+          [
+            firstname || rows[0].firstname,
+            lastname || rows[0].lastname,
+            othername || rows[0].othername,
+            email || rows[0].email,
+            phoneNumber || rows[0].phonenumber,
+            'politician',
+            passportUrl || rows[0].passporturl,
+            rows[0].isAdmin,
+            req.user.id,
+          ]);
+        req.body.registerAs = 'voter';
+        res.status(401), json({
+          'status': 401,
+          'data': {
+            '': [anotherResponse.rows],
+            'message': 'You are already a candidate. You cannot be a voter',
+          },
+        });
+      }
+      const expectedResponse = await pool.query(updateUser,
+        [
+          firstname || rows[0].firstname,
+          lastname || rows[0].lastname,
+          othername || rows[0].othername,
+          email || rows[0].email,
+          phoneNumber || rows[0].phonenumber,
+          registerAs || rows[0].registeras,
+          passportUrl || rows[0].passporturl,
+          rows[0].isAdmin,
+          req.user.id,
+        ]);
+      console.log(expectedResponse);
+      return res.status(200).json({
+        'status': 200,
+        'data': expectedResponse.rows,
+      });
+
+
+    } catch (error) {
+      res.status(500).json({
+        'status': 500,
+        'error': error.toString(),
+      });
+    }
+  }
 }
+
 export default userController;
