@@ -267,6 +267,34 @@ class userController {
     }
   }
 
+  static async deleteProfile(req , res) {
+    
+    try {
+      const getUser = 'Select * from users where id= $1';
+   
+      const checkUser = await pool.query(getUser ,[req.user.id])
+      if(!checkUser.rows[0]) {
+        return res.status(404).json({
+          'status':404,
+          'error': 'User not found'
+        })
+      }
+      const deleting = 'Delete from users where id= $1';
+      await pool.query(deleting ,[req.user.id])
+      return res.status(200).json({
+        'status': 200,
+        'data': {
+          'message': 'Your profile has been deleted'
+        }
+      })
+    }catch(err) {
+      return res.status(500).json({
+        'status':500,
+        'error': err.toString()
+      })
+    }   
+  }
+
 }
 
 export default userController;

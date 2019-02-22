@@ -26,7 +26,7 @@ router.post('/auth/login', userController.login);
 
 router.patch('/users/me', auth.checkToken, userController.editProfile);
 router.post('/users/me/password', auth.checkToken, userController.changePassword);
-// router.put('/users/me', userController.deleteProfile);
+router.delete('/users/me', auth.checkToken, userController.deleteProfile);
 
 
 router.post('/votes', auth.checkToken, votesController.vote);
