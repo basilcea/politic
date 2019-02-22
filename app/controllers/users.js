@@ -43,6 +43,7 @@ class userController {
           'error': 'phoneNumber already exists',
         });
       }
+
       const hashPassword = authHelper.hashPassword(password);
 
       const createUser = `INSERT INTO users(firstname, lastname, othername, email,phoneNumber, password,registerAs ,isAdmin)

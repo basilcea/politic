@@ -233,6 +233,14 @@ export const editPartySchema = joi.object().keys({
 export const createOfficeSchema = joi.object().keys({
   type: requiredType,
   office: requiredOffice,
+  electDate: joi.date().iso().error(new Error('Date should be in this format yyyy-mm-dd')),
+
+});
+
+export const editOfficeSchema = joi.object().keys({
+  type: joi.string().allow('').trim().regex(/^[a-zA-Z]+$/).error (OfficeTypeError),
+  office: joi.string().allow('').trim().regex(/^[a-z A-Z_]+$/).error (OfficeNameError),
+  electDate: joi.date().iso().error(new Error('Date should be in this format yyyy-mm-dd')),
 
 });
 
