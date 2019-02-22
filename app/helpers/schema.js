@@ -51,7 +51,7 @@ const PasswordError = (x) => {
       return new Error('Password cannot be empty');
     }
     case 'string.regex.base': {
-      return new Error('Invalid format. Must be between 6 and 15 digits  contining letters and numbers');
+      return new Error('Invalid format. Must be between 6 and 15 digits containing letters and numbers');
     }
     default: {
       return new Error('Password has some error');
@@ -283,10 +283,16 @@ export const editProfileSchema = joi.object().keys({
   phoneNumber: joi.string().regex(/^[0]\d{10}$/).error(PhoneError),
   email: joi.string().email().allow('').error(EmailError),
   passportUrl: joi.string().trim().uri()
-  .error(urlError),
+    .error(urlError),
   registerAs: joi.string().valid('voter', 'politician').trim()
     .error(new Error('Value must be either voter or politician')),
-  
+
+});
+export const changePasswordSchema = joi.object().keys({
+  oldPassword: password,
+  newPassword: password,
+  confirmPassword: joi.string().valid(joi.ref('newPassword')).required().strict()
+    .error(new Error('Password does not match')),
 });
 
 export const check = (data, schema, res) => {
