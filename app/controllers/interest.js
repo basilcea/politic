@@ -106,5 +106,33 @@ class interestController {
       });
     }
   }
+  
+  static async deleteInterest(req, res) {
+    const id = Number(req.params.id);
+    validation.check(id, validation.id, res);
+    const getInterests = 'Select * from interests where id =$1 and interest=$2';
+    const { rows } = await pool.query(getInterests, [id, req.user.id]);
+    if (!rows[0]) {
+      return res.status(404).json({
+        'status': 404,
+        'error': 'Interest not found',
+      });
+    }
+    const deleting = 'Delete from interests where id=$1';
+    try {
+      await pool.query(deleting, [id]);
+      return res.status(200).json({
+        'status': 200,
+        'data': {
+          'message': 'interests deleted succesfully',
+        },
+      });
+    } catch (err) {
+      return res.status(501).json({
+        'status': 501,
+        'error': err.toString(),
+      });
+    }
+  }
 }
 export default interestController;
