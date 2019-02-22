@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 import pool from '../migrate';
 import * as validation from '../helpers/schema';
 
@@ -8,8 +9,8 @@ class interestController {
     const checkPolitician = await pool.query(getUser, [req.user.id, 'politician']);
     if (!checkPolitician.rows[0]) {
       return res.status(404).json({
-        status: 404,
-        error: 'User is not a politician',
+        'status': 404,
+        'error': 'User is not a politician',
       });
     }
     validation.check(req.body, validation.createInterestSchema, res);
@@ -28,13 +29,13 @@ class interestController {
       const AllInterests = await pool.query(selectInterest);
 
       return res.status(201).json({
-        status: 201,
-        data: AllInterests.rows[AllInterests.rowCount - 1],
+        'status': 201,
+        'data': AllInterests.rows[AllInterests.rowCount - 1],
       });
     } catch (err) {
       return res.status(501).json({
-        status: 501,
-        error: err.toString(),
+        'status': 501,
+        'error': err.toString(),
       });
     }
   }
@@ -48,8 +49,8 @@ class interestController {
     const { rows } = await pool.query(getUserInterests, [req.user.id, id]);
     if (!rows[0]) {
       return res.status(401).json({
-        status: 401,
-        Error: 'Interest not found',
+        'status': 401,
+        'error ': 'Interest not found',
       });
     }
     const {
@@ -65,13 +66,13 @@ class interestController {
     try {
       const updatedInterest = await pool.query(updateInterest, values);
       return res.status(201).json({
-        status: 201,
-        data: updatedInterest.rows[0],
+        'status': 201,
+        'data': updatedInterest.rows[0],
       });
     } catch (err) {
       return res.status(501).json({
-        status: 501,
-        error: err.toString(),
+        'status': 501,
+        'error': err.toString(),
       });
     }
   }
@@ -79,30 +80,29 @@ class interestController {
   static async getInterest(req, res) {
     try {
       const getallinterests = 'SELECT * from interests';
-
       const getuserinterests = 'SELECT * from interests where interest =$1';
       if (req.user.isAdmin === true) {
         const { rows } = await pool.query(getallinterests);
         return res.status(200).json({
-          status: 200,
-          data: rows,
+          'status': 200,
+          'data': rows,
         });
       }
       const { rows } = await pool.query(getuserinterests, [req.user.id]);
       if (!rows[0]) {
         return res.status(401).json({
-          status: 401,
-          error: 'Unauthorized',
+          'status': 401,
+          'error': 'Unauthorized',
         });
       }
       return res.status(200).json({
-        status: 200,
-        data: rows,
+        'status': 200,
+        'data': rows,
       });
     } catch (err) {
       return res.status(500).json({
-        status: 500,
-        error: err.toString(),
+        'status': 500,
+        'error': err.toString(),
       });
     }
   }
