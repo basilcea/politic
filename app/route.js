@@ -47,4 +47,5 @@ router.delete('/petitions/:id', auth.checkToken, petitionController.deletePetiti
 router.get('/interests', auth.checkToken, interestController.getInterest);
 router.post('/interests', auth.checkToken, interestController.createInterest);
 router.put('/interests/:id', auth.checkToken, interestController.editInterest);
+router.delete('/interests/:id', auth.checkToken, interestController.deleteInterest);
 export default router;
