@@ -23,24 +23,23 @@ router.post('/auth/login', userController.login);
 // router.post('/auth/reset', userController.resetPassword);
 // router.get('/auth/logout', userController.logout);
 
-
 router.patch('/users/me', auth.checkToken, userController.editProfile);
 router.post('/users/me/password', auth.checkToken, userController.changePassword);
 router.delete('/users/me', auth.checkToken, userController.deleteProfile);
 
 
 router.post('/votes', auth.checkToken, votesController.vote);
-router.get('/office/:id/result', auth.checkToken, officeController.getOfficeResults);
+router.get('/office/:id/result', auth.checkToken, votesController.getOfficeResults);
 
 router.post('/offices', auth.checkToken, officeController.createOffice);
 router.get('/offices', auth.checkToken, officeController.getAllOffices);
 router.get('/offices/:id', auth.checkToken, officeController.getOffice);
+router.patch('/offices/:id', auth.checkToken, officeController.editOffice);
 
 router.post('/office/:id/register', auth.checkToken, candidateController.makeCandidate);
 router.get('/office/:id/candidates', auth.checkToken, candidateController.searchCandidate);
 router.put('/candidates/:id', auth.checkToken, candidateController.editCandidate);
 router.delete('/candidates/:id', auth.checkToken, candidateController.deleteCandidate);
-
 
 router.post('/parties', auth.checkToken, partyController.createParty);
 router.get('/parties', auth.checkToken, partyController.getAllParties);

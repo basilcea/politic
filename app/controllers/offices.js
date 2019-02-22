@@ -27,11 +27,11 @@ class officeController {
     }
     validation.check(req.body, validation.createOfficeSchema, res);
 
-    const { type, name } = req.body;
-    const sendoffice = `INSERT INTO offices (type ,name)
+    const { type, name , electDate} = req.body;
+    const sendoffice = `INSERT INTO offices (type ,name ,electDate)
     VALUES($1,$2)`;
     const selectOffice = 'Select * from offices';
-    const values = [type.trim(), name.trim().toLowerCase()];
+    const values = [type.trim(), name.trim().toLowerCase() , electDate.trim()];
 
     try {
       /**
@@ -121,35 +121,45 @@ class officeController {
       });
     }
   }
-
-  /**
-  * Get office result
-  * @param {integer} - id of the office
-  * @return {object} -All  office with the id
-  */
-  static async getOfficeResults(req, res) {
-    const officeId = Number(req.params.id);
-    // check if input string is valid.
-    validation.check(officeId, validation.id, res);
-    const selectResult = `SELECT office, candidate , count(candidate) result  from votes
-    where office = $1  Group BY (candidate ,office) `;
+  static async editOffice(req, res) {
+    if (req.user.isAdmin !== true) {
+      return res.status(401).json({
+        'status': 401,
+        'error': 'Unauthorized',
+      });
+    }
+    const id = Number(req.params.id);
+    // eslint-disable-next-line prefer-destructuring
+    validation.check(id, validation.id, res);
+    validation.check(req.body, validation.editOfficeSchema, res);
+    const { type, name, electDate } = req.body
+    const getOffice = 'Select * from offices where id=$1';
+    const { rows } = await pool.query(getOffice, [id]);
+    const updateOffice = 'update offices set type=$1, name=$2 , electDate =$3 where id=$4 returning *';
+    const values = [
+      type || rows[0].type,
+      name || rows[0].name,
+      electDate || rows[0].electDate,
+      id
+    ]
     try {
-      const getResult = await pool.query(selectResult, [officeId]);
-      if (!getResult.rows[0]) {
+      if (!rows[0]) {
         return res.status(404).json({
           'status': 404,
-          'error': 'Office not found',
+          'error': 'Party not found',
         });
       }
-      return res.status(200).json({
-        'status': 200,
-        'data': getResult.rows,
+      const updatedOffice = await pool.query(updateOffice, values);
+      return res.status(201).json({
+        'status': 201,
+        'data': updatedOffice.rows[0],
       });
+      
     } catch (err) {
-      return res.status(501).json({
-        'status': 501,
-        'error': err.toString(),
-      });
+      return res.status(500).json({
+        'status': 500 ,
+        'error': err.toString()
+      })
     }
   }
 }

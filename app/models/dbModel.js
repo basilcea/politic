@@ -158,7 +158,8 @@ export const createOfficeTable = async function () {
       CREATE TABLE IF NOT EXISTS offices(
         id serial PRIMARY KEY,
         type varchar(255) not null,
-        name Varchar(255) not null
+        name varchar(255) not null,
+        electDate date
       )`);
     console.log('offices table created');
     seed('offices', offices);

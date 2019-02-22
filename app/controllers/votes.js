@@ -65,5 +65,31 @@ class votesController {
       });
     }
   }
+
+  static async getOfficeResults(req, res) {
+    const officeId = Number(req.params.id);
+    // check if input string is valid.
+    validation.check(officeId, validation.id, res);
+    const selectResult = `SELECT office, candidate , count(candidate) result  from votes
+    where office = $1  Group BY (candidate ,office) `;
+    try {
+      const getResult = await pool.query(selectResult, [officeId]);
+      if (!getResult.rows[0]) {
+        return res.status(404).json({
+          'status': 404,
+          'error': 'Office not found',
+        });
+      }
+      return res.status(200).json({
+        'status': 200,
+        'data': getResult.rows,
+      });
+    } catch (err) {
+      return res.status(501).json({
+        'status': 501,
+        'error': err.toString(),
+      });
+    }
+  }
 }
 export default votesController;
