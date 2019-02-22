@@ -23,6 +23,11 @@ router.post('/auth/login', userController.login);
 // router.post('/auth/reset', userController.resetPassword);
 // router.get('/auth/logout', userController.logout);
 
+
+router.patch('/users/me', auth.checkToken, userController.editProfile);
+// router.put('/users/me', userController.deleteProfile);
+
+
 router.post('/votes', auth.checkToken, votesController.vote);
 router.get('/office/:id/result', auth.checkToken, officeController.getOfficeResults);
 

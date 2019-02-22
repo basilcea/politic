@@ -276,6 +276,19 @@ export const createVote = joi.object().keys({
   voter: id,
 });
 
+export const editProfileSchema = joi.object().keys({
+  firstname: name,
+  lastname: name,
+  othername: name,
+  phoneNumber: joi.string().regex(/^[0]\d{10}$/).error(PhoneError),
+  email: joi.string().email().allow('').error(EmailError),
+  passportUrl: joi.string().trim().uri()
+  .error(urlError),
+  registerAs: joi.string().valid('voter', 'politician').trim()
+    .error(new Error('Value must be either voter or politician')),
+  
+});
+
 export const check = (data, schema, res) => {
   joi.validate(data, schema, { stripUnknown: true }, (err) => {
     if (err) {
