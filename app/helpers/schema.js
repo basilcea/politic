@@ -172,16 +172,16 @@ const name = joi.string().trim().regex(/^[a-zA-Z]+$/).min(2)
   .error(nameError);
 
 const email = joi.string().email().invalid('').required()
-.error(EmailError);
+  .error(EmailError);
 
 const password = joi.string().invalid('').regex(/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$/).required()
   .error(PasswordError);
 
 const requiredType = joi.string().invalid('').trim().regex(/^[a-zA-Z]+$/)
-.required()
+  .required()
   .error(OfficeTypeError);
 const requiredOffice = joi.string().invalid('').trim().regex(/^[a-z A-Z_]+$/)
-.required()
+  .required()
   .error(OfficeNameError);
 
 
@@ -254,14 +254,19 @@ export const createPetitionSchema = joi.object().keys({
 
 export const editPetitionSchema = joi.object().keys({
   office: id.allow(''),
-  subject: string.allow(''),
-  body: string.allow(''),
+  subject: string.allow('').required(),
+  body: string.allow('').required(),
   evidence: joi.array().items(joi.string().uri().allow('')).single(),
 });
 
 export const createInterestSchema = joi.object().keys({
   office: id,
   party: id,
+});
+
+export const editInterestSchema = joi.object().keys({
+  office: id.allow(''),
+  party: id.allow(''),
 });
 
 
