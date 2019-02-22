@@ -171,7 +171,7 @@ class partyController {
   * @return {object} - The satus code and message to show delte action completed
   */
   static async deleteParty(req, res) {
-    if (req.user.isAdmin !== false) {
+    if (req.user.isAdmin !== true) {
       return res.status(401).json({
         status: 401,
         error: 'Unauthorized',
