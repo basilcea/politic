@@ -18,8 +18,8 @@ class petitionController {
   */
   static async createPetition(req, res) {
     const {
- office, subject, body, evidence 
-} = req.body;
+      office, subject, body, evidence,
+    } = req.body;
     console.log(req.body);
     const getUser = 'Select * from users where id= $1 AND registeras =$2';
     const checkPolitician = await pool.query(getUser, [req.user.id, 'politician']);
@@ -66,24 +66,15 @@ class petitionController {
   }
 
   static async editPetition(req, res) {
-    const getUserPetition = 'Select * from petitions where createdBy=$1';
-    const checkCreator = await pool.query(getUserPetition, [req.user.id]);
-    if (!checkCreator.rows) {
-      return res.status(401).json({
-        'status': 401,
-        'Error': 'Unauthorized.You cannot edit this petition',
-      });
-    }
-
+    const getUserPetition = 'Select * from petitions where createdBy=$1 AND id=$2';
     const id = Number(req.params.id);
     // eslint-disable-next-line prefer-destructuring
     validation.check(id, validation.id, res);
-    const petition = 'SELECT * from petitions where id=$1';
-    const { rows } = await pool.query(petition, [id]);
+    const { rows } = await pool.query(getUserPetition, [req.user.id, id]);
     if (!rows[0]) {
       return res.status(401).json({
         'status': 401,
-        'error': 'Unauthorized',
+        'Error': 'Petition',
       });
     }
     const {
@@ -93,10 +84,10 @@ class petitionController {
     const updatePetition = `Update petitions
     SET office = $1 , subject =$2 , body =$3 , evidence =$4 where id = $5 returning *`;
     const values = [
-      office.trim() || rows[0].office,
+      office || rows[0].office,
       subject.trim() || rows[0].subject,
       body.trim() || rows[0].body,
-      [evidence] || rows[0].evidence,
+      [evidence],
       id];
     try {
       const updatedPetition = await pool.query(updatePetition, values);
@@ -154,6 +145,7 @@ class petitionController {
       const id = Number(req.params.id);
       validation.check(id, validation.id, res);
       const petition = 'Select * from petitions where id =$1';
+      const { rows } = await pool.query(petition, [id]);
       if (!rows[0]) {
         return res.status(404).json({
           'status': 404,
@@ -161,7 +153,6 @@ class petitionController {
         });
       }
       if (req.user.isAdmin === true) {
-        const { rows } = await pool.query(petition, [id]);
         return res.status(200).json({
           'status': 200,
           'data': rows[0],
