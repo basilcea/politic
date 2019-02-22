@@ -75,5 +75,36 @@ class interestController {
       });
     }
   }
+
+  static async getInterest(req, res) {
+    try {
+      const getallinterests = 'SELECT * from interests';
+
+      const getuserinterests = 'SELECT * from interests where interest =$1';
+      if (req.user.isAdmin === true) {
+        const { rows } = await pool.query(getallinterests);
+        return res.status(200).json({
+          status: 200,
+          data: rows,
+        });
+      }
+      const { rows } = await pool.query(getuserinterests, [req.user.id]);
+      if (!rows[0]) {
+        return res.status(401).json({
+          status: 401,
+          error: 'Unauthorized',
+        });
+      }
+      return res.status(200).json({
+        status: 200,
+        data: rows,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        status: 500,
+        error: err.toString(),
+      });
+    }
+  }
 }
 export default interestController;
