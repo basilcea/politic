@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable quote-props */
 import pool from '../migrate';
 import authHelper from '../helpers/auth';
@@ -124,6 +125,7 @@ class userController {
     const {
       firstname, lastname, othername, email, phoneNumber, registerAs, passportUrl,
     } = req.body;
+
     validation.check(req.body, validation.editProfileSchema, res);
     const getUser = 'SELECT * from users where id = $1';
     const { rows } = await pool.query(getUser, [req.user.id]);
@@ -136,19 +138,8 @@ class userController {
 
     try {
       const updateUser = `UPDATE users
-    SET firstname =$1, lastname =$2, othername =$3, email=$4, phonenumber=$5, registeras=$6, passporturl=$7 ,isAdmin=$8
-    WHERE id = $9 returning *`;
-      [
-        firstname || rows[0].firstname,
-        lastname || rows[0].lastname,
-        othername || rows[0].othername,
-        email || rows[0].email,
-        phoneNumber || rows[0].phonenumber,
-        registerAs || rows[0].registeras,
-        passportUrl || rows[0].passporturl,
-        req.user.isAdmin || rows[0].isadmin,
-        req.user.id,
-      ];
+      SET firstname =$1, lastname =$2, othername =$3, email=$4, phonenumber=$5, registeras=$6, passporturl=$7 ,isAdmin=$8
+      WHERE id = $9 returning *`;
 
       const getEmail = 'SELECT email, phonenumber from users';
       const emailing = await pool.query(getEmail);
@@ -168,17 +159,11 @@ class userController {
       if (req.user.isAdmin === true && registerAs === 'politician') {
         const response = await pool.query(updateUser,
           [
-            firstname || rows[0].firstname,
-            lastname || rows[0].lastname,
-            othername || rows[0].othername,
-            email || rows[0].email,
-            phoneNumber || rows[0].phonenumber,
-            registerAs || rows[0].registeras,
-            passportUrl || rows[0].passporturl,
-            false,
-            req.user.id,
+            firstname || rows[0].firstname, lastname || rows[0].lastname,
+            othername || rows[0].othername, email || rows[0].email,
+            phoneNumber || rows[0].phonenumber, registerAs || rows[0].registeras,
+            passportUrl || rows[0].passporturl, false, req.user.id,
           ]);
-
         res.status(200).json({
           'status': 200,
           'data': {
@@ -196,15 +181,10 @@ class userController {
         await pool.query(deleteInterest, [req.user.id]);
         const newResponse = await pool.query(updateUser,
           [
-            firstname || rows[0].firstname,
-            lastname || rows[0].lastname,
-            othername || rows[0].othername,
-            email || rows[0].email,
-            phoneNumber || rows[0].phonenumber,
-            registerAs || rows[0].registeras,
-            passportUrl || rows[0].passporturl,
-            rows[0].isAdmin,
-            req.user.id,
+            firstname || rows[0].firstname, lastname || rows[0].lastname,
+            othername || rows[0].othername, email || rows[0].email,
+            phoneNumber || rows[0].phonenumber, registerAs || rows[0].registeras,
+            passportUrl || rows[0].passporturl, rows[0].isAdmin, req.user.id,
           ]);
         res.status(200).json({
           'status': 200,
@@ -219,21 +199,16 @@ class userController {
       if (candidate.rows[0] !== undefined) {
         const anotherResponse = await pool.query(updateUser,
           [
-            firstname || rows[0].firstname,
-            lastname || rows[0].lastname,
-            othername || rows[0].othername,
-            email || rows[0].email,
-            phoneNumber || rows[0].phonenumber,
-            'politician',
-            passportUrl || rows[0].passporturl,
-            rows[0].isAdmin,
+            firstname || rows[0].firstname, lastname || rows[0].lastname,
+            othername || rows[0].othername, email || rows[0].email,
+            phoneNumber || rows[0].phonenumber, 'politician',
+            passportUrl || rows[0].passporturl, rows[0].isAdmin,
             req.user.id,
           ]);
-        req.body.registerAs = 'voter';
         res.status(401), json({
           'status': 401,
           'data': {
-            '': [anotherResponse.rows],
+            '': anotherResponse.rows,
             'message': 'You are already a candidate. You cannot be a voter',
           },
         });
@@ -255,8 +230,6 @@ class userController {
         'status': 200,
         'data': expectedResponse.rows,
       });
-
-
     } catch (error) {
       res.status(500).json({
         'status': 500,
@@ -264,6 +237,36 @@ class userController {
       });
     }
   }
+
+  static async changePassword(req, res) {
+    try {
+      const { oldPassword, newPassword } = req.body;
+      validation.check(req.body, validation.changePasswordSchema, res);
+      const Password = 'Select password from users where id= $1';
+      const getPassword = await pool.query(Password, [req.user.id]);
+      
+      if (authHelper.comparePassword(getPassword.rows[0].password, oldPassword) === false) {
+        return res.status(422).json({
+          'status': 422,
+          'error': 'Incorrect Password',
+        });
+      }
+      const hashedPassword = authHelper.hashPassword(newPassword);
+      const NewPassword = 'UPDATE users SET password = $1 where id=$2 returning password';
+      const insertNewPassword = await pool.query(NewPassword, [hashedPassword, req.user.id]);
+      return res.status(200).json({
+        'status': 200,
+        'data': insertNewPassword.rows,
+      });
+    }
+    catch (err) {
+      return res.status(500).json({
+        'status': 500,
+        'error': err.toString(),
+      });
+    }
+  }
+
 }
 
 export default userController;
