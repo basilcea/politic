@@ -19,7 +19,7 @@ class partyController {
     const {
       name, hqAddress, logoUrl,
     } = req.body;
-    if (req.user.isAdmin === false) {
+    if (req.user.isAdmin !== true) {
       return res.status(401).json({
         status: 401,
         error: 'Unauthorized',
@@ -124,7 +124,7 @@ class partyController {
   * @return {object} - The party that has the specified id with new name
   */
   static async editParty(req, res) {
-    if (req.user.isAdmin === false) {
+    if (req.user.isAdmin !== true) {
       return res.status(401).json({
         'status': 401,
         'error': 'Unauthorized',
@@ -171,7 +171,7 @@ class partyController {
   * @return {object} - The satus code and message to show delte action completed
   */
   static async deleteParty(req, res) {
-    if (req.user.isAdmin === false) {
+    if (req.user.isAdmin !== false) {
       return res.status(401).json({
         status: 401,
         error: 'Unauthorized',

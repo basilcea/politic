@@ -31,7 +31,7 @@ class candidateController {
   Values($1,$2 ,$3)`;
     try {
     // check if user is admin
-      if (req.user.isAdmin === false) {
+      if (req.user.isAdmin !== true) {
         return res.status(401).json({
           'status': 401,
           'error': 'Unauthorized',
@@ -123,7 +123,7 @@ class candidateController {
     try {
       const id = Number(req.params.id);
       validation.check(id, validation.id, res);
-      if (req.user.isAdmin === false) {
+      if (req.user.isAdmin !== true) {
         return res.status(401).json({
           'status': 401,
           'error': 'Unauthorized',
@@ -156,6 +156,41 @@ class candidateController {
     } catch (err) {
       return res.status(500).json({
         'status': 500,
+        'error': err.toString(),
+      });
+    }
+  }
+
+  static async deleteCandidate(req, res) {
+    const id = Number(req.params.id);
+    validation.check(id, validation.id, res);
+    console.log(req.user.isAdmin)
+    if (req.user.isAdmin !== true) {
+      return res.status(401).json({
+        'status': 401,
+        'error': 'Unauthorized',
+      });
+    }
+    const getInterests = 'Select * from candidates where id =$1 ';
+    const { rows } = await pool.query(getInterests, [id]);
+    if (!rows[0]) {
+      return res.status(404).json({
+        'status': 404,
+        'error': 'Candidate not found',
+      });
+    }
+    const deleting = 'Delete from candidates where id=$1';
+    try {
+      await pool.query(deleting, [id]);
+      return res.status(200).json({
+        'status': 200,
+        'data': {
+          'message': 'Candidate deleted succesfully',
+        },
+      });
+    } catch (err) {
+      return res.status(501).json({
+        'status': 501,
         'error': err.toString(),
       });
     }
