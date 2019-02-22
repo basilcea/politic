@@ -81,13 +81,21 @@ class petitionController {
       office, subject, body, evidence,
     } = req.body;
     validation.check(req.body, validation.editPetitionSchema, res);
+    let evidenceInput;
+    if (evidence === '' || evidence === undefined) {
+      evidenceInput = rows[0].evidence;
+    }
+    else {
+      evidenceInput = [evidence].concat(rows[0].evidence);
+    }
+
     const updatePetition = `Update petitions
     SET office = $1 , subject =$2 , body =$3 , evidence =$4 where id = $5 returning *`;
     const values = [
       office || rows[0].office,
       subject.trim() || rows[0].subject,
       body.trim() || rows[0].body,
-      [evidence],
+      evidenceInput,
       id];
     try {
       const updatedPetition = await pool.query(updatePetition, values);

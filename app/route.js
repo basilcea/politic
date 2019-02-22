@@ -33,6 +33,7 @@ router.get('/offices/:id', auth.checkToken, officeController.getOffice);
 router.post('/office/:id/register', auth.checkToken, candidateController.makeCandidate);
 router.get('/office/:id/candidates', auth.checkToken, candidateController.searchCandidate);
 router.put('/candidates/:id', auth.checkToken, candidateController.editCandidate);
+router.delete('/candidates/:id', auth.checkToken, candidateController.deleteCandidate);
 
 
 router.post('/parties', auth.checkToken, partyController.createParty);
@@ -44,7 +45,7 @@ router.delete('/parties/:id', auth.checkToken, partyController.deleteParty);
 router.get('/petitions', auth.checkToken, petitionController.getUserPetition);
 router.get('/petitions/:id', auth.checkToken, petitionController.getAPetition);
 router.post('/petitions', auth.checkToken, petitionController.createPetition);
-router.put('/petitions/:id', auth.checkToken, petitionController.editPetition);
+router.patch('/petitions/:id', auth.checkToken, petitionController.editPetition);
 router.delete('/petitions/:id', auth.checkToken, petitionController.deletePetition);
 
 router.get('/interests', auth.checkToken, interestController.getInterest);
