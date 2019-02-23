@@ -2,6 +2,7 @@
 import express from 'express';
 
 import userController from './controllers/users';
+import userActivityController from './controllers/activity';
 import votesController from './controllers/votes';
 import officeDB from './controllers/offices';
 import partyDB from './controllers/parties';
@@ -20,13 +21,15 @@ const router = express.Router();
 
 router.post('/auth/signup', userController.signup);
 router.post('/auth/login', userController.login);
-// router.post('/auth/reset', userController.resetPassword);
+router.post('/auth/reset', userController.resetPassword);
+router.get('/auth/check', userController.checkLink);
+router.post('/auth/forgot', userController.forgotPassword);
 router.get('/auth/logout', userController.logout);
 
-router.patch('/users/me', auth.checkToken, userController.editProfile);
-router.post('/users/me/password', auth.checkToken, userController.changePassword);
-router.delete('/users/me', auth.checkToken, userController.deleteProfile);
-router.patch('/admin/user/:id' , auth.checkToken, userController.makeAdmin)
+router.patch('/users/me', auth.checkToken, userActivityController.editProfile);
+router.post('/users/me/password', auth.checkToken, userActivityController.changePassword);
+router.delete('/users/me', auth.checkToken, userActivityController.deleteProfile);
+router.patch('/admin/user/:id', auth.checkToken, userActivityController.makeAdmin);
 
 
 router.post('/votes', auth.checkToken, votesController.vote);
