@@ -214,35 +214,6 @@ class userController {
 
   }
 
-  static async checkLink(req, res, next) {
-    try {
-      const token = req.params.token;
-      const payload = await jwt.verify(token, process.env.SECRET);
-      const users = 'Select id from users where id= $1';
-      const getuser = await pool.query(users, [payload.id]);
-      if (!getuser.rows[0]) {
-        return res.status(403).json({
-          'status': 403,
-          'error': 'Token is expired',
-        });
-      }
-      res.status(200).json({
-        'status': 200,
-        'data': {
-          id: payload.id,
-          token,
-        },
-      });
-      next();
-    } catch (error) {
-      return res.status(500).json({
-        'status': 500,
-        'error': error.toString(),
-      });
-    }
-
-  }
-
   static async resetPassword(req, res) {
     try {
       const { newPassword } = req.body;
