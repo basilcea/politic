@@ -171,10 +171,10 @@ const name = joi.string().trim().regex(/^[a-zA-Z]+$/).min(2)
   .max(30)
   .error(nameError);
 
-const email = joi.string().email().invalid('').required()
+export const email = joi.string().email().invalid('').required()
   .error(EmailError);
 
-const password = joi.string().invalid('').regex(/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$/).required()
+export const password = joi.string().invalid('').regex(/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$/).required()
   .error(PasswordError);
 
 const requiredType = joi.string().invalid('').trim().regex(/^[a-zA-Z]+$/)
@@ -197,6 +197,8 @@ export const signupSchema = joi.object().keys({
   lastname: name,
   othername: name,
   phoneNumber: joi.string().regex(/^[0]\d{10}$/).required().error(PhoneError),
+  passportUrl: joi.string().trim().uri().required()
+    .error(urlError),
   email,
   password,
   confirmPassword: joi.string().valid(joi.ref('password')).required().strict()
@@ -238,8 +240,10 @@ export const createOfficeSchema = joi.object().keys({
 });
 
 export const editOfficeSchema = joi.object().keys({
-  type: joi.string().allow('').trim().regex(/^[a-zA-Z]+$/).error (OfficeTypeError),
-  office: joi.string().allow('').trim().regex(/^[a-z A-Z_]+$/).error (OfficeNameError),
+  type: joi.string().allow('').trim().regex(/^[a-zA-Z]+$/)
+.error(OfficeTypeError),
+  office: joi.string().allow('').trim().regex(/^[a-z A-Z_]+$/)
+.error(OfficeNameError),
   electDate: joi.date().iso().error(new Error('Date should be in this format yyyy-mm-dd')),
 
 });
