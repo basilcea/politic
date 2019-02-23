@@ -215,7 +215,7 @@ class userController {
             passportUrl || rows[0].passporturl, false, req.user.id,
           ]);
           redisClient.LPUSH('token',token);
-          const newToken = authHelper.generateToken(response.rows[0].id, false)
+          authHelper.generateToken(response.rows[0].id, false)
         res.status(200).json({
           'status': 200,
           'data': {
