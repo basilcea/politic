@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable quote-props */
 import pool from '../migrate';
+import {redisClient} from '../migrate';
 import authHelper from '../helpers/auth';
 import 'dotenv';
 import '@babel/polyfill';
@@ -87,7 +88,21 @@ class userController {
 
     const getUser = 'SELECT * FROM users WHERE email = $1';
     try {
-      //
+
+      const  token = req.headers['x-access-token']
+      const invalid = (callback) => {
+        redisClient.lrange('token', 0,100, (err,result)=> {
+            return callback(result)
+        });
+      }
+      invalid((result)=>{
+      if (result.indexOf(token) < 0){
+        return res.status(400).json({
+          'status':400,
+          'error': 'You are already logged in'
+        })
+      }
+      })
       validation.check(req.body, validation.loginSchema, res);
       const { email, password } = req.body;
       const { rows } = await pool.query(getUser, [email]);
@@ -105,12 +120,12 @@ class userController {
         });
       }
       // generate a token for the user
-      const token = authHelper.generateToken(rows[0].id, rows[0].isadmin);
+      const newtoken = authHelper.generateToken(rows[0].id, rows[0].isadmin);
       // check if token
       return res.status(200).json({
         'status': 200,
         'data': [{
-          'token': token,
+          'token': newtoken,
           'user': rows[0],
         }],
       });
@@ -122,13 +137,47 @@ class userController {
     }
   }
 
+  static async logout ( req, res ) {
+    // check if user is logged in
+    // logout user
+    // save token in redis
+  const token = req.headers['x-access-token']
+  
+  
+  try{
+    const invalid = (callback) => {
+      redisClient.lrange('token', 0,100, (err,result)=> {
+          return callback(result)
+      });
+    }
+    invalid((result)=> {
+      if (result.indexOf(token) > -1){
+          return res.status(400).json({
+            'status': 400,
+            'error':'You are already logged out'})
+      }
+      redisClient.LPUSH('token',token);
+      return res.status(200).json({
+        'status':200 ,
+        'data':'You are logged out'
+      })
+    })
+  }catch(error){
+    return res.status(400).json({
+      'status': 500,
+      'error' :error.toString()
+    })
+  }
+  
+  }
+
   static async editProfile(req, res) {
     const {
       firstname, lastname, othername, email, phoneNumber, registerAs, passportUrl,
     } = req.body;
-
+    const token = req.headers['x-access-token'] ;
     validation.check(req.body, validation.editProfileSchema, res);
-    const getUser = 'SELECT * from users where id = $1';
+    const getUser = 'SELECT * fom users where id = $1';
     const { rows } = await pool.query(getUser, [req.user.id]);
     if (!rows[0]) {
       return res.status(401).json({
@@ -165,6 +214,8 @@ class userController {
             phoneNumber || rows[0].phonenumber, registerAs || rows[0].registeras,
             passportUrl || rows[0].passporturl, false, req.user.id,
           ]);
+          redisClient.LPUSH('token',token);
+          const newToken = authHelper.generateToken(response.rows[0].id, false)
         res.status(200).json({
           'status': 200,
           'data': {
