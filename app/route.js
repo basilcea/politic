@@ -22,7 +22,6 @@ const router = express.Router();
 router.post('/auth/signup', userController.signup);
 router.post('/auth/login', userController.login);
 router.post('/auth/reset', userController.resetPassword);
-router.get('/auth/check', userController.checkLink);
 router.post('/auth/forgot', userController.forgotPassword);
 router.get('/auth/logout', userController.logout);
 

@@ -10,21 +10,23 @@ const auth = {
     const token = req.headers['x-access-token'] || req.params.token;
     if (!token) {
       return res.status(401).send({
-        status: 401,
-        error: 'You need to Login',
+        'status': 401,
+        'error': 'You need to Login',
       });
     }
     const invalid = (callback) => {
-      redisClient.lrange('token', 0, 100, (err, result) => callback(result));
-    };
-    invalid((result) => {
-      if (result.indexOf(token) > -1){
-        return res.status(400).json({
-          status: 400,
-          Message: 'Invalid Token',
-        });
-      }
-
+      redisClient.lrange('token', 0,100, (err,result)=> {
+          return callback(result);
+      });
+   };
+    invalid((result)=>{
+        if (result.indexOf(token) > -1){
+          return res.status(400).json({
+            'status': 400,
+            'Message': 'Invalid Token'
+          });
+        }
+        
     });
     try {
       const decrypt = await jwt.verify(token, process.env.SECRET);
@@ -32,8 +34,8 @@ const auth = {
       const { rows } = await pool.query(getUser, [decrypt.id]);
       if (!rows[0]) {
         return res.status(403).json({
-          status: 403,
-          error: ' Token Not accessible',
+          'status': 403,
+          'error': ' Token Not accessible',
         });
       }
       req.user = {
@@ -43,8 +45,8 @@ const auth = {
       next();
     } catch (error) {
       return res.status(501).json({
-        status: 501,
-        error: error.toString(),
+        'status': 501,
+        'error': error.toString(),
       });
     }
   },
