@@ -296,6 +296,38 @@ class userController {
     }   
   }
 
+  static async makeAdmin (req, res){
+    const id = Number(req.params.id)
+    validation.check(id ,validation.id ,res)
+    const updateUser =`UPDATE users SET isAdmin =$1 registerAs=$2 WHERE id = $3  returning id,firstname,registerAs ,isAdmin`
+  try{
+    const user = 'select * from users where id =$1'
+    if(req.user.isAdmin !== true){
+      return res.status(401).json({
+        'status': 401,
+        'error': 'Unauthorized',
+      })
+    }
+    const {rows} = await  pool.query(user ,[id]) 
+    if(!rows[0]){
+      return res.status(404).json({
+        'status': 404,
+        'error': ' User not found'
+      })
+    }
+    const response = await pool.query(updateUser, [true, 'voter', id]);
+    return res.status(200).json({
+      'status':200,
+      'data': response.rows[0]
+    });
+  }
+ catch (error) {
+  res.status(500).json({
+    'status': 500,
+    'error': error.toString()
+  });
+}
+
 }
 
 export default userController;
