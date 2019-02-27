@@ -7,7 +7,7 @@
     "test": "SET NODE_ENV=test&& mocha test --require @babel/register ",
     "babel-node": "babel-node --presets=/*a*/ --ignore='foo|bar|baz'",
     "lint": "eslint **/*.js --fix",
-    "start": "SET NODE_ENV=production&& babel-node -- app/server.js",
+    "start": "babel-node -- app/server.js",
     "dev": "SET NODE_ENV=development&& nodemon app/server.js --exec babel-node --",
     "migrate": "babel-node ./app/models/dbModel",
     "seed": "babel-node ./app/seeds/seed"
