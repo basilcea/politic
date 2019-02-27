@@ -2,24 +2,25 @@ import { Pool } from 'pg';
 import dotenv from 'dotenv';
 import redis from 'redis';
 import { execFile } from 'child_process';
-import mailgun from 'mailgun-js'
+import mailgun from 'mailgun-js';
 
 dotenv.config();
 
-execFile('redis/redis-server.exe',(error,stdout)=>{
-  if(error){
-    throw error
+execFile('redis/redis-server.exe', (error, stdout) => {
+  if (error) {
+    throw error;
   }
-  console.log(stdout)
-})
+  console.log(stdout);
+});
 
 export const mailer = new mailgun({
-  apiKey: process.env.API_KEY,
-  domain: process.env.EMAIL_DOMAIN
-  
-})
+  apiKey: process.env.NODE_ENV === 'test' ? process.env.PUBLIC_KEY : process.env.API_KEY,
+  domain: process.env.EMAIL_DOMAIN,
+  testMode: process.env.NODE_ENV === 'test',
+
+});
 const pool = new Pool({
-  connectionString: process.env.NODE_ENV === 'test' ? process.env.TEST_DATABASE : process.env.DATABASE_URL,
+  connectionString: process.env.NODE_ENV === 'test' ? process.env.TEST_URL : process.env.DATABASE_URL,
   ssl: false,
 });
 
@@ -31,14 +32,13 @@ pool.query('SELECT NOW()')
     console.log('Database Connection Failed.', error);
   });
 
-export const redisClient = redis.createClient()
-redisClient.on('connect',()=>{
-  console.log('Token blacklisting activated.')
+export const redisClient = redis.createClient(process.env.REDIS_URL);
+redisClient.on('connect', () => {
+  console.log('Token blacklisting activated.');
 });
-redisClient.on('error', (error)=>{
-  console.log('Redis not connected.', error)
+redisClient.on('error', (error) => {
+  console.log('Redis not connected.', error);
 });
-
 
 
 export default pool;
