@@ -21,7 +21,7 @@ export const mailer = new mailgun({
 });
 const pool = new Pool({
   connectionString: process.env.NODE_ENV === 'test' ? process.env.TEST_URL : process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production',
+  ssl: true,
 });
 
 pool.query('SELECT NOW()')
