@@ -33,6 +33,8 @@ router.patch('/admin/user/:id', auth.checkToken, userActivityController.makeAdmi
 
 router.post('/votes', auth.checkToken, votesController.vote);
 router.get('/office/:id/result', auth.checkToken, votesController.getOfficeResults);
+// route for get all user voting activities
+//route for scheduling elections
 
 router.post('/offices', auth.checkToken, officeController.createOffice);
 router.get('/offices', auth.checkToken, officeController.getAllOffices);

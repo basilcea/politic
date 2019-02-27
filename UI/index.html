@@ -37,16 +37,21 @@
 				<!--Sign Up form-->
 
       <div id="signup">
-        <form id="form1">
+        <form id="signupForm">
           <span class='text_styled text_centered'>Nigerian's e-voting platform</span>
           <p class='text_centered'>Sign up on Politico</p>
-          <input type="text" placeholder="First Name" required>
-          <input type="text" placeholder="Last Name" required>
-          <input type="text" placeholder="Other Names">
-          <input type="email" placeholder="Email" required>
-          <input type="text" placeholder ="Phone Number">
-          <input type="password" placeholder="Password" required>
-          <input type ="password" placeholder="Confirm Password"required>
+          <div class="layout_left">
+            <img  id ="uploadedPassport" class="others_img" src='./static/avatar.png'>
+            <br>
+            <button type="button" class="button_btn">Upload Picture</button>
+          </div>
+          <input type="text" placeholder="First Name" required id='signup_firstname'>
+          <input type="text" placeholder="Last Name" required id ='signup_lastname'>
+          <input type="text" placeholder="Other Names" id='signup_othername'>
+          <input type="email" placeholder="Email" required id ='signup_email'>
+          <input type="text" placeholder ="Phone Number" id ='signup_phonenumber'>
+          <input type="password" placeholder="Password" required id ='signup_password'>
+          <input type ="password" placeholder="Confirm Password"required id='signup_confirmpassword'>
           <br/>
           <select id="usertype" name="userType" >
             <option value ="" disabled selected>-- Register as --</option>
@@ -85,6 +90,7 @@
       </div>
 			</div>
 		</div>
-		<script src="./JS/index.js"></script>
+    <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+    <script src="./JS/index.js"></script>
   </body>
 </html>

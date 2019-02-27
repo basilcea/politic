@@ -79,7 +79,7 @@ const PhoneError = (x) => {
 const OfficeTypeError = (x) => {
   switch (x[0].type) {
     case 'any.required': {
-      return new Error('Type of office fielc is required');
+      return new Error('Type of office field is required');
     }
     case 'any.empty': {
       return new Error('Type of office is not empty');
@@ -241,9 +241,9 @@ export const createOfficeSchema = joi.object().keys({
 
 export const editOfficeSchema = joi.object().keys({
   type: joi.string().allow('').trim().regex(/^[a-zA-Z]+$/)
-.error(OfficeTypeError),
+    .error(OfficeTypeError),
   office: joi.string().allow('').trim().regex(/^[a-z A-Z_]+$/)
-.error(OfficeNameError),
+    .error(OfficeNameError),
   electDate: joi.date().iso().error(new Error('Date should be in this format yyyy-mm-dd')),
 
 });
@@ -306,6 +306,13 @@ export const changePasswordSchema = joi.object().keys({
   confirmPassword: joi.string().valid(joi.ref('newPassword')).required().strict()
     .error(new Error('Password does not match')),
 });
+export const resetPasswordSchema = joi.object().keys({
+  id,
+  newPassword: password,
+  confirmPassword: joi.string().valid(joi.ref('newPassword')).required().strict()
+    .error(new Error('Password does not match')),
+});
+
 
 export const check = (data, schema, res) => {
   joi.validate(data, schema, { stripUnknown: true }, (err) => {

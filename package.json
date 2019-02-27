@@ -4,7 +4,7 @@
   "description": "[![Build Status](https://travis-ci.org/basilcea/politico.svg?branch=develop)](https://travis-ci.org/basilcea/politico)\r [![Maintainability](https://api.codeclimate.com/v1/badges/1ab9d7aac9c48843eac3/maintainability)](https://codeclimate.com/github/basilcea/politico/maintainability)\r [![Coverage Status](https://coveralls.io/repos/github/basilcea/politico/badge.svg?branch=develop)](https://coveralls.io/github/basilcea/politico?branch=develop)\r [![Test Coverage](https://api.codeclimate.com/v1/badges/1ab9d7aac9c48843eac3/test_coverage)](https://codeclimate.com/github/basilcea/politico/test_coverage)",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test --require @babel/register ",
+    "test": "SET NODE_ENV=test&& mocha test --require @babel/register ",
     "babel-node": "babel-node --presets=/*a*/ --ignore='foo|bar|baz'",
     "lint": "eslint **/*.js --fix",
     "start": "babel-node -- app/server.js",
@@ -34,6 +34,9 @@
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
+    "chai-joi": "^2.0.3",
+    "cloudinary": "^1.13.2",
+    "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "heroku-cli": "^7.0.9",

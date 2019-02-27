@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable quote-props */
 import pool, { redisClient, mailer } from '../migrate';
-import authHelper from '../helpers/auth';
 import 'dotenv';
 import '@babel/polyfill';
 import * as validation from '../helpers/schema';
+import '@babel/polyfill';
+import authHelper from '../helpers/auth';
 /**
   * Represents a controller  class for all user specific acitvities
   * @class userController
@@ -171,7 +172,7 @@ class userController {
     const { email } = req.body;
     validation.check(email, validation.email, res);
     const allEmails = 'Select * from users where email=$1';
-    const { rows } = await pool.query(allEmails, email);
+    const { rows } = await pool.query(allEmails, [email]);
     try {
       if (!rows[0]) {
         return res.status(404).json({
@@ -180,7 +181,7 @@ class userController {
         });
       }
 
-      const token = authHelper.generateToken(rows[0].id, rows[0].isadmin) + rows[0].password;
+      const token = authHelper.generateToken(rows[0].id, rows[0].isadmin);
       const data = {
         from: 'Politico <me@samples.mailgun.org>',
         to: rows[0].email,
@@ -217,10 +218,17 @@ class userController {
   static async resetPassword(req, res) {
     try {
       const { newPassword } = req.body;
-      validation.check(req.body, validation.changePasswordSchema, res);
+      const id = Number(req.body.id);
+      validation.check(req.body, validation.resetPasswordSchema, res);
       const hashedPassword = authHelper.hashPassword(newPassword);
       const NewPassword = 'UPDATE users SET password = $1 where id=$2 returning password';
-      const insertNewPassword = await pool.query(NewPassword, [hashedPassword, req.body.id]);
+      const insertNewPassword = await pool.query(NewPassword, [hashedPassword, id]);
+      if (!insertNewPassword.rows[0]) {
+        return res.status(404).json({
+          'status': 404,
+          'error': 'User does not exist',
+        });
+      }
       return res.status(200).json({
         'status': 200,
         'data': {
