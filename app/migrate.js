@@ -6,12 +6,14 @@ import mailgun from 'mailgun-js';
 
 dotenv.config();
 
-execFile('redis/redis-server.exe', (error, stdout) => {
-  if (error) {
-    throw error;
-  }
-  console.log(stdout);
-});
+if (process.env.NODE_ENV !== 'production') {
+  execFile('redis/redis-server.exe', (error, stdout) => {
+    if (error) {
+      throw error;
+    }
+    console.log(stdout);
+  });
+}
 
 export const mailer = new mailgun({
   apiKey: process.env.NODE_ENV === 'test' ? process.env.PUBLIC_KEY : process.env.API_KEY,
@@ -21,7 +23,7 @@ export const mailer = new mailgun({
 });
 const pool = new Pool({
   connectionString: process.env.NODE_ENV === 'test' ? process.env.TEST_URL : process.env.DATABASE_URL,
-  ssl: true,
+  ssl: process.env.NODE_ENV === 'production',
 });
 
 pool.query('SELECT NOW()')
