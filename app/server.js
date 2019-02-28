@@ -9,14 +9,8 @@ const server = express();
 server.use(express.json());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
-server.use('/api/v1', router);
 server.use(cors());
-server.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With,x-access-token, Content-Type, Accept');
-  next();
-});
+server.use('/api/v1', router);
 
 server.get('/', (req, res) => {
   res.status(200).json({

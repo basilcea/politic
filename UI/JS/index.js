@@ -171,6 +171,7 @@ const createUser = (url , formData) => {
   const home = '../home.html';
   fetch(url, {
     method: 'POST',
+    mode: 'cors',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json', 
