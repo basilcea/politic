@@ -10,7 +10,7 @@ server.use(express.json());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use('/api/v1', router);
-server.use(cors());
+server.use(cors({ origin: '*' }));
 
 server.get('/', (req, res) => {
   res.status(200).json({
