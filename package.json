@@ -34,7 +34,6 @@
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
-    "chai-joi": "^2.0.3",
     "cloudinary": "^1.13.2",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",

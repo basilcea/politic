@@ -10,7 +10,7 @@ server.use(express.json());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use('/api/v1', router);
-server.use(cors({ origin: '*' }));
+server.use(cors());
 
 server.get('/', (req, res) => {
   res.status(200).json({
@@ -25,7 +25,7 @@ server.all('*', (req, res) => {
   });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const app = server.listen(PORT, () => {
   console.log(`server running on port ${PORT}`);
 });
