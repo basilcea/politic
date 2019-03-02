@@ -9,9 +9,8 @@ const server = express();
 server.use(express.json());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
-server.use('/api/v1', router);
 server.use(cors());
-
+server.use('/api/v1', router);
 server.get('/', (req, res) => {
   res.status(200).json({
     status: 200,

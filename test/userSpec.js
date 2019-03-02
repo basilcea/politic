@@ -18,7 +18,6 @@ const data = {
   password: 'chijind1',
   confirmPassword: 'chijind1',
   registerAs: 'voter',
-  isAdmin: false,
 };
 
 
@@ -98,15 +97,17 @@ describe('POST/ auth/forgot', () => {
         done();
       });
   });
-  it('should pass if email does exist in database', (done) => {
+  it('should fail if email does exist in database but no connection', (done) => {
     chai.request(app)
       .post('/api/v1/auth/forgot')
       .set('x-access-token', token)
       .send({ email: data.email })
       .end((err, res) => {
-        expect(res.status).to.equal(200);
+
+        expect(res.status).to.equal(400);
         expect(res.body).to.have.property('status');
-        expect(res.body.status).to.equal(200);
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.have.property('error');
         done();
         // eslint-disable-next-line no-self-assign
         token = token;
@@ -215,7 +216,7 @@ describe('POST /auth/login', () => {
   it('should fail if user is already logged in', (done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
-      .send({ email: data.email, password: data.password })
+      .send({ email: data.email, password: 'change101' })
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('status');
@@ -223,7 +224,6 @@ describe('POST /auth/login', () => {
         expect(res.body).to.have.property('error');
         expect(res.body.error).to.be.a('string');
         expect(res.body.error).to.equal('You are already logged in');
-
         done();
       });
   });

@@ -3,13 +3,15 @@ node_js:
   - "stable"
 services:
   - postgresql
+  - redis-server
 cache:
   directories:
     - "node_modules"
 env:
-  - NODE_ENV = test
   global:
+    - NODE_ENV=test
     - CC_TEST_REPORTER_ID=05a0eb4ea8fb6257ff0cb1a2d9fb472040683937cd84e4c61dddfff8199bf8c6
+   
 before_script:
   - psql -c 'create database politico_test;' -U postgres
   - npm install -g nyc
@@ -21,8 +23,8 @@ script:
   - nyc --reporter=lcov npm test
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
-  - nyc report --reporter=text-lcov | coveralls
+  - travis_wait 10 ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - travis_wait 10 nyc report --reporter=text-lcov | coveralls
 
 notifications:
   email: false

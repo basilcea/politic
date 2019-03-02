@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable quote-props */
+import nodemailer from 'nodemailer';
 import pool, { redisClient, mailer } from '../migrate';
 import 'dotenv';
 import '@babel/polyfill';
-import * as validation from '../helpers/schema';
-import '@babel/polyfill';
 import authHelper from '../helpers/auth';
+
 /**
   * Represents a controller  class for all user specific acitvities
   * @class userController
@@ -19,15 +19,13 @@ class userController {
     * Create  a user
     * @async requestPromises
     * @method signup
-    * @params {object} request - The form data to be inputted
-    * @return {object} response - The status code and data.
-    *
+    * @params {object} request - The form data to be inputted ;
+    * @return {object} response - The status code and data ;
    */
   static async signup(req, res) {
     const {
-      firstname, lastname, othername, password, email, phoneNumber, registerAs, isAdmin, passportUrl,
+      firstname, lastname, othername, password, email, phoneNumber, registerAs, passportUrl,
     } = req.body;
-    validation.check(req.body, validation.signupSchema, res);
     /** try and catch async block */
     try {
       const getEmail = 'SELECT email, phonenumber from users';
@@ -51,7 +49,7 @@ class userController {
       
       VALUES($1, $2, $3,$4, $5, $6 ,$7 ,$8 ,$9)`;
       const values = [
-        firstname.trim(), lastname, othername, email, phoneNumber, hashPassword, passportUrl, registerAs.trim(), isAdmin,
+        firstname.trim(), lastname, othername, email, phoneNumber, hashPassword, passportUrl, registerAs.trim(), false,
       ];
       await pool.query(createUser, values);
 
@@ -68,7 +66,7 @@ class userController {
         }],
       });
     } catch (error) {
-      res.status(500).json({
+      return res.status(500).json({
         'status': 500,
         'error': error.toString(),
       });
@@ -101,7 +99,7 @@ class userController {
           });
         }
       });
-      validation.check(req.body, validation.loginSchema, res);
+
       const { email, password } = req.body;
       const { rows } = await pool.query(getUser, [email]);
       if (!rows[0]) {
@@ -170,7 +168,6 @@ class userController {
 
   static async forgotPassword(req, res) {
     const { email } = req.body;
-    validation.check(email, validation.email, res);
     const allEmails = 'Select * from users where email=$1';
     const { rows } = await pool.query(allEmails, [email]);
     try {
@@ -183,7 +180,7 @@ class userController {
 
       const token = authHelper.generateToken(rows[0].id, rows[0].isadmin);
       const data = {
-        from: 'Politico <me@samples.mailgun.org>',
+        from: process.env.TEST_EMAIL || process.env.EMAIL,
         to: rows[0].email,
         subject: 'Password Reset Link',
         html: `<p> You have asked for a password reset on <a href='https://basilcea.github.io/politico/UI/'>Politico</a></p>
@@ -192,19 +189,19 @@ class userController {
                   <p><i> kindly ignore this mail if you did not request for a password reset </i> </p>
                   <p><img src='../UI/STATIC/logo.png'>`,
       };
-      mailer.messages().send(data, (error, body) => {
-        if (error) {
-          return res.status(500).json({
-            'status': 500,
-            'error': error.toString(),
-          });
-        }
+      mailer.sendMail(data).then(info => {
         return res.status(200).json({
           'status': 200,
-          'data': body,
-
-        });
-      });
+          'data': mailer.getTestMessageUrl(info)|| info
+        })
+      })
+        .catch(error => {
+          return res.status(400).json({
+            'status': 400,
+             error,
+          })
+        
+      })
     }
     catch (err) {
       return res.status(500).json({
@@ -219,7 +216,6 @@ class userController {
     try {
       const { newPassword } = req.body;
       const id = Number(req.body.id);
-      validation.check(req.body, validation.resetPasswordSchema, res);
       const hashedPassword = authHelper.hashPassword(newPassword);
       const NewPassword = 'UPDATE users SET password = $1 where id=$2 returning password';
       const insertNewPassword = await pool.query(NewPassword, [hashedPassword, id]);

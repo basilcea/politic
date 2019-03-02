@@ -114,12 +114,10 @@ const form2 = document.getElementById('form2');
 const form3 = document.getElementById('form3');
 
 /** Get all submit buttons in the page */
-const signin = document.getElementById('signedin');
 const enter = document.getElementById('enter');
 const reseted = document.getElementById('reseted');
 
 /**  Get all requires form inputs */
-const signupdetails = signupForm.querySelectorAll('[required]');
 const enterdetails = form2.querySelectorAll('[required]');
 const resetdetails = form3.querySelectorAll('[required]');
 
@@ -135,77 +133,78 @@ if (minWidth.matches) {
 } else {
   uploadButton.style.marginLeft = '';
   previewed.style.paddingLeft = '';
-  
 }
-let passport;
+
+const loginData = {
+  email: document.getElementById('login_email').value,
+  password: document.getElementById('login_password').value,
+};
+const resetData = document.getElementById('reset_email').value;
 
 const mywidget = cloudinary.createUploadWidget({
   cloudName: 'basilcea',
   uploadPreset: 'cea_politico',
   folder: 'politico',
+  form: '#signupForm',
+  fieldName: 'passportUrl',
   cropping: true,
 },
-  (error, result) => {
-    if (result && result.event === 'success') {
-      passport = result.info.url;
-      previewed.src = passport;
-    }
-    return previewed.src;
+(error, result) => {
+  if (result && result.event === 'success') {
+    passport = result.info.url;
+    previewed.src = passport;
+  }
+  return previewed.src;
+});
 
-  })
+uploadButton.addEventListener('click', () => {
+  // trigger the click of the file upload input
+  mywidget.open();
+});
 
-  uploadButton.addEventListener('click', () => {
-    // trigger the click of the file upload input
-    mywidget.open();
-  });
-;
-
-const formData = {
-  firstname: document.getElementById('signup_firstname').value,
-  lastname: document.getElementById('signup_lastname').value,
-  othername: document.getElementById('signup_othername').value,
-  email: document.getElementById('signup_email').value,
-  passportUrl: previewed.src,
-  phoneNumber: document.getElementById('signup_phonenumber').value,
-  password: document.getElementById('signup_password').value,
-  confirmPassword: document.getElementById('signup_confirmpassword').value,
-  registerAs: document.getElementById('usertype').value,
-};
-if (formData.password !== formData.confirmPassword) {
-  console.log('Password does not match');
-}
-console.log(formData);
-const host = 'https://cea-politico-gres.herokuapp.com/';
-const signupUrl = `${host}/api/v1/auth/signup`;
+host = 'https://cea-politico-gres.herokuapp.com';
+signupError = document.getElementById('signupErrors');
+console.log(signupError);
 
 // eslint-disable-next-line no-shadow
-const createUser = () => {
-  const home = '../home.html';
-  fetch(signupUrl, {
-    method: 'POST',
-    headers: {
-      'Accept ': 'application/json',
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify(formData),
-  })
-    .then(res => res.json)
-    .then((info) => {
-      if (info.status === 201) {
-        const token = info.data.token;
-        console.log(token)
-        const user = info.data.user;
-        console.log(user)
-        localStorage.clear()
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringfy(user));
-        window.location.replace(`${home}`);
-      } else {
-        // eslint-disable-next-line prefer-destructuring
-        const error = info.error;
-        console.log(error);
-      }
-    });
-};
 
-signin.addEventListener('submit', createUser());
+
+document.getElementById('signupForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const signupData = {
+    firstname: document.getElementById('signup_firstname').value,
+    lastname: document.getElementById('signup_lastname').value,
+    othername: document.getElementById('signup_othername').value,
+    email: document.getElementById('signup_email').value,
+    passportUrl: previewed.src,
+    phoneNumber: document.getElementById('signup_phonenumber').value,
+    password: document.getElementById('signup_password').value,
+    confirmPassword: document.getElementById('signup_confirmpassword').value,
+    registerAs: document.getElementById('usertype').value,
+  };
+  const createUser = (url, formData) => {
+    const home = 'home.html';
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(res => res.json())
+      .then((res) => {
+        if (res.status === 201) {
+          const { token, user } = res.data;
+          localStorage.clear();
+          localStorage.setItem('token', token);
+          localStorage.setItem('user', user);
+          window.location.replace(`${home}`);
+        } else {
+          // eslint-disable-next-line prefer-destructuring
+          signupError.innerHTML = res.error;
+        }
+      });
+  };
+  createUser(`${host}/api/v1/auth/signup`, signupData);
+});

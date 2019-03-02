@@ -13,20 +13,21 @@ import partyDS from './DS/controllers/party';
 import officeDS from './DS/controllers/office';
 
 import auth from './middleware/auth';
+import validation from './middleware/validate';
 
 const partyController = partyDB || partyDS;
 const officeController = officeDB || officeDS;
 
 const router = express.Router();
 
-router.post('/auth/signup', userController.signup);
-router.post('/auth/login', userController.login);
-router.post('/auth/reset', userController.resetPassword);
-router.post('/auth/forgot', userController.forgotPassword);
+router.post('/auth/signup', validation.signup, userController.signup);
+router.post('/auth/login', validation.login, userController.login);
+router.post('/auth/reset', validation.resetPassword, userController.resetPassword);
+router.post('/auth/forgot', validation.forgotPassword, userController.forgotPassword);
 router.get('/auth/logout', userController.logout);
 
 router.patch('/users/me', auth.checkToken, userActivityController.editProfile);
-router.post('/users/me/password', auth.checkToken, userActivityController.changePassword);
+router.post('/users/me/password', validation.changePassword, auth.checkToken, userActivityController.changePassword);
 router.delete('/users/me', auth.checkToken, userActivityController.deleteProfile);
 router.patch('/admin/user/:id', auth.checkToken, userActivityController.makeAdmin);
 
@@ -34,7 +35,7 @@ router.patch('/admin/user/:id', auth.checkToken, userActivityController.makeAdmi
 router.post('/votes', auth.checkToken, votesController.vote);
 router.get('/office/:id/result', auth.checkToken, votesController.getOfficeResults);
 // route for get all user voting activities
-//route for scheduling elections
+// route for scheduling elections
 
 router.post('/offices', auth.checkToken, officeController.createOffice);
 router.get('/offices', auth.checkToken, officeController.getAllOffices);

@@ -45,6 +45,7 @@
             <br>
             <button type="button" class="button_btn">Upload Picture</button>
           </div>
+          <div><p id='signupErrors'></p></div>
           <input type="text" placeholder="First Name" required id='signup_firstname'>
           <input type="text" placeholder="Last Name" required id ='signup_lastname'>
           <input type="text" placeholder="Other Names" id='signup_othername'>
@@ -69,8 +70,8 @@
         <form id="form2">
           <span class='text_styled text_centered'>Nigerian's e-voting platform</span>
           <p class='text_centered'>Login with Email</p>
-          <input type="email" placeholder="Email" >
-          <input type="password" placeholder="Password" >
+          <input type="email" placeholder="Email" id='login_email' >
+          <input type="password" placeholder="Password" id ='login_password' >
           <p class="text_small"><a id="resetLink">Forgot Password?</a></p>
           <input type="submit" id="enter" value="Login">
           <p class="text_small"><a id="signupLink">Don't have an account? Sign up</a></p>
@@ -83,14 +84,14 @@
         <form id="form3">
           <span class='text_styled text_centered'>Nigerian's e-voting platform</span>
           <p class='text_centered'>Enter your registered email address and a reset link will be sent</p>
-          <input type="email" placeholder="email" required>
+          <input type="email" placeholder="email" required id='reset_email'>
           <input type="submit"  id="reseted" value="Submit" >
         </form>
           <p class="text_small"><a id="backLink" href=''>Go back to Login </a></p>
       </div>
 			</div>
-		</div>
-    <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+    </div>
+    <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>  
     <script src="./JS/index.js"></script>
   </body>
 </html>
