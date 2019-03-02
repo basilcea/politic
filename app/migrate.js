@@ -2,7 +2,8 @@ import { Pool } from 'pg';
 import dotenv from 'dotenv';
 import redis from 'redis';
 import { execFile } from 'child_process';
-import mailgun from 'mailgun-js';
+import nodemailer from 'nodemailer';
+import { getMaxListeners } from 'cluster';
 
 dotenv.config();
 
@@ -15,12 +16,29 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 
-export const mailer = new mailgun({
-  apiKey: process.env.NODE_ENV === 'test' || 'development' ? process.env.PUBLIC_KEY : process.env.API_KEY,
-  domain: process.env.EMAIL_DOMAIN,
-  testMode: process.env.NODE_ENV === 'development' || 'test',
-
-});
+let mailConfig;
+if (process.env.NODE_ENV === 'production') {
+  mailConfig = {
+    service: 'gmail',
+    secure: true,
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD
+    }
+  }
+} else {
+  mailConfig = {
+    host: 'smtp.ethereal.email',
+    port: 587,
+    requireTLS: true,
+    secure:true,
+    auth: {
+      user: process.env.TEST_EMAIL,
+      pass: process.env.TEST_PASSWORD,
+    }
+  };
+}
+export const mailer = nodemailer.createTransport(mailConfig);
 const pool = new Pool({
   connectionString: process.env.NODE_ENV === 'test' ? process.env.TEST_URL : process.env.DATABASE_URL,
   ssl: process.env.NODE_ENV === 'production',

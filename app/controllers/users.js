@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable quote-props */
+import nodemailer from 'nodemailer';
 import pool, { redisClient, mailer } from '../migrate';
 import 'dotenv';
 import '@babel/polyfill';
 import authHelper from '../helpers/auth';
+
 /**
   * Represents a controller  class for all user specific acitvities
   * @class userController
@@ -33,7 +35,7 @@ class userController {
           'status': 422,
           'error': 'Email already exists',
         });
-      };
+      }
       if (authHelper.isUniquePhone(phoneNumber, emailing) !== null) {
         return res.status(422).json({
           'status': 422,
@@ -178,7 +180,7 @@ class userController {
 
       const token = authHelper.generateToken(rows[0].id, rows[0].isadmin);
       const data = {
-        from: 'Politico <me@samples.mailgun.org>',
+        from: process.env.TEST_EMAIL || process.env.EMAIL,
         to: rows[0].email,
         subject: 'Password Reset Link',
         html: `<p> You have asked for a password reset on <a href='https://basilcea.github.io/politico/UI/'>Politico</a></p>
@@ -187,19 +189,19 @@ class userController {
                   <p><i> kindly ignore this mail if you did not request for a password reset </i> </p>
                   <p><img src='../UI/STATIC/logo.png'>`,
       };
-      mailer.messages().send(data, (error, body) => {
-        if (error) {
-          return res.status(500).json({
-            'status': 500,
-            'error': error.toString(),
-          });
-        }
+      mailer.sendMail(data).then(info => {
         return res.status(200).json({
           'status': 200,
-          'data': body,
-
-        });
-      });
+          'data': mailer.getTestMessageUrl(info)|| info
+        })
+      })
+        .catch(error => {
+          return res.status(400).json({
+            'status': 400,
+             error,
+          })
+        
+      })
     }
     catch (err) {
       return res.status(500).json({

@@ -1,6 +1,7 @@
 import joi from 'joi';
 
-export const email = joi.string().email().invalid('').required()
+export const email = joi.string().trim().email().invalid('')
+  .required()
   .error(
     (errors) => {
       errors.forEach((err) => {
@@ -22,7 +23,8 @@ export const email = joi.string().email().invalid('').required()
     },
   );
 
-export const password = joi.string().invalid('').regex(/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$/).required()
+export const password = joi.string().trim().invalid('').regex(/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$/)
+  .required()
   .error(
     (errors) => {
       errors.forEach((err) => {
@@ -44,7 +46,8 @@ export const password = joi.string().invalid('').regex(/(?!^[0-9]*$)(?!^[a-zA-Z]
     },
   );
 
-export const id = joi.number().invalid('').required().integer()
+export const id = joi.number().invalid('').required()
+  .integer()
   .positive()
   .error((errors) => {
     errors.forEach((err) => {
@@ -138,7 +141,8 @@ export const signupSchema = joi.object().keys({
       });
       return errors;
     }),
-  phoneNumber: joi.string().invalid('').regex(/^[0]\d{10}$/).required()
+  phoneNumber: joi.string().trim().invalid('').regex(/^[0]\d{10}$/)
+    .required()
     .error(
       (errors) => {
         errors.forEach((err) => {
@@ -159,7 +163,8 @@ export const signupSchema = joi.object().keys({
         return errors;
       },
     ),
-  passportUrl: joi.string().invalid('').uri().required()
+  passportUrl: joi.string().trim().invalid('').uri()
+    .required()
     .error(
       (errors) => {
         errors.forEach((err) => {
@@ -182,7 +187,8 @@ export const signupSchema = joi.object().keys({
     ),
   email,
   password,
-  confirmPassword: joi.string().valid(joi.ref('password')).required().strict()
+  confirmPassword: joi.string().trim().valid(joi.ref('password')).required()
+    .strict()
     .error(() => 'Password does not match'),
   registerAs: joi.string().valid('voter', 'politician').trim().required()
     .error(() => 'Value must be either voter or politician'),
@@ -190,21 +196,23 @@ export const signupSchema = joi.object().keys({
 
 export const loginSchema = joi.object().keys({
   email,
-  password: joi.string().required().error(() => 'Password is required'),
+  password,
 });
 
 
 export const changePasswordSchema = joi.object().keys({
   oldPassword: password,
   newPassword: password,
-  confirmPassword: joi.string().valid(joi.ref('newPassword')).required().strict()
+  confirmPassword: joi.string().trim().valid(joi.ref('newPassword')).required()
+    .strict()
     .error(() => 'Password does not match'),
 });
 
 export const resetPasswordSchema = joi.object().keys({
   id,
   newPassword: password,
-  confirmPassword: joi.string().valid(joi.ref('newPassword')).required().strict()
+  confirmPassword: joi.string().trim().valid(joi.ref('newPassword')).required()
+    .strict()
     .error(() => 'Password does not match'),
 });
 

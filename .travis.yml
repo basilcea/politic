@@ -23,8 +23,8 @@ script:
   - nyc --reporter=lcov npm test
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
-  - nyc report --reporter=text-lcov | coveralls
+  - travis_wait 10 ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - travis_wait 10 nyc report --reporter=text-lcov | coveralls
 
 notifications:
   email: false
