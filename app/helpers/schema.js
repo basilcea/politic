@@ -191,7 +191,7 @@ export const signupSchema = joi.object().keys({
     .strict()
     .error(() => 'Password does not match'),
   registerAs: joi.string().valid('voter', 'politician').trim().required()
-    .error(() => 'Value must be either voter or politician'),
+    .error(() => 'RegisterAs value must be either voter or politician'),
 });
 
 export const loginSchema = joi.object().keys({
