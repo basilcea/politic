@@ -85,7 +85,7 @@ class validation {
       if (err) {
         const errMsg = [];
         for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(err.details[i].message);
+          errMsg.push(`${err.details[i].message} \n`);
         }
         return res.status(400).json({
           status: 400,
