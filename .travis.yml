@@ -3,6 +3,7 @@ node_js:
   - "stable"
 services:
   - postgresql
+  - redis-server
 cache:
   directories:
     - "node_modules"
