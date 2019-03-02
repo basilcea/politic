@@ -35,7 +35,6 @@ reset.className = 'layout_none';
     change style of login button to active. */
 
 loginButton.onclick = () => {
-  location.href = 'home.html';
   loginButton.className = 'button_active';
   signupButton.className = 'button_login';
   login.className = 'layout_block';
@@ -117,16 +116,6 @@ const previewed = document.getElementById('uploadedPassport');
 
 const uploadButton = document.querySelector('.button_btn');
 
-
-const minWidth = window.matchMedia('(min-width: 1040px)');
-if (minWidth.matches) {
-  uploadButton.style.marginLeft = '9vw';
-  previewed.style.paddingLeft = '9vw';
-} else {
-  uploadButton.style.marginLeft = '';
-  previewed.style.paddingLeft = '';
-}
-
 const loginData = {
   email: document.getElementById('login_email').value,
   password: document.getElementById('login_password').value,
@@ -157,10 +146,11 @@ uploadButton.addEventListener('click', () => {
 host = 'https://cea-politico-gres.herokuapp.com';
 signupError = document.getElementById('signupErrors');
 loginError = document.getElementById('loginErrors');
+resetError = document.getElementById('resetErrors');
 
 // eslint-disable-next-line no-shadow
 
-const createUser = (url, formData, errorDiv) => {
+const createUser = (url, formData, errorDiv, statusCode, message) => {
   const home = 'home.html';
   fetch(url, {
     method: 'POST',
@@ -172,12 +162,12 @@ const createUser = (url, formData, errorDiv) => {
   })
     .then(res => res.json())
     .then((res) => {
-      if (res.status === 201) {
+      if (res.status === statusCode) {
         const { token, user } = res.data;
         localStorage.clear();
         localStorage.setItem('token', token);
         localStorage.setItem('user', user);
-        errorDiv.innerHTML = ' Signup successful';
+        errorDiv.innerHTML = message;
         window.location.replace(`${home}`);
       } else {
         // eslint-disable-next-line prefer-destructuring
@@ -199,7 +189,7 @@ document.getElementById('signupForm').addEventListener('submit', (e) => {
     confirmPassword: document.getElementById('signup_confirmpassword').value,
     registerAs: document.getElementById('usertype').value,
   };
-  createUser(`${host}/api/v1/auth/signup`, signupData, signupError);
+  createUser(`${host}/api/v1/auth/signup`, signupData, signupError, 201, 'Signup successful');
 });
 
 
@@ -210,5 +200,38 @@ document.getElementById('loginForm').addEventListener('submit', (e) => {
     password: document.getElementById('login_password').value,
 
   };
-  createUser(`${host}/api/v1/auth/login`, loginData , loginError);
+  createUser(`${host}/api/v1/auth/login`, loginData, loginError, 200, 'login succesful');
+});
+
+document.getElementById('resetForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const resetData = {
+    email: document.getElementById('reset_email').value,
+
+  };
+  const resetUser = (url, formData, errorDiv) => {
+    const home = 'home.html';
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(res => res.json())
+      .then((res) => {
+        if (res.status === 200) {
+          errorDiv.innerHTML = ' Your reset link has been sent to your email.';
+          window.location.replace(`${index}`);
+        } else if (res.status === 400) {
+          errorDiv.innerHTML = res.error.response;
+        }
+        else {
+          // eslint-disable-next-line prefer-destructuring
+          errorDiv.innerHTML = res.error;
+        }
+      });
+  };
+  resetUser(`${host}/api/v1/auth/forgot`, resetData, resetError);
 });

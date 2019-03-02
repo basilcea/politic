@@ -189,19 +189,14 @@ class userController {
                   <p><i> kindly ignore this mail if you did not request for a password reset </i> </p>
                   <p><img src='../UI/STATIC/logo.png'>`,
       };
-      mailer.sendMail(data).then(info => {
-        return res.status(200).json({
+      mailer.sendMail(data).then((info) => res.status(200).json({
           'status': 200,
           'data': mailer.getTestMessageUrl(info)|| info
-        })
-      })
-        .catch(error => {
-          return res.status(400).json({
+        }))
+        .catch((error) => res.status(400).json({
             'status': 400,
-             error,
-          })
-        
-      })
+            error,
+          }));
     }
     catch (err) {
       return res.status(500).json({

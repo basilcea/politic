@@ -18,7 +18,7 @@
 		<div class="background_banner">
       <div class="layout_smallNav">
         <ul class="nav_tabs_small">
-          <li class="nav_horizontal_small"><a class="others_full" id="sign" href="#signup">Sign up</a></li>
+          <li class="nav_horizontal_small"><a class="others_full" id="sign" >Sign up</a></li>
           <a href="javascript:void(0)" class="background_icon" id='hamburger'></a>
           <li class="nav_horizontal_small"><a class="others_full" id="log">Login</a></li>
         </ul>
@@ -45,12 +45,12 @@
             <br>
             <button type="button" class="button_btn">Upload Picture</button>
           </div>
-          <div><p id='signupErrors'></p></div>
+          <div id ='signupErrors'></div>
           <input type="text" placeholder="First Name" required id='signup_firstname'>
-          <input type="text" placeholder="Last Name" required id ='signup_lastname'>
+          <input type="text" placeholder="Last Name" id ='signup_lastname'>
           <input type="text" placeholder="Other Names" id='signup_othername'>
           <input type="email" placeholder="Email" required id ='signup_email'>
-          <input type="text" placeholder ="Phone Number" id ='signup_phonenumber'>
+          <input type="text" placeholder ="Phone Number" required id ='signup_phonenumber'>
           <input type="password" placeholder="Password" required id ='signup_password'>
           <input type ="password" placeholder="Confirm Password"required id='signup_confirmpassword'>
           <br/>
@@ -82,9 +82,10 @@
 				<!--Reset Password Form-->
 
       <div id="reset">
-        <form id="form3">
+        <form id="resetForm">
           <span class='text_styled text_centered'>Nigerian's e-voting platform</span>
           <p class='text_centered'>Enter your registered email address and a reset link will be sent</p>
+          <div id='resetErrors'></div>
           <input type="email" placeholder="email" required id='reset_email'>
           <input type="submit"  id="reseted" value="Submit" >
         </form>
