@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "set NODE_ENV=test&& mocha test --require @babel/register ",
+    "localtest": "set NODE_ENV=development&& mocha test --require @babel/register ",
     "babel-node": "babel-node --presets=/*a*/ --ignore='foo|bar|baz'",
     "lint": "eslint **/*.js --fix",
     "start": "babel-node -- app/server.js",

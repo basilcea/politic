@@ -6,7 +6,7 @@ import mailgun from 'mailgun-js';
 
 dotenv.config();
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
   execFile('redis/redis-server.exe', (error, stdout) => {
     if (error) {
       throw error;
@@ -16,9 +16,9 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export const mailer = new mailgun({
-  apiKey: process.env.NODE_ENV === 'test' ? process.env.PUBLIC_KEY : process.env.API_KEY,
+  apiKey: process.env.NODE_ENV === 'test' || 'development' ? process.env.PUBLIC_KEY : process.env.API_KEY,
   domain: process.env.EMAIL_DOMAIN,
-  testMode: process.env.NODE_ENV === 'test',
+  testMode: process.env.NODE_ENV === 'development' || 'test',
 
 });
 const pool = new Pool({

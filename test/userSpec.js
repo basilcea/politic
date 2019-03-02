@@ -197,7 +197,8 @@ describe('POST /auth/login', () => {
     chai.request(app)
       .post('/api/v1/auth/login')
       .set('x-access-token', token)
-      .send({ email: data.email, password: 'change101' })
+      .send({ email: data.email, password: data.password })
+
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.have.property('status');
