@@ -109,17 +109,9 @@ icon.onclick = () => {
   }
 };
 /** Get all forms */
-const signupForm = document.getElementById('signupForm');
-const form2 = document.getElementById('form2');
-const form3 = document.getElementById('form3');
 
-/** Get all submit buttons in the page */
-const enter = document.getElementById('enter');
-const reseted = document.getElementById('reseted');
 
-/**  Get all requires form inputs */
-const enterdetails = form2.querySelectorAll('[required]');
-const resetdetails = form3.querySelectorAll('[required]');
+
 
 const previewed = document.getElementById('uploadedPassport');
 
@@ -164,10 +156,35 @@ uploadButton.addEventListener('click', () => {
 
 host = 'https://cea-politico-gres.herokuapp.com';
 signupError = document.getElementById('signupErrors');
-console.log(signupError);
+loginError = document.getElementById('loginErrors');
 
 // eslint-disable-next-line no-shadow
 
+const createUser = (url, formData, errorDiv) => {
+  const home = 'home.html';
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+  })
+    .then(res => res.json())
+    .then((res) => {
+      if (res.status === 201) {
+        const { token, user } = res.data;
+        localStorage.clear();
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', user);
+        errorDiv.innerHTML = ' Signup successful';
+        window.location.replace(`${home}`);
+      } else {
+        // eslint-disable-next-line prefer-destructuring
+        errorDiv.innerHTML = res.error;
+      }
+    });
+};
 
 document.getElementById('signupForm').addEventListener('submit', (e) => {
   e.preventDefault();
@@ -182,29 +199,16 @@ document.getElementById('signupForm').addEventListener('submit', (e) => {
     confirmPassword: document.getElementById('signup_confirmpassword').value,
     registerAs: document.getElementById('usertype').value,
   };
-  const createUser = (url, formData) => {
-    const home = 'home.html';
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then(res => res.json())
-      .then((res) => {
-        if (res.status === 201) {
-          const { token, user } = res.data;
-          localStorage.clear();
-          localStorage.setItem('token', token);
-          localStorage.setItem('user', user);
-          window.location.replace(`${home}`);
-        } else {
-          // eslint-disable-next-line prefer-destructuring
-          signupError.innerHTML = res.error;
-        }
-      });
+  createUser(`${host}/api/v1/auth/signup`, signupData, signupError);
+});
+
+
+document.getElementById('loginForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const loginData = {
+    email: document.getElementById('login_email').value,
+    password: document.getElementById('login_password').value,
+
   };
-  createUser(`${host}/api/v1/auth/signup`, signupData);
+  createUser(`${host}/api/v1/auth/login`, loginData , loginError);
 });
