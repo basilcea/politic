@@ -35,7 +35,6 @@ reset.className = 'layout_none';
     change style of login button to active. */
 
 loginButton.onclick = () => {
-  location.href = 'home.html';
   loginButton.className = 'button_active';
   signupButton.className = 'button_login';
   login.className = 'layout_block';
@@ -208,7 +207,6 @@ document.getElementById('loginForm').addEventListener('submit', (e) => {
   const loginData = {
     email: document.getElementById('login_email').value,
     password: document.getElementById('login_password').value,
-
   };
-  createUser(`${host}/api/v1/auth/login`, loginData , loginError);
+  createUser(`${host}/api/v1/auth/login`, loginData, loginError);
 });
