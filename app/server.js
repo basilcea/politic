@@ -11,7 +11,6 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(cors());
 server.use('/api/v1', router);
-
 server.get('/', (req, res) => {
   res.status(200).json({
     status: 200,
@@ -25,7 +24,7 @@ server.all('*', (req, res) => {
   });
 });
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 const app = server.listen(PORT, () => {
   console.log(`server running on port ${PORT}`);
 });

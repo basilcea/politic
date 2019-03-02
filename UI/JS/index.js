@@ -133,7 +133,6 @@ if (minWidth.matches) {
 } else {
   uploadButton.style.marginLeft = '';
   previewed.style.paddingLeft = '';
-  
 }
 
 const loginData = {
@@ -150,51 +149,27 @@ const mywidget = cloudinary.createUploadWidget({
   fieldName: 'passportUrl',
   cropping: true,
 },
-  (error, result) => {
-    if (result && result.event === 'success') {
-      passport = result.info.url;
-      previewed.src = passport;
-    }
-    return previewed.src;
+(error, result) => {
+  if (result && result.event === 'success') {
+    passport = result.info.url;
+    previewed.src = passport;
+  }
+  return previewed.src;
+});
 
-  })
+uploadButton.addEventListener('click', () => {
+  // trigger the click of the file upload input
+  mywidget.open();
+});
 
-  uploadButton.addEventListener('click', () => {
-    // trigger the click of the file upload input
-    mywidget.open();
-  });
-
- host = 'https://cea-politico-gres.herokuapp.com'
+host = 'https://cea-politico-gres.herokuapp.com';
+signupError = document.getElementById('signupErrors');
+console.log(signupError);
 
 // eslint-disable-next-line no-shadow
-const createUser = (url , formData) => {
-  const home = '../home.html';
-  fetch(url, {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json', 
-    },
-    body: JSON.stringify(formData),
-  })
-    .then(res => res.json)
-    .then((data) => {
-      if (data.status === 201) {
-        const { token, user } = data.data;
-        localStorage.clear();
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringfy(user));
-        window.location.replace(`${home}`);
-      } else {
-        // eslint-disable-next-line prefer-destructuring
-        console.log(data.error);
-        
-      }
-    });
-};
 
-document.getElementById('signupForm').onsubmit = (e) => {
+
+document.getElementById('signupForm').addEventListener('submit', (e) => {
   e.preventDefault();
   const signupData = {
     firstname: document.getElementById('signup_firstname').value,
@@ -207,6 +182,29 @@ document.getElementById('signupForm').onsubmit = (e) => {
     confirmPassword: document.getElementById('signup_confirmpassword').value,
     registerAs: document.getElementById('usertype').value,
   };
-  console.log(signupData)
+  const createUser = (url, formData) => {
+    const home = 'home.html';
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(res => res.json())
+      .then((res) => {
+        if (res.status === 201) {
+          const { token, user } = res.data;
+          localStorage.clear();
+          localStorage.setItem('token', token);
+          localStorage.setItem('user', user);
+          window.location.replace(`${home}`);
+        } else {
+          // eslint-disable-next-line prefer-destructuring
+          signupError.innerHTML = res.error;
+        }
+      });
+  };
   createUser(`${host}/api/v1/auth/signup`, signupData);
-};
+});

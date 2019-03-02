@@ -18,7 +18,6 @@ const data = {
   password: 'chijind1',
   confirmPassword: 'chijind1',
   registerAs: 'voter',
-  isAdmin: false,
 };
 
 
@@ -37,6 +36,7 @@ describe('POST /auth/signup', () => {
       .post('/api/v1/auth/signup')
       .send(data)
       .end((err, res) => {
+        console.log(res.body);
         expect(res.status).to.equal(201);
         expect(res.body).to.have.property('status');
         expect(res.body.status).to.equal(201);
@@ -89,6 +89,7 @@ describe('POST/ auth/forgot', () => {
       .set('x-access-token', token)
       .send({ email: 'basil3@gmail.com' })
       .end((err, res) => {
+        console.log(res.body);
         expect(res.status).to.equal(404);
         expect(res.body).to.have.property('status');
         expect(res.body.status).to.equal(404);

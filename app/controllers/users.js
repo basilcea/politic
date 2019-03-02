@@ -3,8 +3,6 @@
 import pool, { redisClient, mailer } from '../migrate';
 import 'dotenv';
 import '@babel/polyfill';
-import * as validation from '../helpers/schema';
-import '@babel/polyfill';
 import authHelper from '../helpers/auth';
 /**
   * Represents a controller  class for all user specific acitvities
@@ -19,15 +17,13 @@ class userController {
     * Create  a user
     * @async requestPromises
     * @method signup
-    * @params {object} request - The form data to be inputted
-    * @return {object} response - The status code and data.
-    *
+    * @params {object} request - The form data to be inputted ;
+    * @return {object} response - The status code and data ;
    */
   static async signup(req, res) {
     const {
-      firstname, lastname, othername, password, email, phoneNumber, registerAs, isAdmin, passportUrl,
+      firstname, lastname, othername, password, email, phoneNumber, registerAs, passportUrl,
     } = req.body;
-    validation.check(req.body, validation.signupSchema, res);
     /** try and catch async block */
     try {
       const getEmail = 'SELECT email, phonenumber from users';
@@ -37,7 +33,7 @@ class userController {
           'status': 422,
           'error': 'Email already exists',
         });
-      }
+      };
       if (authHelper.isUniquePhone(phoneNumber, emailing) !== null) {
         return res.status(422).json({
           'status': 422,
@@ -51,7 +47,7 @@ class userController {
       
       VALUES($1, $2, $3,$4, $5, $6 ,$7 ,$8 ,$9)`;
       const values = [
-        firstname.trim(), lastname, othername, email, phoneNumber, hashPassword, passportUrl, registerAs.trim(), isAdmin,
+        firstname.trim(), lastname, othername, email, phoneNumber, hashPassword, passportUrl, registerAs.trim(), false,
       ];
       await pool.query(createUser, values);
 
@@ -68,7 +64,7 @@ class userController {
         }],
       });
     } catch (error) {
-      res.status(500).json({
+      return res.status(500).json({
         'status': 500,
         'error': error.toString(),
       });
@@ -101,7 +97,7 @@ class userController {
           });
         }
       });
-      validation.check(req.body, validation.loginSchema, res);
+
       const { email, password } = req.body;
       const { rows } = await pool.query(getUser, [email]);
       if (!rows[0]) {
@@ -170,7 +166,6 @@ class userController {
 
   static async forgotPassword(req, res) {
     const { email } = req.body;
-    validation.check(email, validation.email, res);
     const allEmails = 'Select * from users where email=$1';
     const { rows } = await pool.query(allEmails, [email]);
     try {
@@ -219,7 +214,6 @@ class userController {
     try {
       const { newPassword } = req.body;
       const id = Number(req.body.id);
-      validation.check(req.body, validation.resetPasswordSchema, res);
       const hashedPassword = authHelper.hashPassword(newPassword);
       const NewPassword = 'UPDATE users SET password = $1 where id=$2 returning password';
       const insertNewPassword = await pool.query(NewPassword, [hashedPassword, id]);
