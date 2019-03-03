@@ -1,5 +1,4 @@
-const smallLogout = document.getElementById('logout_full');
-const fullLogout = document.getElementById('logout_small');
+
 
 const logoutUrl = 'https://cea-politico-gres.herokuapp.com/api/v1/auth/logout';
 const index = 'index.html';
@@ -17,10 +16,11 @@ const logout = (url) => {
     });
 };
 
-smallLogout.onclick = () => {
+document.getElementById('logout_small').onclick = () => {
   logout(logoutUrl);
 };
 
-fullLogout.onclick = () => {
+document.getElementById('logout_full').onclick = () => {
   logout(logoutUrl);
 };
+
