@@ -35,7 +35,6 @@ reset.className = 'layout_none';
     change style of login button to active. */
 
 loginButton.onclick = () => {
-  location.href = 'home.html';
   loginButton.className = 'button_active';
   signupButton.className = 'button_login';
   login.className = 'layout_block';
@@ -109,16 +108,130 @@ icon.onclick = () => {
   }
 };
 /** Get all forms */
-const form1 = document.getElementById('form1');
-const form2 = document.getElementById('form2');
-const form3 = document.getElementById('form3');
 
-/** Get all submit buttons in the page */
-const signin = document.getElementById('signedin');
-const enter = document.getElementById('enter');
-const reseted = document.getElementById('reseted');
 
-/**  Get all requires form inputs */
-const signupdetails = form1.querySelectorAll('[required]');
-const enterdetails = form2.querySelectorAll('[required]');
-const resetdetails = form3.querySelectorAll('[required]');
+
+
+const previewed = document.getElementById('uploadedPassport');
+
+const uploadButton = document.querySelector('.button_btn');
+
+const loginData = {
+  email: document.getElementById('login_email').value,
+  password: document.getElementById('login_password').value,
+};
+const resetData = document.getElementById('reset_email').value;
+
+const mywidget = cloudinary.createUploadWidget({
+  cloudName: 'basilcea',
+  uploadPreset: 'cea_politico',
+  folder: 'politico',
+  form: '#signupForm',
+  fieldName: 'passportUrl',
+  cropping: true,
+},
+(error, result) => {
+  if (result && result.event === 'success') {
+    passport = result.info.url;
+    previewed.src = passport;
+  }
+  return previewed.src;
+});
+
+uploadButton.addEventListener('click', () => {
+  // trigger the click of the file upload input
+  mywidget.open();
+});
+
+host = 'https://cea-politico-gres.herokuapp.com';
+signupError = document.getElementById('signupErrors');
+loginError = document.getElementById('loginErrors');
+resetError = document.getElementById('resetErrors');
+
+// eslint-disable-next-line no-shadow
+
+const createUser = (url, formData, errorDiv, statusCode, message) => {
+  const home = 'home.html';
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+  })
+    .then(res => res.json())
+    .then((res) => {
+      if (res.status === statusCode) {
+        const { token, user } = res.data;
+        localStorage.clear();
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', user);
+        errorDiv.innerHTML = message;
+        window.location.replace(`${home}`);
+      } else {
+        // eslint-disable-next-line prefer-destructuring
+        errorDiv.innerHTML = res.error;
+      }
+    });
+};
+
+document.getElementById('signupForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const signupData = {
+    firstname: document.getElementById('signup_firstname').value,
+    lastname: document.getElementById('signup_lastname').value,
+    othername: document.getElementById('signup_othername').value,
+    email: document.getElementById('signup_email').value,
+    passportUrl: previewed.src,
+    phoneNumber: document.getElementById('signup_phonenumber').value,
+    password: document.getElementById('signup_password').value,
+    confirmPassword: document.getElementById('signup_confirmpassword').value,
+    registerAs: document.getElementById('usertype').value,
+  };
+  createUser(`${host}/api/v1/auth/signup`, signupData, signupError, 201, 'Signup successful');
+});
+
+
+document.getElementById('loginForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const loginData = {
+    email: document.getElementById('login_email').value,
+    password: document.getElementById('login_password').value,
+
+  };
+  createUser(`${host}/api/v1/auth/login`, loginData, loginError, 200, 'login succesful');
+});
+
+document.getElementById('resetForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const resetData = {
+    email: document.getElementById('reset_email').value,
+
+  };
+  const resetUser = (url, formData, errorDiv) => {
+    const home = 'home.html';
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(res => res.json())
+      .then((res) => {
+        if (res.status === 200) {
+          errorDiv.innerHTML = ' Your reset link has been sent to your email.';
+          window.location.replace(`${index}`);
+        } else if (res.status === 400) {
+          errorDiv.innerHTML = res.error.response;
+        }
+        else {
+          // eslint-disable-next-line prefer-destructuring
+          errorDiv.innerHTML = res.error;
+        }
+      });
+  };
+  resetUser(`${host}/api/v1/auth/forgot`, resetData, resetError);
+});

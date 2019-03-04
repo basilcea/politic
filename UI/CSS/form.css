@@ -28,6 +28,15 @@ input[type=submit]:hover{
 	background-color:#d92121;
 	color:white;
 }
+input:required {
+	border:1px solid red;
+	background-color:white;
+
+}
+input:invalid {
+	border:1px solid red;
+	background-color:#28495b;
+}
 
 textarea::placeholder{
 	opacity:1;
