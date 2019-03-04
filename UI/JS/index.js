@@ -198,7 +198,6 @@ document.getElementById('loginForm').addEventListener('submit', (e) => {
   const loginData = {
     email: document.getElementById('login_email').value,
     password: document.getElementById('login_password').value,
-
   };
   createUser(`${host}/api/v1/auth/login`, loginData, loginError, 200, 'login succesful');
 });
