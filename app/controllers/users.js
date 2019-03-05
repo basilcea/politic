@@ -145,16 +145,19 @@ class userController {
   
   
   try{
+    if (token) {
     const invalid = (callback) => {
       redisClient.lrange('token', 0,100, (err,result)=> {
           return callback(result)
       });
     }
-    invalid((result)=> {
-      if (result.indexOf(token) > -1){
+      invalid((result) => {
+        if (result.indexOf(token) > -1) {
           return res.status(400).json({
             'status': 400,
-            'error':'You are already logged out'})
+            'error': 'You are already logged out'
+          })
+        }
       }
       redisClient.LPUSH('token',token);
       return res.status(200).json({
