@@ -88,19 +88,17 @@ class userController {
     try {
 
       const token = req.headers['x-access-token'];
-      if (token) {
-        const invalid = (callback) => {
-          redisClient.lrange('token', 0, 100, (err, result) => callback(result));
-        };
-        invalid((result) => {
-          if (result.indexOf(token) < 0) {
-            return res.status(400).json({
-              'status': 400,
-              'error': 'You are already logged in',
-            });
-          }
-        });
-      }
+      const invalid = (callback) => {
+        redisClient.lrange('token', 0, 100, (err, result) => callback(result));
+      };
+      invalid((result) => {
+        if (result.indexOf(token) < 0) {
+          return res.status(400).json({
+            'status': 400,
+            'error': 'You are already logged in',
+          });
+        }
+      });
       const { email, password } = req.body;
       const { rows } = await pool.query(getUser, [email]);
       if (!rows[0]) {
@@ -140,27 +138,21 @@ class userController {
     // save token in redis
     const token = req.headers['x-access-token'];
     try {
-      if (token) {
-        const invalid = (callback) => {
-          redisClient.lrange('token', 0, 100, (err, result) => callback(result));
-        };
-        invalid((result) => {
-          if (result.indexOf(token) > -1) {
-            return res.status(400).json({
-              'status': 400,
-              'error': 'You are already logged out',
-            });
-          }
-          redisClient.LPUSH('token', token);
-          return res.status(200).json({
-            'status': 200,
-            'data': 'You are logged out',
+      const invalid = (callback) => {
+        redisClient.lrange('token', 0, 100, (err, result) => callback(result));
+      };
+      invalid((result) => {
+        if (result.indexOf(token) > -1) {
+          return res.status(400).json({
+            'status': 400,
+            'error': 'You are already logged out',
           });
+        }
+        redisClient.LPUSH('token', token);
+        return res.status(200).json({
+          'status': 200,
+          'data': 'You are logged out',
         });
-      }
-      return res.status(400).json({
-        'status': 400,
-        'error': 'You are not logged in',
       });
     } catch (error) {
       return res.status(400).json({
