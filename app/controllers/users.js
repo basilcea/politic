@@ -89,7 +89,7 @@ class userController {
     const getUser = 'SELECT * FROM users WHERE email = $1';
     try {
 
-      const  token = req.headers['x-access-token']
+      /*const  token = req.headers['x-access-token']
       const invalid = (callback) => {
         redisClient.lrange('token', 0,100, (err,result)=> {
             return callback(result)
@@ -102,7 +102,7 @@ class userController {
           'error': 'You are already logged in'
         })
       }
-      })
+      })*/
       validation.check(req.body, validation.loginSchema, res);
       const { email, password } = req.body;
       const { rows } = await pool.query(getUser, [email]);
