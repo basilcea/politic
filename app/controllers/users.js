@@ -87,7 +87,8 @@ class userController {
     const getUser = 'SELECT * FROM users WHERE email = $1';
     try {
 
-      const token = req.headers['x-access-token'];
+      token = req.headers['x-access-token']
+      if(token){
       const invalid = (callback) => {
         redisClient.lrange('token', 0, 100, (err, result) => callback(result));
       };
@@ -95,11 +96,12 @@ class userController {
         if (result.indexOf(token) < 0) {
           return res.status(400).json({
             'status': 400,
-            'error': 'You are already logged in',
-          });
+            'error': 'You are already logged in'
+          })
         }
-      });
-
+      })
+    }
+      validation.check(req.body, validation.loginSchema, res);
       const { email, password } = req.body;
       const { rows } = await pool.query(getUser, [email]);
       if (!rows[0]) {
@@ -138,9 +140,8 @@ class userController {
     // logout user
     // save token in redis
     const token = req.headers['x-access-token'];
-
-
     try {
+      if(token){
       const invalid = (callback) => {
         redisClient.lrange('token', 0, 100, (err, result) => callback(result));
       };
@@ -151,6 +152,7 @@ class userController {
             'error': 'You are already logged out',
           });
         }
+      }
         redisClient.LPUSH('token', token);
         return res.status(200).json({
           'status': 200,
