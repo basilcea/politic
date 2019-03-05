@@ -164,7 +164,6 @@ describe('POST /auth/login', () => {
   it('should fail if email does not exist', (done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
-      .set('x-access-token', token)
       .send({ email: 'basil3@gmail.com', password: data.password })
       .end((err, res) => {
         expect(res.status).to.equal(404);
@@ -180,7 +179,6 @@ describe('POST /auth/login', () => {
   it('should fail if password is not correct', (done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
-      .set('x-access-token', token)
       .send({ email: data.email, password: 'basil123' })
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -190,13 +188,13 @@ describe('POST /auth/login', () => {
         expect(res.body.error).to.be.a('string');
         expect(res.body.error).to.equal('Incorrect password');
         done();
+        console.log(token);
       });
   });
 
   it('should pass', (done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
-      .set('x-access-token', token)
       .send({ email: data.email, password: 'change101' })
       .end((err, res) => {
         expect(res.status).to.equal(200);
@@ -209,6 +207,7 @@ describe('POST /auth/login', () => {
         expect(res.body.data[0].user).to.be.an('object');
         expect(res.body.data[0].user).to.include.keys('firstname', 'email', 'phonenumber', 'passporturl', 'password', 'registeras', 'isadmin');
         token = res.body.data[0].token;
+        console.log(token);
         done();
       });
   });
@@ -216,8 +215,10 @@ describe('POST /auth/login', () => {
   it('should fail if user is already logged in', (done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
+      .set('x-access-token', token)
       .send({ email: data.email, password: 'change101' })
       .end((err, res) => {
+        console.log(token);
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('status');
         expect(res.body.status).to.equal(400);

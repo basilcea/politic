@@ -88,17 +88,20 @@ class userController {
     try {
 
       const token = req.headers['x-access-token'];
-      const invalid = (callback) => {
-        redisClient.lrange('token', 0, 100, (err, result) => callback(result));
-      };
-      invalid((result) => {
-        if (result.indexOf(token) < 0) {
-          return res.status(400).json({
-            'status': 400,
-            'error': 'You are already logged in',
-          });
-        }
-      });
+      if (token) {
+        const invalid = (callback) => {
+          redisClient.lrange('token', 0, 100, (err, result) => callback(result));
+        };
+        invalid((result) => {
+          if (result.indexOf(token) ) {
+            return res.status(400).json({
+              'status': 400,
+              'error': 'You are already logged in',
+            });
+          }
+        });
+
+      }
       const { email, password } = req.body;
       const { rows } = await pool.query(getUser, [email]);
       if (!rows[0]) {
@@ -138,6 +141,13 @@ class userController {
     // save token in redis
     const token = req.headers['x-access-token'];
     try {
+
+      if (!token) {
+        return res.status(400).json({
+          'status': 400,
+          'error': 'You need to login',
+        });
+      }
       const invalid = (callback) => {
         redisClient.lrange('token', 0, 100, (err, result) => callback(result));
       };
