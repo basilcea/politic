@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable quote-props */
-import pool from '../migrate';
-import {redisClient} from '../migrate';
-import authHelper from '../helpers/auth';
+import nodemailer from 'nodemailer';
+import pool, { redisClient, mailer } from '../migrate';
 import 'dotenv';
 import '@babel/polyfill';
-import * as validation from '../helpers/schema';
+import authHelper from '../helpers/auth';
+
 /**
   * Represents a controller  class for all user specific acitvities
   * @class userController
@@ -19,15 +19,13 @@ class userController {
     * Create  a user
     * @async requestPromises
     * @method signup
-    * @params {object} request - The form data to be inputted
-    * @return {object} response - The status code and data.
-    *
+    * @params {object} request - The form data to be inputted ;
+    * @return {object} response - The status code and data ;
    */
   static async signup(req, res) {
     const {
-      firstname, lastname, othername, password, email, phoneNumber, registerAs, isAdmin,
+      firstname, lastname, othername, password, email, phoneNumber, registerAs, passportUrl,
     } = req.body;
-    validation.check(req.body, validation.signupSchema, res);
     /** try and catch async block */
     try {
       const getEmail = 'SELECT email, phonenumber from users';
@@ -47,11 +45,11 @@ class userController {
 
       const hashPassword = authHelper.hashPassword(password);
 
-      const createUser = `INSERT INTO users(firstname, lastname, othername, email,phoneNumber, password,registerAs ,isAdmin)
+      const createUser = `INSERT INTO users(firstname, lastname, othername, email,phoneNumber, password, passporturl ,registerAs ,isAdmin)
       
-      VALUES($1, $2, $3,$4, $5, $6 ,$7 ,$8)`;
+      VALUES($1, $2, $3,$4, $5, $6 ,$7 ,$8 ,$9)`;
       const values = [
-        firstname.trim(), lastname, othername, email, phoneNumber, hashPassword, registerAs.trim(), isAdmin,
+        firstname.trim(), lastname, othername, email, phoneNumber, hashPassword, passportUrl, registerAs.trim(), false,
       ];
       await pool.query(createUser, values);
 
@@ -68,7 +66,7 @@ class userController {
         }],
       });
     } catch (error) {
-      res.status(500).json({
+      return res.status(500).json({
         'status': 500,
         'error': error.toString(),
       });
@@ -92,10 +90,8 @@ class userController {
       token = req.headers['x-access-token']
       if(token){
       const invalid = (callback) => {
-        redisClient.lrange('token', 0, 100, (err, result) => {
-          return callback(result)
-        });
-      }
+        redisClient.lrange('token', 0, 100, (err, result) => callback(result));
+      };
       invalid((result) => {
         if (result.indexOf(token) < 0) {
           return res.status(400).json({
@@ -139,182 +135,70 @@ class userController {
     }
   }
 
-  static async logout ( req, res ) {
+  static async logout(req, res) {
     // check if user is logged in
     // logout user
     // save token in redis
-  const token = req.headers['x-access-token']
-  
-  
-  try{
-    if (token) {
-    const invalid = (callback) => {
-      redisClient.lrange('token', 0,100, (err,result)=> {
-          return callback(result)
-      });
-    }
+    const token = req.headers['x-access-token'];
+    try {
+      if(token){
+      const invalid = (callback) => {
+        redisClient.lrange('token', 0, 100, (err, result) => callback(result));
+      };
       invalid((result) => {
         if (result.indexOf(token) > -1) {
           return res.status(400).json({
             'status': 400,
-            'error': 'You are already logged out'
-          })
+            'error': 'You are already logged out',
+          });
         }
       }
-      redisClient.LPUSH('token',token);
-      return res.status(200).json({
-        'status':200 ,
-        'data':'You are logged out'
-      })
-    })
-  }catch(error){
-    return res.status(400).json({
-      'status': 500,
-      'error' :error.toString()
-    })
-  }
-  
-  }
-
-  static async editProfile(req, res) {
-    const {
-      firstname, lastname, othername, email, phoneNumber, registerAs, passportUrl,
-    } = req.body;
-    const token = req.headers['x-access-token'] ;
-    validation.check(req.body, validation.editProfileSchema, res);
-    const getUser = 'SELECT * fom users where id = $1';
-    const { rows } = await pool.query(getUser, [req.user.id]);
-    if (!rows[0]) {
-      return res.status(401).json({
-        'status': 401,
-        'error': 'Unauthorized',
-      });
-    }
-
-    try {
-      const updateUser = `UPDATE users
-      SET firstname =$1, lastname =$2, othername =$3, email=$4, phonenumber=$5, registeras=$6, passporturl=$7 ,isAdmin=$8
-      WHERE id = $9 returning *`;
-
-      const getEmail = 'SELECT email, phonenumber from users';
-      const emailing = await pool.query(getEmail);
-      if (authHelper.isUniqueEmail(email, emailing) !== null) {
-        return res.status(422).json({
-          'status': 422,
-          'error': 'Email already exists',
-        });
-      }
-
-      if (authHelper.isUniquePhone(phoneNumber, emailing) !== null) {
-        return res.status(422).json({
-          'status': 422,
-          'error': 'phoneNumber already exists',
-        });
-      }
-      if (req.user.isAdmin === true && registerAs === 'politician') {
-        const response = await pool.query(updateUser,
-          [
-            firstname || rows[0].firstname, lastname || rows[0].lastname,
-            othername || rows[0].othername, email || rows[0].email,
-            phoneNumber || rows[0].phonenumber, registerAs || rows[0].registeras,
-            passportUrl || rows[0].passporturl, false, req.user.id,
-          ]);
-          redisClient.LPUSH('token',token);
-          authHelper.generateToken(response.rows[0].id, false)
-        res.status(200).json({
+        redisClient.LPUSH('token', token);
+        return res.status(200).json({
           'status': 200,
-          'data': {
-            '': response.rows,
-            'message': 'You are no longer an admin as admin cannot be a politician',
-          },
+          'data': 'You are logged out',
         });
-      }
-
-      const getInterest = 'Select interest from interests where interest=$1';
-      const interest = await pool.query(getInterest, [req.user.id]);
-
-      if (registerAs === 'voter' && interest.rows[0] !== undefined) {
-        const deleteInterest = 'Delete from interests where interest =$1';
-        await pool.query(deleteInterest, [req.user.id]);
-        const newResponse = await pool.query(updateUser,
-          [
-            firstname || rows[0].firstname, lastname || rows[0].lastname,
-            othername || rows[0].othername, email || rows[0].email,
-            phoneNumber || rows[0].phonenumber, registerAs || rows[0].registeras,
-            passportUrl || rows[0].passporturl, rows[0].isAdmin, req.user.id,
-          ]);
-        res.status(200).json({
-          'status': 200,
-          'data': {
-            '': newResponse.rows,
-            'message': 'All political interest removed',
-          },
-        });
-      }
-      const getCandidate = 'Select candidate from candidates where candidate=$1';
-      const candidate = await pool.query(getCandidate, [req.user.id]);
-      if (candidate.rows[0] !== undefined) {
-        const anotherResponse = await pool.query(updateUser,
-          [
-            firstname || rows[0].firstname, lastname || rows[0].lastname,
-            othername || rows[0].othername, email || rows[0].email,
-            phoneNumber || rows[0].phonenumber, 'politician',
-            passportUrl || rows[0].passporturl, rows[0].isAdmin,
-            req.user.id,
-          ]);
-        res.status(401), json({
-          'status': 401,
-          'data': {
-            '': anotherResponse.rows,
-            'message': 'You are already a candidate. You cannot be a voter',
-          },
-        });
-      }
-      const expectedResponse = await pool.query(updateUser,
-        [
-          firstname || rows[0].firstname,
-          lastname || rows[0].lastname,
-          othername || rows[0].othername,
-          email || rows[0].email,
-          phoneNumber || rows[0].phonenumber,
-          registerAs || rows[0].registeras,
-          passportUrl || rows[0].passporturl,
-          rows[0].isAdmin,
-          req.user.id,
-        ]);
-      console.log(expectedResponse);
-      return res.status(200).json({
-        'status': 200,
-        'data': expectedResponse.rows,
       });
     } catch (error) {
-      res.status(500).json({
+      return res.status(400).json({
         'status': 500,
         'error': error.toString(),
       });
     }
+
   }
 
-  static async changePassword(req, res) {
+  static async forgotPassword(req, res) {
+    const { email } = req.body;
+    const allEmails = 'Select * from users where email=$1';
+    const { rows } = await pool.query(allEmails, [email]);
     try {
-      const { oldPassword, newPassword } = req.body;
-      validation.check(req.body, validation.changePasswordSchema, res);
-      const Password = 'Select password from users where id= $1';
-      const getPassword = await pool.query(Password, [req.user.id]);
-      
-      if (authHelper.comparePassword(getPassword.rows[0].password, oldPassword) === false) {
-        return res.status(422).json({
-          'status': 422,
-          'error': 'Incorrect Password',
+      if (!rows[0]) {
+        return res.status(404).json({
+          'status': 404,
+          'error': 'Email does not exist',
         });
       }
-      const hashedPassword = authHelper.hashPassword(newPassword);
-      const NewPassword = 'UPDATE users SET password = $1 where id=$2 returning password';
-      const insertNewPassword = await pool.query(NewPassword, [hashedPassword, req.user.id]);
-      return res.status(200).json({
-        'status': 200,
-        'data': insertNewPassword.rows,
-      });
+
+      const token = authHelper.generateToken(rows[0].id, rows[0].isadmin);
+      const data = {
+        from: process.env.TEST_EMAIL || process.env.EMAIL,
+        to: rows[0].email,
+        subject: 'Password Reset Link',
+        html: `<p> You have asked for a password reset on <a href='https://basilcea.github.io/politico/UI/'>Politico</a></p>
+                  <p> To reset password click on the Reset Password link below <p><br>
+                  <p><b><a href="/resetpassword/${token}">Reset password</a></b>
+                  <p><i> kindly ignore this mail if you did not request for a password reset </i> </p>
+                  <p><img src='../UI/STATIC/logo.png'>`,
+      };
+      mailer.sendMail(data).then((info) => res.status(200).json({
+          'status': 200,
+          'data': mailer.getTestMessageUrl(info)|| info
+        }))
+        .catch((error) => res.status(400).json({
+            'status': 400,
+            error,
+          }));
     }
     catch (err) {
       return res.status(500).json({
@@ -322,66 +206,34 @@ class userController {
         'error': err.toString(),
       });
     }
+
   }
 
-  static async deleteProfile(req , res) {
+  static async resetPassword(req, res) {
     try {
-      const getUser = 'Select * from users where id= $1'
-      const checkUser = await pool.query(getUser ,[req.user.id])
-      if(!checkUser.rows[0]) {
+      const { newPassword } = req.body;
+      const id = Number(req.body.id);
+      const hashedPassword = authHelper.hashPassword(newPassword);
+      const NewPassword = 'UPDATE users SET password = $1 where id=$2 returning password';
+      const insertNewPassword = await pool.query(NewPassword, [hashedPassword, id]);
+      if (!insertNewPassword.rows[0]) {
         return res.status(404).json({
-          'status':404,
-          'error': 'User not found'
-        })
+          'status': 404,
+          'error': 'User does not exist',
+        });
       }
-      const deleting = 'Delete from users where id= $1';
-      await pool.query(deleting ,[req.user.id])
       return res.status(200).json({
         'status': 200,
         'data': {
-          'message': 'Your profile has been deleted'
-        }
-      })
-    }catch(err) {
-      return res.status(500).json({
-        'status':500,
-        'error': err.toString()
-      })
-    }   
-  }
-
-  static async makeAdmin (req, res){
-    const id = Number(req.params.id)
-    validation.check(id ,validation.id ,res)
-    const updateUser =`UPDATE users SET isAdmin =$1,registerAs=$2 WHERE id = $3  returning id,firstname,registerAs ,isAdmin`
-    try{
-      const user = 'select * from users where id =$1'
-      if(req.user.isAdmin !== true){
-        return res.status(401).json({
-          'status': 401,
-          'error': 'Unauthorized',
-        })
-      }
-      const {rows} = await  pool.query(user ,[id]) 
-      if(!rows[0]){
-        return res.status(404).json({
-          'status': 404,
-          'error': ' User not found'
-        })
-      }
-      const response = await pool.query(updateUser, [true, 'voter', id]);
-      const admintoken = authHelper.generateToken(id, true);
-      return res.status(200).json({
-        'status':200,
-        'data': {
-          '': response.rows[0],
-          'token': admintoken
-        }
+          'password': insertNewPassword.rows,
+          'message': 'password change successful',
+        },
       });
-    }catch (error) {
-      res.status(500).json({
+    }
+    catch (error) {
+      return res.status(500).json({
         'status': 500,
-        'error': error.toString()
+        'error': error.toString(),
       });
     }
   }

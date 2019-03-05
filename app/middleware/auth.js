@@ -7,7 +7,7 @@ import 'dotenv';
 const auth = {
   // eslint-disable-next-line consistent-return
   async checkToken(req, res, next) {
-    const token = req.headers['x-access-token'];
+    const token = req.headers['x-access-token'] || req.params.token;
     if (!token) {
       return res.status(401).send({
         'status': 401,

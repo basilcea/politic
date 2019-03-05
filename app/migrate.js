@@ -2,19 +2,46 @@ import { Pool } from 'pg';
 import dotenv from 'dotenv';
 import redis from 'redis';
 import { execFile } from 'child_process';
+import nodemailer from 'nodemailer';
+import { getMaxListeners } from 'cluster';
 
 dotenv.config();
 
-execFile('redis/redis-server.exe',(error,stdout)=>{
-  if(error){
-    throw error
-  }
-  console.log(stdout)
-})
+if (process.env.NODE_ENV === 'development') {
+  execFile('redis/redis-server.exe', (error, stdout) => {
+    if (error) {
+      throw error;
+    }
+    console.log(stdout);
+  });
+}
 
+let mailConfig;
+if (process.env.NODE_ENV === 'production') {
+  mailConfig = {
+    service: 'gmail',
+    secure: true,
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD
+    }
+  }
+} else {
+  mailConfig = {
+    host: 'smtp.ethereal.email',
+    port: 587,
+    requireTLS: true,
+    secure:true,
+    auth: {
+      user: process.env.TEST_EMAIL,
+      pass: process.env.TEST_PASSWORD,
+    }
+  };
+}
+export const mailer = nodemailer.createTransport(mailConfig);
 const pool = new Pool({
-  connectionString: process.env.NODE_ENV === 'test' ? process.env.TEST_DATABASE : process.env.DATABASE_URL,
-  ssl: false,
+  connectionString: process.env.NODE_ENV === 'test' ? process.env.TEST_URL : process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === 'production',
 });
 
 pool.query('SELECT NOW()')
@@ -25,12 +52,13 @@ pool.query('SELECT NOW()')
     console.log('Database Connection Failed.', error);
   });
 
-export const redisClient = redis.createClient()
-redisClient.on('connect',()=>{
-  console.log('Token blacklisting activated.')
+export const redisClient = redis.createClient(process.env.REDIS_URL);
+redisClient.on('connect', () => {
+  console.log('Token blacklisting activated.');
 });
-redisClient.on('error', (error)=>{
-  console.log('Redis not connected.', error)
+redisClient.on('error', (error) => {
+  console.log('Redis not connected.', error);
 });
+
 
 export default pool;

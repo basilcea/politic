@@ -1,6 +1,7 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable func-names */
 import pool from '../migrate';
+import '@babel/polyfill';
 
 const seed = async function (dbTable, dataArray) {
   const client = await pool.connect();
@@ -19,7 +20,7 @@ const seed = async function (dbTable, dataArray) {
           columnValue = Object.values(dataArray[j]);
           insert = `insert into ${tableName}(${columnName})
           values(${columnValue})`;
-          await client.query(insert);
+          client.query(insert);
         }console.log('seeded');
       }
     }
