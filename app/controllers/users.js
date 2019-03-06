@@ -141,13 +141,6 @@ class userController {
     // save token in redis
     const token = req.headers.Authorization;
     try {
-
-      if (!token) {
-        return res.status(400).json({
-          'status': 400,
-          'error': 'You need to login',
-        });
-      }
       const invalid = (callback) => {
         redisClient.lrange('token', 0, 100, (err, result) => callback(result));
       };
