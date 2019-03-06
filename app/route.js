@@ -24,7 +24,7 @@ router.post('/auth/signup', validation.signup, userController.signup);
 router.post('/auth/login', validation.login, userController.login);
 router.post('/auth/reset', validation.resetPassword, userController.resetPassword);
 router.post('/auth/forgot', validation.forgotPassword, userController.forgotPassword);
-router.get('/auth/logout', auth.checkToken, userController.logout);
+router.get('/auth/logout', userController.logout);
 
 router.patch('/users/me', auth.checkToken, userActivityController.editProfile);
 router.post('/users/me/password', validation.changePassword, auth.checkToken, userActivityController.changePassword);

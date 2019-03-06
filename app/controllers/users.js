@@ -5,6 +5,7 @@ import pool, { redisClient, mailer } from '../migrate';
 import 'dotenv';
 import '@babel/polyfill';
 import authHelper from '../helpers/auth';
+import { isNull } from 'util';
 
 /**
   * Represents a controller  class for all user specific acitvities
@@ -87,21 +88,33 @@ class userController {
     const getUser = 'SELECT * FROM users WHERE email = $1';
     try {
 
-      const token = req.headers.authorization.split(' ')[1];
-      if (token) {
-        const invalid = (callback) => {
-          redisClient.lrange('token', 0, 100, (err, result) => callback(result));
-        };
-        invalid((result) => {
-          if (result.indexOf(token)) {
-            return res.status(400).json({
-              'status': 400,
-              'error': 'You are already logged in',
-            });
-          }
-        });
-
+      let token = req.headers.authorization.split(' ')[1];
+      console.log(token);
+      if (token === null) {
+        token = 'null';
       }
+      console.log(token);
+      const invalid = (callback) => {
+        redisClient.lrange('token', 0, 100, (err, result) => {
+          console.log(result);
+          return callback(result);
+        });
+      };
+      invalid((result) => {
+        console.log(result.indexOf(token));
+        if (result.indexOf(token) < 0) {
+          return res.status(400).json({
+            'status': 400,
+            'error': 'You are already logged in',
+          });
+        }
+        if (token !== 'null' && result.includes(token) === true) {
+          return res.status(401).json({
+            'status': 401,
+            'error': 'Expired Token',
+          });
+        }
+      });
       const { email, password } = req.body;
       const { rows } = await pool.query(getUser, [email]);
       if (!rows[0]) {
@@ -139,7 +152,7 @@ class userController {
     // check if user is logged in
     // logout user
     // save token in redis
-    const token = req.headers.authorization.split(' ')[1].split(' ')[1];
+    const token = req.headers.authorization.split(' ')[1];
     try {
       const invalid = (callback) => {
         redisClient.lrange('token', 0, 100, (err, result) => callback(result));
@@ -156,7 +169,9 @@ class userController {
           'status': 200,
           'data': 'You are logged out',
         });
+
       });
+
     } catch (error) {
       return res.status(400).json({
         'status': 500,
