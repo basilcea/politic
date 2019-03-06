@@ -87,7 +87,7 @@ class userController {
     const getUser = 'SELECT * FROM users WHERE email = $1';
     try {
 
-      const token = req.headers.Authorization;
+      const token = req.headers.authorization.split(' ')[1];
       if (token) {
         const invalid = (callback) => {
           redisClient.lrange('token', 0, 100, (err, result) => callback(result));
@@ -139,7 +139,7 @@ class userController {
     // check if user is logged in
     // logout user
     // save token in redis
-    const token = req.headers.Authorization;
+    const token = req.headers.authorization.split(' ')[1].split(' ')[1];
     try {
       const invalid = (callback) => {
         redisClient.lrange('token', 0, 100, (err, result) => callback(result));
