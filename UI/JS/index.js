@@ -152,18 +152,22 @@ resetError = document.getElementById('resetErrors');
 
 const createUser = (url, formData, errorDiv, statusCode, message) => {
   const home = 'home.html';
+  const formerToken = localStorage.getItem('token');
   fetch(url, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      authorization: `Bearer ${formerToken}`,
     },
     body: JSON.stringify(formData),
   })
     .then(res => res.json())
     .then((res) => {
+      console.log(res);
       if (res.status === statusCode) {
-        const { token, user } = res.data;
+        const { token, user } = res.data[0];
+        console.log(res.data);
         localStorage.clear();
         localStorage.setItem('token', token);
         localStorage.setItem('user', user);
@@ -219,16 +223,16 @@ document.getElementById('resetForm').addEventListener('submit', (e) => {
       body: JSON.stringify(formData),
     })
       .then(res => res.json())
-      .then((res) => {
-        if (res.status === 200) {
+      .then((info) => {
+        if (info.status === 200) {
           errorDiv.innerHTML = ' Your reset link has been sent to your email.';
           window.location.replace(`${index}`);
         } else if (res.status === 400) {
-          errorDiv.innerHTML = res.error.response;
+          errorDiv.innerHTML = info.error.response;
         }
         else {
           // eslint-disable-next-line prefer-destructuring
-          errorDiv.innerHTML = res.error;
+          errorDiv.innerHTML = info.error;
         }
       });
   };

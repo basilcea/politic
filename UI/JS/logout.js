@@ -2,16 +2,26 @@
 
 const logoutUrl = 'https://cea-politico-gres.herokuapp.com/api/v1/auth/logout';
 const index = 'index.html';
-
+const token = localStorage.getItem('token');
 const logout = (url) => {
-  fetch(url)
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+      'Access-Control-Allow-Origin': '*',
+    },
+  })
     .then(res => res.json())
-    .then((res) => {
-      if (res.status === 200) {
+    .then((info) => {
+      if (info.status === 200) {
+        // eslint-disable-next-line no-undef
         localStorage.clear();
         window.location.replace(`${index}`);
       } else {
-        return res.error;
+        return info.error;
+
       }
     });
 };
@@ -23,4 +33,3 @@ document.getElementById('logout_small').onclick = () => {
 document.getElementById('logout_full').onclick = () => {
   logout(logoutUrl);
 };
-
