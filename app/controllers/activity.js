@@ -10,7 +10,7 @@ class userActivityController{
         const {
           firstname, lastname, othername, email, phoneNumber, registerAs, passportUrl,
         } = req.body;
-        const token = req.headers['x-access-token'];
+        const token = req.headers.Authorization;
         validation.check(req.body, validation.editProfileSchema, res);
         const getUser = 'SELECT * fom users where id = $1';
         const { rows } = await pool.query(getUser, [req.user.id]);

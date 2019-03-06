@@ -87,13 +87,13 @@ class userController {
     const getUser = 'SELECT * FROM users WHERE email = $1';
     try {
 
-      const token = req.headers['x-access-token'];
+      const token = req.headers.Authorization;
       if (token) {
         const invalid = (callback) => {
           redisClient.lrange('token', 0, 100, (err, result) => callback(result));
         };
         invalid((result) => {
-          if (result.indexOf(token) ) {
+          if (result.indexOf(token)) {
             return res.status(400).json({
               'status': 400,
               'error': 'You are already logged in',
@@ -139,7 +139,7 @@ class userController {
     // check if user is logged in
     // logout user
     // save token in redis
-    const token = req.headers['x-access-token'];
+    const token = req.headers.Authorization;
     try {
 
       if (!token) {
