@@ -8,7 +8,6 @@ const auth = {
   // eslint-disable-next-line consistent-return
   async checkToken(req, res, next) {
     const token = req.headers.authorization.split(' ')[1] || req.params.token;
-    console.log(token);
     if (!token) {
       return res.status(401).send({
         status: 401,
