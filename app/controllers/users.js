@@ -89,19 +89,13 @@ class userController {
     try {
 
       let token = req.headers.authorization.split(' ')[1];
-      console.log(token);
       if (token === null) {
         token = 'null';
       }
-      console.log(token);
       const invalid = (callback) => {
-        redisClient.lrange('token', 0, 100, (err, result) => {
-          console.log(result);
-          return callback(result);
-        });
+        redisClient.lrange('token', 0, 100, (err, result) => callback(result));
       };
       invalid((result) => {
-        console.log(result.indexOf(token));
         if (result.indexOf(token) < 0) {
           return res.status(400).json({
             'status': 400,

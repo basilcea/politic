@@ -46,6 +46,7 @@ describe('POST /auth/signup', () => {
         expect(res.body.data[0].user).to.be.an('object');
         expect(res.body.data[0].user).to.include.keys('firstname', 'email', 'phonenumber', 'passporturl', 'password', 'registeras', 'isadmin');
         token = res.body.data[0].token;
+        console.log(token);
         done();
       });
   });
@@ -55,7 +56,7 @@ describe('GET /auth/logout', () => {
   it('should pass if you logout', (done) => {
     chai.request(app)
       .get('/api/v1/auth/logout')
-      .set('x-access-token', token)
+      .set('Authorization', `Bearer ${token}`)
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.have.property('status');
@@ -69,7 +70,7 @@ describe('GET /auth/logout', () => {
   it('should fail if your are already logged out', (done) => {
     chai.request(app)
       .get('/api/v1/auth/logout')
-      .set('x-access-token', token)
+      .set('Authorization', `Bearer ${token}`)
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('status');
@@ -85,7 +86,7 @@ describe('POST/ auth/forgot', () => {
   it('should fail if email does not exist', (done) => {
     chai.request(app)
       .post('/api/v1/auth/forgot')
-      .set('x-access-token', token)
+      .set('Authorization', `Bearer ${token}`)
       .send({ email: 'basil3@gmail.com' })
       .end((err, res) => {
         expect(res.status).to.equal(404);
@@ -100,17 +101,15 @@ describe('POST/ auth/forgot', () => {
   it('should fail if email does exist in database but no connection', (done) => {
     chai.request(app)
       .post('/api/v1/auth/forgot')
-      .set('x-access-token', token)
+      .set('Authorization', `Bearer ${token}`)
       .send({ email: data.email })
       .end((err, res) => {
-        console.log(res.body);
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('status');
         expect(res.body.status).to.equal(400);
         expect(res.body).to.have.property('error');
         done();
         // eslint-disable-next-line no-self-assign
-        token = token;
       });
   });
 
@@ -166,6 +165,7 @@ describe('POST /auth/login', () => {
       .post('/api/v1/auth/login')
       .send({ email: 'basil3@gmail.com', password: data.password })
       .end((err, res) => {
+        console.log(res.body);
         expect(res.status).to.equal(404);
         expect(res.body).to.have.property('status');
         expect(res.body.status).to.equal(404);
@@ -188,7 +188,6 @@ describe('POST /auth/login', () => {
         expect(res.body.error).to.be.a('string');
         expect(res.body.error).to.equal('Incorrect password');
         done();
-        console.log(token);
       });
   });
 
@@ -207,7 +206,6 @@ describe('POST /auth/login', () => {
         expect(res.body.data[0].user).to.be.an('object');
         expect(res.body.data[0].user).to.include.keys('firstname', 'email', 'phonenumber', 'passporturl', 'password', 'registeras', 'isadmin');
         token = res.body.data[0].token;
-        console.log(token);
         done();
       });
   });
@@ -215,10 +213,9 @@ describe('POST /auth/login', () => {
   it('should fail if user is already logged in', (done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
-      .set('x-access-token', token)
+      .set('Authorization', token)
       .send({ email: data.email, password: 'change101' })
       .end((err, res) => {
-        console.log(token);
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('status');
         expect(res.body.status).to.equal(400);
