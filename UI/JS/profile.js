@@ -229,6 +229,67 @@ const info = [
   },
 ];
 
+window.onload = () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    window.location = 'index.html';
+  }
+
+  const informat = {
+    firstname: document.getElementById('firstname'),
+    lastname: document.getElementById('lastname'),
+    othername: document.getElementById('othername'),
+    email: document.getElementById('email'),
+    phone: document.getElementById('phonenumber'),
+    passport: document.getElementById('uploaded'),
+    status: document.getElementById('status'),
+    editfirstname: document.getElementById('editFirstname'),
+    editlastname: document.getElementById('editLastname'),
+    editothername: document.getElementById('editOthername'),
+    editemail: document.getElementById('editEmail'),
+    editphone: document.getElementById('editPhonenumber'),
+    editpassport: document.getElementById('editPix'),
+
+
+  };
+  fetch('https://cea-politico-gres.herokuapp.com/api/v1/users/me', {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+      'Access-Control-Allow-Origin': '*',
+    },
+  })
+    .then(res => res.json())
+    .then((data) => {
+      if (data.status === 200) {
+        informat.firstname.innerHTML = data.data.firstname;
+        informat.lastname.innerHTML = data.data.lastname;
+        informat.othername.innerHTML = data.data.othername;
+        informat.email.innerHTML = data.data.email.toLowerCase();
+        informat.phone.innerHTML = data.data.phonenumber;
+        informat.status.innerHTML = data.data.registeras;
+        informat.passport.src = data.data.passporturl;
+        informat.editfirstname.placeholder = data.data.firstname;
+        informat.editlastname.placeholder = data.data.lastname;
+        informat.editothername.placeholder = data.data.othername;
+        informat.editemail.placeholder = data.data.email.toLowerCase();
+        informat.editphone.placeholder = data.data.phonenumber;
+        informat.editpassport.src = data.data.passporturl;
+
+
+      }
+      else if (data.Message === 'Invalid Token') {
+        window.location.replace('index.html');
+      }
+      else {
+        return data.error;
+      }
+    });
+};
+
+
 /** Input seed database into table */
 const values = Object.values(info);
 const valuesArray = Object.values(values);

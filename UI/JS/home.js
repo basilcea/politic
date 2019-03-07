@@ -63,6 +63,7 @@ window.onload = () => {
           const figCaption = document.createElement('figcaption');
           const image = document.createElement('img');
           image.src = data.data[i].logourl;
+          image.className = 'others_img2';
           figCaption.innerHTML = acronymn;
           figure.appendChild(image);
           figure.appendChild(figCaption);

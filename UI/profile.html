@@ -93,14 +93,15 @@
 					<form>
 						<p class="text_centered">View Profile</p>
 						<div class="layout_right">
-						<img  id ="uploaded" class="others_img" src="STATIC/avatar.png" alt="logo">
+						<img  id ="uploaded" class="others_img" alt="logo">
 						</div>
 						<div class="others_profile">
-						<p>First Name:<span class='text_straight'>Ogbonna</span></p>
-						<p>Last Name:<span class="text_straight">Basil</span></p>
-						<p>Other Name:<span class="text_straight">Cea</span></p>
-						<p>Email:<span class="text_straight "> basilcea@yahoo.co.uk</span></p>
-						<p>Phone: <span class="text_straight ">+9 (0) 2346790</span></p>
+						<p>First Name:<span class='text_straight text_capitalize' id ='firstname'></span></p>
+						<p>Last Name:<span class="text_straight text_capitalize" id= 'lastname'></span></p>
+						<p>Other Name:<span class="text_straight text_capitalize" id='othername'></span></p>
+						<p>Email:<span class="text_straight" id ='email'></span></p>
+						<p>Phone: <span class="text_straight text_capitalize" id ='phonenumber'></span></p>
+						<p>Status: <span class="text_straight text_capitalize" id ='status'></span></p>
 						</div>
 					</form>
 				</div>
@@ -122,16 +123,21 @@
 					<form>
 						<p class="text_centered">Edit Profile</p>
 						<div class="layout_left">
-							<img  id ="pix" class="others_img" src="STATIC/avatar.png" alt="logo">
+							<img  id ="pix" class="others_img" alt="logo" id='editPix'>
 							<br><br>
 							<button type="button" class="button_btn">Browse Logo</button>
 						</div>
 						<input type ="file" class="layout_none" id="realInput" name="profileFile"  accept="STATIC/*">
-						<input type="text" class="form_halfed" placeholder="First Name">
-						<input type="text" class="form_halfed" placeholder="Last Name">
-						<input type="text" class="form_halfed" placeholder="Other Name">
-						<input type="email" class="form_halfed" placeholder="Email">
-						<input type="text" class="form_halfed" placeholder="Phone Number">
+						<input type="text" class="form_halfed" placeholder="First Name" id='editFirstname'>
+						<input type="text" class="form_halfed" placeholder="Last Name" id='editLastname'>
+						<input type="text" class="form_halfed" placeholder="Other Name" id='editOthername'>
+						<input type="email" class="form_halfed" placeholder="Email" id='editEmail'>
+						<input type="text" class="form_halfed" placeholder="Phone Number" id='editPhonenumber'>
+						<select id="editStatus" name="userType" class='form_halfed'  id ='editStatus'>
+							<option value ="" disabled selected>-- Status --</option>
+							<option value="voter"> Voter </option>
+							<option value="politician">Politician  </option>
+						</select>
 						<input type="submit" value="Submit">
 					</form>
 				</div>
