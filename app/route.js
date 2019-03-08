@@ -27,7 +27,7 @@ router.post('/auth/forgot', validation.forgotPassword, userController.forgotPass
 router.get('/auth/logout', userController.logout);
 
 router.get('/users/me', auth.checkToken, userActivityController.getProfile);
-router.patch('/users/me/edit', auth.checkToken, userActivityController.editProfile);
+router.patch('/users/me/edit',validation.editProfile, auth.checkToken, userActivityController.editProfile);
 router.post('/users/me/password', validation.changePassword, auth.checkToken, userActivityController.changePassword);
 router.delete('/users/me', auth.checkToken, userActivityController.deleteProfile);
 router.patch('/admin/user/:id', auth.checkToken, userActivityController.makeAdmin);
