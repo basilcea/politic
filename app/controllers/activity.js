@@ -27,7 +27,7 @@ class userActivityController {
       firstname, lastname, othername, email, phoneNumber, registerAs, passportUrl,
     } = req.body;
     const token = req.headers.authorization;
-    const getUser = 'SELECT * fom users where id = $1';
+    const getUser = 'SELECT * from users where id = $1';
     const { rows } = await pool.query(getUser, [req.user.id]);
     if (!rows[0]) {
       return res.status(401).json({
@@ -127,7 +127,6 @@ class userActivityController {
           rows[0].isAdmin,
           req.user.id,
         ]);
-      console.log(expectedResponse);
       return res.status(200).json({
         status: 200,
         data: expectedResponse.rows,
