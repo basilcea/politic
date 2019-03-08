@@ -28,7 +28,7 @@ router.get('/auth/logout', userController.logout);
 
 router.get('/users/me', auth.checkToken, userActivityController.getProfile);
 router.patch('/users/me/edit',validation.editProfile, auth.checkToken, userActivityController.editProfile);
-router.post('/users/me/password', validation.changePassword, auth.checkToken, userActivityController.changePassword);
+router.patch('/users/me/password', validation.changePassword, auth.checkToken, userActivityController.changePassword);
 router.delete('/users/me', auth.checkToken, userActivityController.deleteProfile);
 router.patch('/admin/user/:id', auth.checkToken, userActivityController.makeAdmin);
 
@@ -36,7 +36,7 @@ router.patch('/admin/user/:id', auth.checkToken, userActivityController.makeAdmi
 router.post('/votes', auth.checkToken, votesController.vote);
 router.get('/office/:id/result', auth.checkToken, votesController.getOfficeResults);
 // route for get all user voting activities
-// route for scheduling elections
+
 
 router.post('/offices', auth.checkToken, officeController.createOffice);
 router.get('/offices', auth.checkToken, officeController.getAllOffices);
