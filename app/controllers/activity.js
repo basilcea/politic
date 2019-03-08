@@ -3,15 +3,13 @@ import { redisClient } from '../migrate';
 import authHelper from '../helpers/auth';
 import 'dotenv';
 import '@babel/polyfill';
-import * as validation from '../helpers/schema';
 
 class userActivityController{
     static async editProfile(req, res) {
         const {
           firstname, lastname, othername, email, phoneNumber, registerAs, passportUrl,
         } = req.body;
-        const token = req.headers.Authorization;
-        validation.check(req.body, validation.editProfileSchema, res);
+        const token = req.headers.authorization;
         const getUser = 'SELECT * fom users where id = $1';
         const { rows } = await pool.query(getUser, [req.user.id]);
         if (!rows[0]) {
@@ -128,7 +126,6 @@ class userActivityController{
       static async changePassword(req, res) {
         try {
           const { oldPassword, newPassword } = req.body;
-          validation.check(req.body, validation.changePasswordSchema, res);
           const Password = 'Select password from users where id= $1';
           const getPassword = await pool.query(Password, [req.user.id]);
     
@@ -182,7 +179,6 @@ class userActivityController{
     
       static async makeAdmin(req, res) {
         const id = Number(req.params.id);
-        validation.check(id, validation.id, res);
         const updateUser = 'UPDATE users SET isAdmin =$1,registerAs=$2 WHERE id = $3  returning id,firstname,registerAs ,isAdmin';
         try {
           const user = 'select * from users where id =$1';

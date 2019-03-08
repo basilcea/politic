@@ -85,7 +85,28 @@ class validation {
       if (err) {
         const errMsg = [];
         for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(`${err.details[i].message} \n`);
+          errMsg.push(`${err.details[i].message} `);
+        }
+        return res.status(400).json({
+          status: 400,
+          error: errMsg,
+        });
+
+      }
+      next();
+    });
+
+
+  }
+
+
+  static editProfile(req, res, next) {
+    joi.validate(req.body, schema.editProfileSchema, { abortEarly: false, stripUnknown: true }, (err) => {
+
+      if (err) {
+        const errMsg = [];
+        for (let i = 0; i < err.details.length; i++) {
+          errMsg.push(`${err.details[i].message} `);
         }
         return res.status(400).json({
           status: 400,
