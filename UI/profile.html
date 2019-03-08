@@ -139,15 +139,16 @@
 							<option value="voter"> Voter </option>
 							<option value="politician">Politician  </option>
 						</select>
-						<input type="submit" value="Submit" id ='submiteditProfile'>
+						<input type="submit" value="Submit">
 					</form>
 				</div>
 				<div id='change'>
-					<form>
+					<form  id ='changeForm'>
 						<p class='text_centered'>Change Password</p>
-						<input type ='password' placeholder='Old Password'>
-						<input type ='password' placeholder='New Password'>
-						<input type ='password' placeholder ='Confirm New Password'>
+						<div id ='changeError'></div>
+						<input type ='password' placeholder='Old Password' id='oldPword'>
+						<input type ='password' placeholder='New Password' id ='newPword'>
+						<input type ='password' placeholder ='Confirm New Password' id='confirmPword'>
 						<input type ='submit' value ='change'>
 					</form>
 				</div>

@@ -46,7 +46,10 @@ window.onload = () => {
   })
     .then(res => res.json())
     .then((data) => {
-      if (data.status === 200) {
+      if (data.Message === 'Invalid Token') {
+        window.location.replace('index.html');
+      }
+      else if (data.status === 200) {
         let div;
         const pictureDiv = document.getElementById('partyPix')
        ;
@@ -85,8 +88,6 @@ window.onload = () => {
           }
         }
 
-      } else if (data.Message === 'Invalid Token') {
-        window.location.replace('index.html');
       }
       else {
         return data.error;

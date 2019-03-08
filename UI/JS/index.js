@@ -121,10 +121,11 @@ loginError = document.getElementById('loginErrors');
 resetError = document.getElementById('resetErrors');
 
 // eslint-disable-next-line no-shadow
+const formerToken = localStorage.getItem('token');
+
 
 const createUser = (url, formData, errorDiv, statusCode, message) => {
   const home = 'home.html';
-  const formerToken = localStorage.getItem('token');
   fetch(url, {
     method: 'POST',
     headers: {
