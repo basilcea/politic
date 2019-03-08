@@ -314,6 +314,43 @@ document.getElementById('editProfileForm').addEventListener('submit', (e) => {
     });
 });
 
+document.getElementById('changeForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const token = localStorage.getItem('token');
+  const changePass = {
+    oldPassword: document.getElementById('oldPword').value,
+    newPassword: document.getElementById('newPword').value,
+    confirmPassword: document.getElementById('confirmPword').value,
+
+
+  };
+
+  fetch('https://cea-politico-gres.herokuapp.com/api/v1/users/me/password', {
+    method: 'PATCH',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+      'Access-Control-Allow-Origin': '*',
+    },
+    body: JSON.stringify(changePass),
+
+  })
+    .then(res => res.json())
+    .then((data) => {
+      if (data.status === 200) {
+        document.getElementById('changeError').innerHTML = 'Password change successful';
+        document.getElementById('changeForm').reset();
+      }
+      else {
+        document.getElementById('changeError').innerHTML = data.error;
+      }
+    });
+  changePass.oldPassword = '';
+  changePass.newPassword = '';
+  changePass.confirmPassword = '';
+});
+
 /** Input seed database into table */
 const values = Object.values(info);
 const valuesArray = Object.values(values);
