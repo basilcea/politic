@@ -294,21 +294,21 @@ export const editProfileSchema = joi.object().keys({
       },
     ),
   email: joi.string().trim().email().allow('')
-  .error(
-    (errors) => {
-      errors.forEach((err) => {
-        switch (err.type) {
-          case 'string.email':
-            err.message = 'incorrect email format. e.g eaxmple@mymail.com';
-            break;
-          default:
-            break;
-        }
-      });
-      return errors;
-    },
-  ),
-  registerAs: joi.string().valid('voter', 'politician').trim().required()
+    .error(
+      (errors) => {
+        errors.forEach((err) => {
+          switch (err.type) {
+            case 'string.email':
+              err.message = 'incorrect email format. e.g eaxmple@mymail.com';
+              break;
+            default:
+              break;
+          }
+        });
+        return errors;
+      },
+    ),
+  registerAs: joi.string().valid('voter', 'politician').trim().allow('')
     .error(() => 'RegisterAs value must be either voter or politician'),
 });
 export const changePasswordSchema = joi.object().keys({
