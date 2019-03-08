@@ -109,39 +109,11 @@ icon.onclick = () => {
 };
 /** Get all forms */
 
-
-
-
-const previewed = document.getElementById('uploadedPassport');
-
-const uploadButton = document.querySelector('.button_btn');
-
 const loginData = {
   email: document.getElementById('login_email').value,
   password: document.getElementById('login_password').value,
 };
 const resetData = document.getElementById('reset_email').value;
-
-const mywidget = cloudinary.createUploadWidget({
-  cloudName: 'basilcea',
-  uploadPreset: 'cea_politico',
-  folder: 'politico',
-  form: '#signupForm',
-  fieldName: 'passportUrl',
-  cropping: true,
-},
-(error, result) => {
-  if (result && result.event === 'success') {
-    passport = result.info.url;
-    previewed.src = passport;
-  }
-  return previewed.src;
-});
-
-uploadButton.addEventListener('click', () => {
-  // trigger the click of the file upload input
-  mywidget.open();
-});
 
 host = 'https://cea-politico-gres.herokuapp.com';
 signupError = document.getElementById('signupErrors');
