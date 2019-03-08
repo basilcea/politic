@@ -48,7 +48,6 @@ window.onload = () => {
     .then((data) => {
       if (data.status === 200) {
         let div;
-        console.log(data.data);
         const pictureDiv = document.getElementById('partyPix')
        ;
         for (let i = 0; i < data.data.length; i++) {

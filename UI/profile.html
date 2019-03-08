@@ -120,13 +120,14 @@
 		
         <!--edit profile div-->
 				<div id="edit">
-					<form>
+					<form id ='editProfileForm'>
 						<p class="text_centered">Edit Profile</p>
 						<div class="layout_left">
-							<img  id ="pix" class="others_img" alt="logo" id='editPix'>
+							<img  id ="uploadedPassport" class="others_img" alt="logo">
 							<br><br>
 							<button type="button" class="button_btn">Browse Logo</button>
 						</div>
+						<div id='editError'></div>
 						<input type ="file" class="layout_none" id="realInput" name="profileFile"  accept="STATIC/*">
 						<input type="text" class="form_halfed" placeholder="First Name" id='editFirstname'>
 						<input type="text" class="form_halfed" placeholder="Last Name" id='editLastname'>
@@ -138,7 +139,7 @@
 							<option value="voter"> Voter </option>
 							<option value="politician">Politician  </option>
 						</select>
-						<input type="submit" value="Submit">
+						<input type="submit" value="Submit" id ='submiteditProfile'>
 					</form>
 				</div>
 				<div id='change'>
@@ -166,7 +167,10 @@
 		</div>
 		<footer class="background_footer">
       All rights Reserved &copy 2019 .</br> Your right to choose
-    </footer>
+		</footer>
+		<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script> 
+		<script src='./JS/uploadPix.js'></script> 
 		<script src="./JS/profile.js"></script>
+		
 	</body>
 </html>

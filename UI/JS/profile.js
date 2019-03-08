@@ -186,20 +186,8 @@ icon.onclick = () => {
   }
 };
 /** Functionality for upload and preview image */
-const uploadButton = document.querySelector('.button_btn');
-const realInput = document.getElementById('realInput');
 
-uploadButton.addEventListener('click', () => {
-  realInput.click();
-});
-realInput.addEventListener('change', () => {
-  const reader = new FileReader();
-  reader.onload = () => {
-    const previewed = document.getElementById('pix');
-    previewed.src = reader.result;
-  };
-  reader.readAsDataURL(event.target.files[0]);
-});
+
 /** Seed data structure for front end */
 const info = [
   {
@@ -248,10 +236,12 @@ window.onload = () => {
     editothername: document.getElementById('editOthername'),
     editemail: document.getElementById('editEmail'),
     editphone: document.getElementById('editPhonenumber'),
-    editpassport: document.getElementById('editPix'),
+    editpassport: document.getElementById('uploadedPassport'),
 
 
   };
+
+
   fetch('https://cea-politico-gres.herokuapp.com/api/v1/users/me', {
     method: 'GET',
     headers: {
@@ -289,6 +279,40 @@ window.onload = () => {
     });
 };
 
+document.getElementById('editProfileForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const token = localStorage.getItem('token');
+  const editProf = {
+    firstname: document.getElementById('editFirstname').value,
+    lastname: document.getElementById('editLastname').value,
+    othername: document.getElementById('editOthername').value,
+    email: document.getElementById('editEmail').value,
+    phoneNumber: document.getElementById('editPhonenumber').value,
+    passportUrl: previewed.src,
+    registerAs: document.getElementById('editStatus').value,
+  };
+
+  fetch('https://cea-politico-gres.herokuapp.com/api/v1/users/me/edit', {
+    method: 'PATCH',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+      'Access-Control-Allow-Origin': '*',
+    },
+    body: JSON.stringify(editProf),
+
+  })
+    .then(res => res.json())
+    .then((data) => {
+      if (data.status === 200) {
+        window.location = 'profile.html';
+      }
+      else {
+        document.getElementById('editError').innerHTML = data.error;
+      }
+    });
+});
 
 /** Input seed database into table */
 const values = Object.values(info);
