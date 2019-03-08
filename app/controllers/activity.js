@@ -151,6 +151,7 @@ class userActivityController {
           status: 422,
           error: 'Incorrect Password',
         });
+      }
       const hashedPassword = authHelper.hashPassword(newPassword);
       const NewPassword = 'UPDATE users SET password = $1 where id=$2 returning password';
       const insertNewPassword = await pool.query(NewPassword, [hashedPassword, req.user.id]);
