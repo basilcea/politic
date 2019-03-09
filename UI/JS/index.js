@@ -143,7 +143,7 @@ const createUser = (url, formData, errorDiv, statusCode, message) => {
         console.log(res.data);
         localStorage.clear();
         localStorage.setItem('token', token);
-        localStorage.setItem('user', user);
+        localStorage.setItem('username', user.firstname);
         errorDiv.innerHTML = message;
         window.location.replace(`${home}`);
       } else {
