@@ -217,8 +217,9 @@ const info = [
   },
 ];
 
+const token = localStorage.getItem('token');
+
 window.onload = () => {
-  const token = localStorage.getItem('token');
   if (!token) {
     window.location = 'index.html';
   }
@@ -262,8 +263,8 @@ window.onload = () => {
         informat.status.innerHTML = data.data.registeras;
         informat.passport.src = data.data.passporturl;
         informat.editfirstname.placeholder = data.data.firstname;
-        informat.editlastname.placeholder = data.data.lastname;
-        informat.editothername.placeholder = data.data.othername;
+        informat.editlastname.placeholder = data.data.lastname || 'last name';
+        informat.editothername.placeholder = data.data.othername || 'other name';
         informat.editemail.placeholder = data.data.email.toLowerCase();
         informat.editphone.placeholder = data.data.phonenumber;
         informat.editpassport.src = data.data.passporturl;
@@ -281,7 +282,6 @@ window.onload = () => {
 
 document.getElementById('editProfileForm').addEventListener('submit', (e) => {
   e.preventDefault();
-  const token = localStorage.getItem('token');
   const editProf = {
     firstname: document.getElementById('editFirstname').value,
     lastname: document.getElementById('editLastname').value,
@@ -316,15 +316,12 @@ document.getElementById('editProfileForm').addEventListener('submit', (e) => {
 
 document.getElementById('changeForm').addEventListener('submit', (e) => {
   e.preventDefault();
-  const token = localStorage.getItem('token');
   const changePass = {
     oldPassword: document.getElementById('oldPword').value,
     newPassword: document.getElementById('newPword').value,
     confirmPassword: document.getElementById('confirmPword').value,
 
-
   };
-
   fetch('https://cea-politico-gres.herokuapp.com/api/v1/users/me/password', {
     method: 'PATCH',
     headers: {
@@ -333,8 +330,8 @@ document.getElementById('changeForm').addEventListener('submit', (e) => {
       authorization: `Bearer ${token}`,
       'Access-Control-Allow-Origin': '*',
     },
-    body: JSON.stringify(changePass),
 
+    body: JSON.stringify(changePass),
   })
     .then(res => res.json())
     .then((data) => {
@@ -346,11 +343,40 @@ document.getElementById('changeForm').addEventListener('submit', (e) => {
         document.getElementById('changeError').innerHTML = data.error;
       }
     });
-  changePass.oldPassword = '';
-  changePass.newPassword = '';
-  changePass.confirmPassword = '';
 });
 
+
+const choice = document.getElementById('agreement');
+const storedFirstname = localStorage.getItem('username');
+let val;
+document.getElementById('deletefirstname').oninput = () => {
+  val = document.getElementById('deletefirstname').value.toLowerCase();
+  if (val === storedFirstname) { document.getElementById('deleteButton').disabled = false; }
+  else { document.getElementById('deleteButton').disabled = true; }
+};
+document.getElementById('deleteForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  fetch('https://cea-politico-gres.herokuapp.com/api/v1/users/me', {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+      'Access-Control-Allow-Origin': '*',
+    },
+
+  })
+    .then(res => res.json())
+    .then((data) => {
+      if (data.status === 200) {
+        localStorage.clear();
+        window.location = 'index.html';
+      }
+      else {
+        document.getElementById('deleteError').innerHTML = data.error;
+      }
+    });
+});
 /** Input seed database into table */
 const values = Object.values(info);
 const valuesArray = Object.values(values);

@@ -37,6 +37,9 @@ input:invalid {
 	border:1px solid red;
 	background-color:#28495b;
 }
+input:disabled{
+	display:none;
+}
 
 textarea::placeholder{
 	opacity:1;
