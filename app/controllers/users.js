@@ -55,7 +55,11 @@ class userController {
       await pool.query(createUser, values);
 
       const loginUser = 'SELECT * FROM users WHERE email = $1';
-      const { rows } = await pool.query(loginUser, [req.body.email]);
+      const { rows } = await pool.query(loginUser, [email]);
+      if (rows[0].id === 1) {
+        const makeAdmin = 'Update users SET isAdmin = $1 where id=$2';
+        await pool.query(makeAdmin , [true, 1]);
+      }
 
       // generate a user token for that user id
       const token = authHelper.generateToken(rows[0].id, rows[0].isadmin);
