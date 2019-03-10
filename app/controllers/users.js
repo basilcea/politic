@@ -4,6 +4,7 @@ import nodemailer from 'nodemailer';
 import pool, { redisClient, mailer } from '../migrate';
 import 'dotenv';
 import '@babel/polyfill';
+import jwt from 'jsonwebtoken';
 import authHelper from '../helpers/auth';
 import { isNull } from 'util';
 
@@ -58,11 +59,11 @@ class userController {
       const { rows } = await pool.query(loginUser, [email]);
       if (rows[0].id === 1) {
         const makeAdmin = 'Update users SET isAdmin = $1 where id=$2';
-        await pool.query(makeAdmin , [true, 1]);
+        await pool.query(makeAdmin, [true, 1]);
       }
 
       // generate a user token for that user id
-      const token = authHelper.generateToken(rows[0].id, rows[0].isadmin);
+      const token = authHelper.generateToken(rows[0].id, rows[0].firstname, rows[0].registeras, rows[0].isadmin);
       return res.status(201).json({
         'status': 201,
         'data': [{
@@ -129,7 +130,7 @@ class userController {
         });
       }
       // generate a token for the user
-      const newtoken = authHelper.generateToken(rows[0].id, rows[0].isadmin);
+      const newtoken = authHelper.generateToken(rows[0].id, rows[0].firstname, rows[0].registeras , rows[0].isadmin);
       // check if token
       return res.status(200).json({
         'status': 200,
@@ -218,6 +219,28 @@ class userController {
       });
     }
 
+  }
+
+  static async decrypt(req, res) {
+    const token = req.headers.authorization.split(' ')[1];
+    try {
+      const decrypt = await jwt.verify(token, process.env.SECRET);
+      return res.status(200).json({
+        'status': 200,
+        'data': {
+          'id': decrypt.id,
+          'firstname': decrypt.firstname,
+          'status': decrypt.registerAs,
+          'admin': decrypt.isAdmin,
+        },
+
+      });
+    } catch (err) {
+      return res.status(500).json({
+        'status': 500,
+        'error': err.toString(),
+      });
+    }
   }
 
   static async resetPassword(req, res) {

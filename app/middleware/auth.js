@@ -38,6 +38,8 @@ const auth = {
       }
       req.user = {
         id: decrypt.id,
+        firstname: decrypt.firstname,
+        status: decrypt.registerAs,
         isAdmin: decrypt.isAdmin,
       };
       next();
