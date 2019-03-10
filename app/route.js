@@ -20,6 +20,7 @@ const officeController = officeDB || officeDS;
 
 const router = express.Router();
 
+router.get('/auth/decrypt', auth.checkToken, userController.decrypt);
 router.post('/auth/signup', validation.signup, userController.signup);
 router.post('/auth/login', validation.login, userController.login);
 router.post('/auth/reset', validation.resetPassword, userController.resetPassword);
@@ -27,7 +28,7 @@ router.post('/auth/forgot', validation.forgotPassword, userController.forgotPass
 router.get('/auth/logout', userController.logout);
 
 router.get('/users/me', auth.checkToken, userActivityController.getProfile);
-router.patch('/users/me/edit',validation.editProfile, auth.checkToken, userActivityController.editProfile);
+router.patch('/users/me/edit', validation.editProfile, auth.checkToken, userActivityController.editProfile);
 router.patch('/users/me/password', validation.changePassword, auth.checkToken, userActivityController.changePassword);
 router.delete('/users/me', auth.checkToken, userActivityController.deleteProfile);
 router.patch('/admin/user/:id', auth.checkToken, userActivityController.makeAdmin);

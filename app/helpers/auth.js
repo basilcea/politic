@@ -29,10 +29,12 @@ const authHelper = {
       return null;
     }
   },
-  generateToken(id, isAdmin) {
+  generateToken(id, firstname, registerAs, isAdmin) {
     const token = jwt.sign(
       {
         id,
+        firstname,
+        registerAs,
         isAdmin,
       },
       process.env.SECRET,
