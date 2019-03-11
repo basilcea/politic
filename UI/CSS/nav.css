@@ -16,7 +16,6 @@ a{
 }
 .nav_horizontal{
 	float:left;
-	display: block;
 	padding:5vw 0.5vw;
 }
 .nav_menuButton{
@@ -49,7 +48,6 @@ a{
 		display:block;
   }
   .nav_horizontal_small{
-    display:none;
     float:left;
     padding:2vw 5vw;
 		width:70%;

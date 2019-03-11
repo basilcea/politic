@@ -115,14 +115,15 @@ const loginData = {
 };
 const resetData = document.getElementById('reset_email').value;
 
-host = 'https://cea-politico-gres.herokuapp.com';
-signupError = document.getElementById('signupErrors');
-loginError = document.getElementById('loginErrors');
-resetError = document.getElementById('resetErrors');
+const host = 'https://cea-politico-gres.herokuapp.com';
+const snackbar = document.getElementsByClassName('snackbar');
+
 
 // eslint-disable-next-line no-shadow
 const formerToken = localStorage.getItem('token');
-
+if (formerToken !== null) {
+  window.location = 'home.html';
+}
 
 const createUser = (url, formData, errorDiv, statusCode, message) => {
   const home = 'home.html';
@@ -137,14 +138,13 @@ const createUser = (url, formData, errorDiv, statusCode, message) => {
   })
     .then(res => res.json())
     .then((res) => {
-      console.log(res);
       if (res.status === statusCode) {
         const { token, user } = res.data[0];
-        console.log(res.data);
         localStorage.clear();
-        localStorage.setItem('token', token);
         localStorage.setItem('username', user.firstname);
+        localStorage.setItem('token', token);
         errorDiv.innerHTML = message;
+        decrypt();
         window.location.replace(`${home}`);
       } else {
         // eslint-disable-next-line prefer-destructuring
@@ -166,7 +166,7 @@ document.getElementById('signupForm').addEventListener('submit', (e) => {
     confirmPassword: document.getElementById('signup_confirmpassword').value,
     registerAs: document.getElementById('usertype').value,
   };
-  createUser(`${host}/api/v1/auth/signup`, signupData, signupError, 201, 'Signup successful');
+  createUser(`${host}/api/v1/auth/signup`, signupData, snackbar[0], 201, 'Signup successful');
 });
 
 
@@ -176,7 +176,7 @@ document.getElementById('loginForm').addEventListener('submit', (e) => {
     email: document.getElementById('login_email').value,
     password: document.getElementById('login_password').value,
   };
-  createUser(`${host}/api/v1/auth/login`, loginData, loginError, 200, 'login succesful');
+  createUser(`${host}/api/v1/auth/login`, loginData, snackbar[1], 200, 'login succesful');
 });
 
 document.getElementById('resetForm').addEventListener('submit', (e) => {
@@ -209,5 +209,5 @@ document.getElementById('resetForm').addEventListener('submit', (e) => {
         }
       });
   };
-  resetUser(`${host}/api/v1/auth/forgot`, resetData, resetError);
+  resetUser(`${host}/api/v1/auth/forgot`, resetData, snackbar[2]);
 });

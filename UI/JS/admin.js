@@ -243,48 +243,32 @@ if (small.matches) {
   }
 }
 
-
-/** ----------for small screen sizes */
-
-/** get hamburger */
-const icon = document.getElementsByClassName('background_icon')[0];
-const smallLink = document.getElementsByClassName('nav_horizontal_small');
-
-icon.onclick = () => {
-  if (icon.className === 'background_icon') {
-    icon.className = 'background_icon1';
-    for (let i = 0; i < smallLink.length; i++) {
-      smallLink[i].style.display = 'block';
-    }
-  } else {
-    icon.className = 'background_icon';
-    for (let i = 0; i < smallLink.length; i++) {
-      smallLink[i].style.display = 'none';
-    }
-  }
-};
-const par = document.querySelectorAll('p');
-for (let i = 0; i < par.length; i++) {
-  par[i].className = 'text_centered';
-}
-
-/** image upload and preview */
-const uploadButton = document.querySelector('.button_btn');
-const realInput = document.getElementById('realInput');
-
-uploadButton.addEventListener('click', () => {
-  // trigger the click of the file upload input
-  realInput.click();
-});
-
-// wheh file upload button is clicked b
-realInput.addEventListener('change', () => {
-  // read the value of the uploaded document.
-  const reader = new FileReader();
-  reader.onload = () => {
-    const previewed = document.getElementById('uploaded');
-    previewed.src = reader.result;
+const token = localStorage.getItem('token');
+const snackbar = document.getElementsByClassName('snackbar');
+document.getElementById('createParty').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formData = {
+    name: document.getElementById('createPartyName').value,
+    hqAddress: document.getElementById('createPartyAddress').value,
+    logoUrl: previewed.src,
   };
-  // eslint-disable-next-line no-restricted-globals
-  reader.readAsDataURL(event.target.files[0]);
+  fetch('https://cea-politico-gres.herokuapp.com/api/v1/parties', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(formData),
+  })
+    .then(res => res.json())
+    .then((res) => {
+      if (res.status === 201) {
+        snackbar[0].innerHTML = 'Party created';
+        location.reload();
+      } else {
+        // eslint-disable-next-line prefer-destructuring
+        snackbar[0].innerHTML = res.error;
+      }
+    });
 });
