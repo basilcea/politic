@@ -183,8 +183,8 @@ export const signupSchema = joi.object().keys({
           }
         });
         return errors;
-      },
-    ),
+      }
+),
   email,
   password,
   confirmPassword: joi.string().trim().valid(joi.ref('password')).required()
@@ -328,3 +328,67 @@ export const resetPasswordSchema = joi.object().keys({
 });
 
 export const forgotpasswordSchema = joi.object().keys({ email });
+
+
+export const createPartySchema = joi.object().keys({
+  name: joi.string().invalid('').trim().regex(/^[a-z A-Z ]+$/)
+    .required()
+    .error((errors) => {
+      errors.forEach((err) => {
+        switch (err.type) {
+          case 'any.required':
+            err.message = 'Party name field is required';
+            break;
+          case 'any.empty':
+            err.message = 'Party name should not be empty!';
+            break;
+          case 'string.regex.base':
+            err.message = 'Party name should contain only letters and spaces';
+            break;
+          default:
+            break;
+        }
+      });
+      return errors;
+    }),
+  hqAddress: joi.string().trim().regex(/^[A-Za-z0-9- ]+$/).required()
+    .error((errors) => {
+      errors.forEach((err) => {
+        switch (err.type) {
+          case 'any.required':
+            err.message = 'HQ Address field is required';
+            break;
+          case 'any.empty':
+            err.message = 'HQ Address should not be empty!';
+            break;
+          case 'string.regex.base':
+            err.message = 'HQ Address should contain only number, letters and spaces';
+            break;
+          default:
+            break;
+        }
+      });
+      return errors;
+    }),
+  logoUrl: joi.string().trim().uri().required()
+    .error(
+      (errors) => {
+        errors.forEach((err) => {
+          switch (err.type) {
+            case 'any.required':
+              err.message = 'Logo field is required';
+              break;
+            case 'any.empty':
+              err.message = 'You need to upload a party Logo';
+              break;
+            case 'string.uri':
+              err.message = 'invalid url';
+              break;
+            default:
+              break;
+          }
+        });
+        return errors;
+      }
+),
+});

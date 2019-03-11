@@ -50,7 +50,7 @@ router.get('/office/:id/candidates', auth.checkToken, candidateController.search
 router.put('/candidates/:id', auth.checkToken, candidateController.editCandidate);
 router.delete('/candidates/:id', auth.checkToken, candidateController.deleteCandidate);
 
-router.post('/parties', auth.checkToken, partyController.createParty);
+router.post('/parties',validation.createParty,  auth.checkToken, partyController.createParty);
 router.get('/parties', auth.checkToken, partyController.getAllParties);
 router.get('/parties/:id', auth.checkToken, partyController.getParty);
 router.patch('/parties/:id/:value', auth.checkToken, partyController.editParty);
