@@ -94,8 +94,6 @@ class partyController {
   static async getParty(req, res) {
     // force all id string to integer
     const id = Number(req.params.id);
-    validation.check(id, validation.id, res);
-
     const partyById = 'SELECT * from parties where id =$1';
     try {
       const { rows } = await pool.query(partyById, [req.params.id]);
@@ -131,18 +129,16 @@ class partyController {
     }
     const id = Number(req.params.id);
     // eslint-disable-next-line prefer-destructuring
-    validation.check(id, validation.id, res);
-    validation.check(req.body, validation.editPartySchema, res);
     const { name, hqAddress, logoUrl } = req.body;
-    const value = req.params.value;
-    const parameter = value.trim();
-    const party = `SELECT ${parameter} from parties where id=$1`;
+    const party = 'SELECT * from parties where id=$1';
     const { rows } = await pool.query(party, [id]);
-    const updateName = `Update parties
-    SET ${parameter} = $1 where id = $2 returning *`;
+    const updateName = `Update parties SET name = $1 , hqaddress =$2 , logourl = $3  where id = $4 returning *`;
     const values = [
-      (name || hqAddress || logoUrl || rows[0].name || rows[0].hqAddress || rows[0].logoUrl).trim(),
-      id];
+      name || rows[0].name,
+      hqAddress || rows[0].hqaddress,
+      logoUrl || rows[0].logourl,
+      id,
+    ];
     try {
       // check if name inputted is a string
       if (!rows[0]) {
@@ -177,7 +173,6 @@ class partyController {
       });
     }
     const id = Number(req.params.id);
-    validation.check(id, validation.id, res);
     try {
       const getParty = 'Select * from parties where id =$1';
       const { rows } = await pool.query(getParty, [id]);
