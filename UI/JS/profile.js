@@ -166,28 +166,6 @@ Button9.onclick = () => {
   changePassword.className = 'layout_none';
 };
 
-
-/** get hamburger and nav bar for small screen sizes */
-const icon = document.getElementsByClassName('background_icon')[0];
-const smallLink = document.getElementsByClassName('nav_horizontal_small');
-
-/** Make changes to Icon type */
-icon.onclick = () => {
-  if (icon.className === 'background_icon') {
-    icon.className = 'background_icon1';
-    for (let i = 0; i < smallLink.length; i++) {
-      smallLink[i].style.display = 'block';
-    }
-  } else {
-    icon.className = 'background_icon';
-    for (let i = 0; i < smallLink.length; i++) {
-      smallLink[i].style.display = 'none';
-    }
-  }
-};
-/** Functionality for upload and preview image */
-
-
 /** Seed data structure for front end */
 const info = [
   {
@@ -220,10 +198,7 @@ const info = [
 const token = localStorage.getItem('token');
 
 window.onload = () => {
-  if (!token) {
-    window.location = 'index.html';
-  }
-
+  decrypt();
   const informat = {
     firstname: document.getElementById('firstname'),
     lastname: document.getElementById('lastname'),
@@ -306,10 +281,11 @@ document.getElementById('editProfileForm').addEventListener('submit', (e) => {
     .then(res => res.json())
     .then((data) => {
       if (data.status === 200) {
+        snackbar[0].innerHTML = 'Profile Edited successfully';
         window.location = 'profile.html';
       }
       else {
-        document.getElementById('editError').innerHTML = data.error;
+        snackbar[0].innerHTML = data.error;
       }
     });
 });
@@ -336,18 +312,19 @@ document.getElementById('changeForm').addEventListener('submit', (e) => {
     .then(res => res.json())
     .then((data) => {
       if (data.status === 200) {
-        document.getElementById('changeError').innerHTML = 'Password change successful';
+        snackbar[1].innerHTML = 'Password change successful';
         document.getElementById('changeForm').reset();
       }
       else {
-        document.getElementById('changeError').innerHTML = data.error;
+        snackbar[1].innerHTML = data.error;
       }
     });
 });
 
 
 const choice = document.getElementById('agreement');
-const storedFirstname = localStorage.getItem('username');
+const storedFirstname = info.firstname;
+console.log();
 let val;
 document.getElementById('deletefirstname').oninput = () => {
   val = document.getElementById('deletefirstname').value.toLowerCase();
@@ -370,10 +347,11 @@ document.getElementById('deleteForm').addEventListener('submit', (e) => {
     .then((data) => {
       if (data.status === 200) {
         localStorage.clear();
+        snackbar[2].innerHTML = 'Profile Deleted';
         window.location = 'index.html';
       }
       else {
-        document.getElementById('deleteError').innerHTML = data.error;
+        snackbar[2].innerHTML = data.error;
       }
     });
 });

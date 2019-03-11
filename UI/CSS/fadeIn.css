@@ -17,7 +17,7 @@
   from {bottom: 30px; opacity: 1;}
   to {bottom: 0; opacity: 0;}
 }
-#snackbar {
+.snackbar {
   visibility: hidden;
   min-width: 250px;
   margin-left:-125px;
@@ -31,7 +31,7 @@
   left: 50%;
   bottom: 30px;
 }
-#snackbar.show {
+.snackbar.show {
   visibility: visible; /* Show the snackbar */
   /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
   However, delay the fade out process for 2.5 seconds */

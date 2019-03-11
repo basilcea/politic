@@ -2,7 +2,6 @@
 
 const logoutUrl = 'https://cea-politico-gres.herokuapp.com/api/v1/auth/logout';
 const index = 'index.html';
-const token = localStorage.getItem('token');
 const logout = (url) => {
   fetch(url, {
     method: 'GET',

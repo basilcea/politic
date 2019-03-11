@@ -3,8 +3,6 @@
 	<head>
 		<title>Politico- Your right to choose</title>
 		<meta charset="UTF-8">
-		<meta name="description" content="Question and Answer Forum">
-		<meta name="keywords" content="ask, question, answer">
 		<meta name="author" content="Cea">
 		<meta name="viewport" content ="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href ="./CSS/card.css">
@@ -13,65 +11,62 @@
 		<link rel="stylesheet" type="text/css" href ="./CSS/button.css">
 		<link rel="stylesheet" type="text/css" href ="./CSS/text.css">
 		<link rel="stylesheet" type="text/css" href ="./CSS/form.css">
-		<link rel="stylesheet" type="text/css" href ="./CSS/nav.css">
 		<link rel="stylesheet" type="text/css" href ="./CSS/others.css">
+    <link rel="stylesheet" type="text/css" href ="./CSS/nav.css">
+    <link rel="stylesheet" type="text/css" href ="./CSS/fadeIn.css">
 	</head>
 	<body>
 		<div class="layout_large background_body">
-
-			<!-- Navigation Bar for  small screen sizes-->
-			<div class="layout_smallNav">
+      <div class="layout_smallNav">
           <ul class="nav_tabs_small">
-              <li class="nav_horizontal_small">
+              <li class="nav_horizontal_small layout_none">
                 <a class="others_full" href="home.html">Home</a>
               </li>
               <a  class="background_icon" href="javascript:void(0)" ></a>
-              <li class="nav_horizontal_small">
+              <li class="nav_horizontal_small layout_none">
                 <a class="others_full" href="profile.html">Profile</a>
 							</li>
-							<li class="nav_horizontal_small">
+							<li class="nav_horizontal_small layout_none">
 									<a class="others_full" href="vote.html">Vote</a>
 								</li>
-              <li class="nav_horizontal_small">
+              <li class="nav_horizontal_small layout_none" id='smallAdmin'>
                 <a class="others_full" href="admin.html">Admin</a>
               </li>
-              <li class="nav_horizontal_small">
+              <li class="nav_horizontal_small layout_none" id='smallPolitician'> 
                 <a class="others_full" href="candidate.html">Candidacy</a>
               </li>
-              <li class="nav_horizontal_small">
-                  <a class="others_full" href="index.html">Log out</a>
+              <li class="nav_horizontal_small layout_none">
+                  <a class="others_full" id='logout_small'>Log out</a>
                 </li>
             </ul>
       </div>
-      <!--Navigation Bar for large screen sizes-->
-
-			<!--Logo-->
 			<div class="layout_header">
 				<a href='home.html'><img class="others_logo" src="STATIC/logo.png" alt="logo"/></a>
-			</div>
-			<!--Menu Buttons-->
+      </div>
+			<!--Navigation tabs-->
+
 			<div class="layout_nav">
-					<ul class="nav_tabs">
-						<li class="nav_horizontal">
-							<a class="nav_menuButton" href="home.html">Home</a>
-						</li>
-						<li class="nav_horizontal">
-							<a class="nav_active" href="profile.html">Profile</a>
-						</li>
-					</li>
+				<ul class="nav_tabs">
 					<li class="nav_horizontal">
-							<a class="nav_menuButton" href="vote.html">Vote</a>
+						<a class="nav_menuButton" href="home.html">Home</a>
+          </li>
+					<li class="nav_horizontal">
+						<a class="nav_active" href="profile.html">Profile</a>
+					</li>
+				</li>
+				<li class="nav_horizontal">
+						<a class="nav_menuButton" href="vote.html">Vote</a>
+					</li>
+					<li class="nav_horizontal layout_none" id ='fullAdmin'>
+						<a class="nav_menuButton" href="admin.html">Admin</a>
+					</li>
+					<li class="nav_horizontal layout_none" id='fullPolitician'>
+						<a class="nav_menuButton" href="candidate.html">Candidacy</a>
+					<li class="nav_horizontal">
+							<a class="nav_menuButton " id='logout_full'>Logout</a>
 						</li>
-						<li class="nav_horizontal">
-							<a class="nav_menuButton" href="admin.html">Admin</a>
-						</li>
-						<li class="nav_horizontal">
-							<a class="nav_menuButton" href="candidate.html">Candidacy</a>
-						<li class="nav_horizontal">
-								<a class="nav_menuButton" href="index.html">Logout</a>
-							</li>
-					</ul>
-				</div>
+        </ul>
+			</div>
 			<!--tabs button-->
 			<div class="layout_side">
 					<button type="button">View Profile</button>
@@ -127,7 +122,6 @@
 							<br><br>
 							<button type="button" class="button_btn">Browse Logo</button>
 						</div>
-						<div id='editError'></div>
 						<input type ="file" class="layout_none" id="realInput" name="profileFile"  accept="STATIC/*">
 						<input type="text" class="form_halfed" placeholder="First Name" id='editFirstname'>
 						<input type="text" class="form_halfed" placeholder="Last Name" id='editLastname'>
@@ -140,16 +134,17 @@
 							<option value="politician">Politician  </option>
 						</select>
 						<input type="submit" value="Submit">
+						<div class ='snackbar'></div>
 					</form>
 				</div>
 				<div id='change'>
 					<form  id ='changeForm'>
 						<p class='text_centered'>Change Password</p>
-						<div id ='changeError'></div>
 						<input type ='password' placeholder='Old Password' id='oldPword'>
 						<input type ='password' placeholder='New Password' id ='newPword'>
 						<input type ='password' placeholder ='Confirm New Password' id='confirmPword'>
 						<input type ='submit' value ='change'>
+						<div class ='snackbar'></div>
 					</form>
 				</div>
 				<div id="delete">
@@ -160,8 +155,8 @@
 							<input type='text' placeholder = 'firstname' required id='deletefirstname'>
 							<p>Do you still wish to delete your profile?</p>
 							<input type="checkbox" id="agreement" value="delete" required> Yes, I want to delete my profile.
-							<div id ='deleteError'></div>
 							<input type="submit" value="I understand, Delete" disabled id='deleteButton'>
+							<div class ='snackbar'></div>
 					</form>
 				</div>
 			</div>
@@ -169,9 +164,11 @@
 		<footer class="background_footer">
       All rights Reserved &copy 2019 .</br> Your right to choose
 		</footer>
+		<script src="./JS/decrypt.js"></script>
 		<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script> 
 		<script src='./JS/uploadPix.js'></script> 
 		<script src="./JS/profile.js"></script>
+		<script src="./JS/logout.js"></script>
 		
 	</body>
 </html>
