@@ -25,7 +25,6 @@ class partyController {
         error: 'Unauthorized',
       });
     }
-    validation.check(req.body, validation.createPartySchema, res);
     const sendParty = `INSERT INTO parties (name, hqAddress, logoUrl)
     VALUES($1, $2 ,$3 )`;
     const selectParty = 'Select * from parties';
