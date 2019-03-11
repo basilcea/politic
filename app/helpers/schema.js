@@ -183,8 +183,8 @@ export const signupSchema = joi.object().keys({
           }
         });
         return errors;
-      }
-),
+      },
+    ),
   email,
   password,
   confirmPassword: joi.string().trim().valid(joi.ref('password')).required()
@@ -382,13 +382,57 @@ export const createPartySchema = joi.object().keys({
               err.message = 'You need to upload a party Logo';
               break;
             case 'string.uri':
-              err.message = 'invalid url';
+              err.message = 'Logo must be a url';
               break;
             default:
               break;
           }
         });
         return errors;
-      }
-),
+      },
+    ),
+});
+
+export const editPartySchema = joi.object().keys({
+  name: joi.string().allow('').trim().regex(/^[a-z A-Z ]+$/)
+    .error((errors) => {
+      errors.forEach((err) => {
+        switch (err.type) {
+          case 'string.regex.base':
+            err.message = 'Party name should contain only letters and spaces';
+            break;
+          default:
+            break;
+        }
+      });
+      return errors;
+    }),
+  hqAddress: joi.string().trim().regex(/^[A-Za-z0-9- ]+$/).allow('')
+    .error((errors) => {
+      errors.forEach((err) => {
+        switch (err.type) {
+          case 'string.regex.base':
+            err.message = 'HQ Address should contain only number, letters and spaces';
+            break;
+          default:
+            break;
+        }
+      });
+      return errors;
+    }),
+  logoUrl: joi.string().trim().uri().allow('')
+    .error(
+      (errors) => {
+        errors.forEach((err) => {
+          switch (err.type) {
+            case 'string.uri':
+              err.message = 'Logo must be a url';
+              break;
+            default:
+              break;
+          }
+        });
+        return errors;
+      },
+    ),
 });

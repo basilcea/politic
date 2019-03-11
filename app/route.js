@@ -50,14 +50,14 @@ router.get('/office/:id/candidates', auth.checkToken, candidateController.search
 router.put('/candidates/:id', auth.checkToken, candidateController.editCandidate);
 router.delete('/candidates/:id', auth.checkToken, candidateController.deleteCandidate);
 
-router.post('/parties',validation.createParty,  auth.checkToken, partyController.createParty);
+router.post('/parties', validation.createParty, auth.checkToken, partyController.createParty);
 router.get('/parties', auth.checkToken, partyController.getAllParties);
-router.get('/parties/:id', auth.checkToken, partyController.getParty);
-router.patch('/parties/:id/:value', auth.checkToken, partyController.editParty);
-router.delete('/parties/:id', auth.checkToken, partyController.deleteParty);
+router.get('/parties/:id', validation.checkId, auth.checkToken, partyController.getParty);
+router.patch('/parties/:id', validation.checkId, validation.editParty, auth.checkToken, partyController.editParty);
+router.delete('/parties/:id', validation.checkId, auth.checkToken, partyController.deleteParty);
 
 router.get('/petitions', auth.checkToken, petitionController.getUserPetition);
-router.get('/petitions/:id', auth.checkToken, petitionController.getAPetition);
+router.get('/petitions/:id', validation.checkId, auth.checkToken, petitionController.getAPetition);
 router.post('/petitions', auth.checkToken, petitionController.createPetition);
 router.patch('/petitions/:id', auth.checkToken, petitionController.editPetition);
 router.delete('/petitions/:id', auth.checkToken, petitionController.deletePetition);

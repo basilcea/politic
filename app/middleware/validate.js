@@ -140,5 +140,43 @@ class validation {
 
   }
 
+  static editParty(req, res, next) {
+    joi.validate(req.body, schema.editPartySchema, { abortEarly: false, stripUnknown: true }, (err) => {
+
+      if (err) {
+        const errMsg = [];
+        for (let i = 0; i < err.details.length; i++) {
+          errMsg.push(`${err.details[i].message} `);
+        }
+        return res.status(400).json({
+          status: 400,
+          error: errMsg,
+        });
+
+      }
+      next();
+    });
+
+  }
+
+  static checkId(req, res, next) {
+    joi.validate(req.body, schema.id, { abortEarly: false, stripUnknown: true }, (err) => {
+
+      if (err) {
+        const errMsg = [];
+        for (let i = 0; i < err.details.length; i++) {
+          errMsg.push(`${err.details[i].message} `);
+        }
+        return res.status(400).json({
+          status: 400,
+          error: errMsg,
+        });
+
+      }
+      next();
+    });
+
+  }
+
 }
 export default validation;
