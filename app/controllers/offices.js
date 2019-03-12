@@ -25,12 +25,12 @@ class officeController {
         error: 'Unauthorized',
       });
     }
-    
-    const { type, name , electDate } = req.body;
+
+    const { type, name, electDate } = req.body;
     const sendoffice = `INSERT INTO offices (type ,name ,electDate)
-    VALUES($1,$2)`;
+    VALUES($1,$2 ,$3)`;
     const selectOffice = 'Select * from offices';
-    const values = [type.trim(), name.trim().toLowerCase() , electDate.trim()];
+    const values = [type.trim(), name.trim().toLowerCase(), electDate];
 
     try {
       /**
@@ -117,6 +117,7 @@ class officeController {
       });
     }
   }
+
   static async editOffice(req, res) {
     if (req.user.isAdmin !== true) {
       return res.status(401).json({
@@ -125,7 +126,7 @@ class officeController {
       });
     }
     const id = Number(req.params.id);
-    const { type, name, electDate } = req.body
+    const { type, name, electDate } = req.body;
     const getOffice = 'Select * from offices where id=$1';
     const { rows } = await pool.query(getOffice, [id]);
     const updateOffice = 'update offices set type=$1, name=$2 , electDate =$3 where id=$4 returning *';
@@ -133,8 +134,8 @@ class officeController {
       type || rows[0].type,
       name || rows[0].name,
       electDate || rows[0].electDate,
-      id
-    ]
+      id,
+    ];
     try {
       if (!rows[0]) {
         return res.status(404).json({
@@ -147,12 +148,12 @@ class officeController {
         'status': 201,
         'data': updatedOffice.rows[0],
       });
-      
+
     } catch (err) {
       return res.status(500).json({
-        'status': 500 ,
-        'error': err.toString()
-      })
+        'status': 500,
+        'error': err.toString(),
+      });
     }
   }
 
