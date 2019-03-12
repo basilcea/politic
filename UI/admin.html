@@ -101,24 +101,24 @@
 				<div id="editPart">
 					<form id="editParty">
 						<p class='text_centered'>Edit Political Party</p>
-						<select id="candidateParty" name="party" form="editParty" class="others_fix">
+						<select class="candidateParty" name="party" form="editParty" class="others_fix">
 						</select>
+						<div id='hiddenInputs' class='layout_none'>
 						<div class="layout_left">
 							<img  id ="uploaded" class="others_img" src="STATIC/logoPlaceholder.jpg" alt="logo">
 							<br>
 							<button type="button" class="button_btn">Browse Logo</button>
 							</div>
-						<input type ="file" class="layout_none" id="realInput" name="logoFile"  accept="STATIC/*" required>
-            <input type="text" id="partName" class="form_halfed" placeholder="Party Name" required>
-            <input type="text" class="form_halfed" placeholder="AKA">
-						<textarea class= "others_textArea" name="Address" placeholder="Headquaters Address" rows=5 cols=10 required></textarea>
+            <input type="text" id="editPartyName" class="form_halfed" placeholder="Party Name">
+						<textarea class= "others_textArea" id ='editPartyAddress' placeholder="Headquaters Address" rows=5 cols=10 ></textarea>
 						<input type="submit" value="Submit">
+						</div>
 					</form>
 				</div>
 				<div id="deletePart">
 					<p class='text_centered'>Delete Political Party</p>
 					<form id="deleteParty">
-							<select id="candidatePart" name="party" form="deleteParty" class="others_fix">
+							<select class="candidateParty" name="party" form="deleteParty" class="others_fix">
 							</select>
 							<p>Deleting the political party is irrevocable as it is completely off our database.</p>
 						<input type="checkbox" name="Agreement" value="delete" required> Yes, I want to delete this political party
@@ -180,6 +180,7 @@
 		<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script> 
 		<script src="./JS/decrypt.js"></script>
 		<script src='./JS/uploadPix.js'></script> 
+		<script src="./JS/getParties.js"></script>
 		<script src="./JS/admin.js"></script>
 		<script src="./JS/logout.js"></script>
 		

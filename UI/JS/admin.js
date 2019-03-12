@@ -272,3 +272,35 @@ document.getElementById('createParty').addEventListener('submit', (e) => {
       }
     });
 });
+
+document.getElementById('editParty').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const id = Number(selectList[0].value);
+  const editPart = {
+    name: document.getElementById('editPartyName').value,
+    logourl: document.getElementById('uploaded').value,
+    hqAddress: document.getElementById('editPartyAddress').value,
+  };
+  fetch(`https://cea-politico-gres.herokuapp.com/api/v1/parties/${id}`, {
+    method: 'PATCH',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+      'Access-Control-Allow-Origin': '*',
+    },
+    body: JSON.stringify(editPart),
+
+  })
+    .then(res => res.json())
+    .then((data) => {
+      if (data.status === 201) {
+        snackbar[0].innerHTML = 'Party Edited successfully';
+        location.reload()
+        window.location = 'home.html';
+      }
+      else {
+        snackbar[0].innerHTML = data.error;
+      }
+    });
+});
