@@ -3,7 +3,6 @@
 /** -----for small screen sizes------- */
 
 const viewParties = 'https://cea-politico-gres.herokuapp.com/api/v1/parties';
-const viewOffices = 'https://cea-politico-gres.herokuapp.com/api/v1/offices';
 const token = localStorage.getItem('token');
 window.onload = () => {
   decrypt();
