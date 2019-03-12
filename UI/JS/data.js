@@ -1479,7 +1479,6 @@ const createOptions = (element, values) => {
   options.value = values[0];
   options.text = values[0];
   element.add(options);
-  options.disabled = true;
   for (let i = 1; i < values.length; i++) {
     const options = document.createElement('option');
     options.value = values[i];

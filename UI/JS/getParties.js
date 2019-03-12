@@ -12,16 +12,32 @@ window.onload = () => {
     .then(res => res.json())
     .then((data) => {
       if (data.status === 200) {
+        if (selectList[0]) {
           const options = document.createElement('option');
-          options.disabled = true;
-        options.value = 0;
-        options.text = '-- Select Party--';
-        selectList[0].add(options);
-        for (let j = 1; j <= data.data.length; j++) {
-          const options = document.createElement('option');
-          options.value = data.data[j - 1].id;
-          options.text = data.data[j - 1].name;
+          options.value = 0;
+          options.text = '-- Select Party--';
           selectList[0].add(options);
+          options.disabled = true;
+          for (let j = 1; j <= data.data.length; j++) {
+            const options = document.createElement('option');
+            options.value = data.data[j - 1].id;
+            options.text = data.data[j - 1].name;
+            selectList[0].add(options);
+          }
+        }
+
+        if (selectList[1]) {
+          const options = document.createElement('option');
+          options.value = 0;
+          options.text = '-- Select Party--';
+          selectList[1].add(options);
+          options.disabled = true;
+          for (let j = 1; j <= data.data.length; j++) {
+            const options = document.createElement('option');
+            options.value = data.data[j - 1].id;
+            options.text = data.data[j - 1].name;
+            selectList[1].add(options);
+          }
         }
       }
 
