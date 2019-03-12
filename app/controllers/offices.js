@@ -25,9 +25,8 @@ class officeController {
         error: 'Unauthorized',
       });
     }
-    validation.check(req.body, validation.createOfficeSchema, res);
-
-    const { type, name , electDate} = req.body;
+    
+    const { type, name , electDate } = req.body;
     const sendoffice = `INSERT INTO offices (type ,name ,electDate)
     VALUES($1,$2)`;
     const selectOffice = 'Select * from offices';
@@ -97,9 +96,6 @@ class officeController {
     // force all id string to integer
     const id = Number(req.params.id);
 
-    // validate that string is a number
-    validation.check(id, validation.id, res);
-
 
     const officeById = 'SELECT * from offices where id =$1';
     try {
@@ -129,9 +125,6 @@ class officeController {
       });
     }
     const id = Number(req.params.id);
-    // eslint-disable-next-line prefer-destructuring
-    validation.check(id, validation.id, res);
-    validation.check(req.body, validation.editOfficeSchema, res);
     const { type, name, electDate } = req.body
     const getOffice = 'Select * from offices where id=$1';
     const { rows } = await pool.query(getOffice, [id]);
