@@ -266,7 +266,7 @@ export const editProfileSchema = joi.object().keys({
   phoneNumber: joi.string().trim().allow('').regex(/^[0]\d{10}$/)
     .error(() => 'Phone number must start with 0 and be 11 digits'),
   passportUrl: joi.string().trim().allow('').uri()
-    .error( () => 'Invalid passport url'),
+    .error(() => 'Invalid passport url'),
   email: joi.string().trim().email().allow('')
     .error(() => 'incorrect email format. e.g eaxmple@mymail.com'),
   registerAs: joi.string().valid('voter', 'politician').trim().allow('')
@@ -361,7 +361,7 @@ export const editPartySchema = joi.object().keys({
     .error(() => 'HQ Address should contain only number, letters and spaces'),
   logoUrl: joi.string().trim().uri().allow('')
     .error(() => 'Logo must be a url'),
-})
+});
 
 export const createOfficeSchema = joi.object().keys({
   type: joi.string().invalid('').trim().regex(/^[a-z A-Z ]+$/)
@@ -384,32 +384,79 @@ export const createOfficeSchema = joi.object().keys({
       });
       return errors;
     }),
-  name:joi.string().invalid('').trim().regex(/^[a-z A-Z ]+$/)
-  .required()
-  .error((errors) => {
-    errors.forEach((err) => {
-      switch (err.type) {
-        case 'any.required':
-          err.message = 'office name field is required';
-          break;
-        case 'any.empty':
-          err.message = 'office name should not be empty!';
-          break;
-        case 'string.regex.base':
-          err.message = 'office name should contain only letters and spaces';
-          break;
-        default:
-          break;
-      }
-    });
-    return errors;
-  }),
+  name: joi.string().invalid('').trim().regex(/^[a-z A-Z ]+$/)
+    .required()
+    .error((errors) => {
+      errors.forEach((err) => {
+        switch (err.type) {
+          case 'any.required':
+            err.message = 'office name field is required';
+            break;
+          case 'any.empty':
+            err.message = 'office name should not be empty!';
+            break;
+          case 'string.regex.base':
+            err.message = 'office name should contain only letters and spaces';
+            break;
+          default:
+            break;
+        }
+      });
+      return errors;
+    }),
+  electDate: joi.date().iso().greater('now').allow('')
+    .required()
+    .error((errors) => {
+      errors.forEach((err) => {
+        switch (err.type) {
+          case 'any.required':
+            err.message = 'Date field is required';
+            break;
+          case 'date.greater':
+            err.message = 'Date must be greater than today';
+            break;
+          case 'date.base':
+            err.message = 'Value is not a date or cannot be cast to a date';
+            break;
+          case 'date.isoDate':
+            err.message = 'Date should be in the format <yyyy-mm-dd>';
+            break;
+          default:
+            break;
+        }
+      });
+      return errors;
+    }),
+
 });
 
 export const editOfficeSchema = joi.object().keys({
   type: joi.string().allow('').trim().regex(/^[a-z A-Z ]+$/)
     .error(() => 'office type should contain only letters and spaces'),
-  name:joi.string().allow('').trim().regex(/^[a-z A-Z ]+$/)
-  .error(() =>'office name should contain only letters and spaces')
-          
+  name: joi.string().allow('').trim().regex(/^[a-z A-Z ]+$/)
+    .error(() => 'office name should contain only letters and spaces'),
+  electDate: joi.date().iso().greater('now').allow('')
+    .required()
+    .error((errors) => {
+      errors.forEach((err) => {
+        switch (err.type) {
+          case 'any.required':
+            err.message = 'Date field is required';
+            break;
+          case 'date.greater':
+            err.message = 'Date must be greater than today';
+            break;
+          case 'date.base':
+            err.message = 'Value is not a date or cannot be cast to a date';
+            break;
+          case 'date.isoDate':
+            err.message = 'Date should be in the format <yyyy-mm-dd>';
+            break;
+          default:
+            break;
+        }
+      });
+      return errors;
+    }),
+
 });
