@@ -264,50 +264,11 @@ export const editProfileSchema = joi.object().keys({
       return errors;
     }),
   phoneNumber: joi.string().trim().allow('').regex(/^[0]\d{10}$/)
-    .error(
-      (errors) => {
-        errors.forEach((err) => {
-          switch (err.type) {
-            case 'string.regex.base':
-              err.message = 'Phone number must start with 0 and be 11 digits';
-              break;
-            default:
-              break;
-          }
-        });
-        return errors;
-      },
-    ),
+    .error(() => 'Phone number must start with 0 and be 11 digits'),
   passportUrl: joi.string().trim().allow('').uri()
-    .error(
-      (errors) => {
-        errors.forEach((err) => {
-          switch (err.type) {
-            case 'string.uri':
-              err.message = 'invalid url';
-              break;
-            default:
-              break;
-          }
-        });
-        return errors;
-      },
-    ),
+    .error( () => 'Invalid passport url'),
   email: joi.string().trim().email().allow('')
-    .error(
-      (errors) => {
-        errors.forEach((err) => {
-          switch (err.type) {
-            case 'string.email':
-              err.message = 'incorrect email format. e.g eaxmple@mymail.com';
-              break;
-            default:
-              break;
-          }
-        });
-        return errors;
-      },
-    ),
+    .error(() => 'incorrect email format. e.g eaxmple@mymail.com'),
   registerAs: joi.string().valid('voter', 'politician').trim().allow('')
     .error(() => 'RegisterAs value must be either voter or politician'),
 });
@@ -395,24 +356,27 @@ export const createPartySchema = joi.object().keys({
 
 export const editPartySchema = joi.object().keys({
   name: joi.string().allow('').trim().regex(/^[a-z A-Z ]+$/)
-    .error((errors) => {
-      errors.forEach((err) => {
-        switch (err.type) {
-          case 'string.regex.base':
-            err.message = 'Party name should contain only letters and spaces';
-            break;
-          default:
-            break;
-        }
-      });
-      return errors;
-    }),
+    .error(() => 'Party name should contain only letters and spaces'),
   hqAddress: joi.string().trim().regex(/^[A-Za-z0-9- ]+$/).allow('')
+    .error(() => 'HQ Address should contain only number, letters and spaces'),
+  logoUrl: joi.string().trim().uri().allow('')
+    .error(() => 'Logo must be a url'),
+})
+
+export const createOfficeSchema = joi.object().keys({
+  type: joi.string().invalid('').trim().regex(/^[a-z A-Z ]+$/)
+    .required()
     .error((errors) => {
       errors.forEach((err) => {
         switch (err.type) {
+          case 'any.required':
+            err.message = 'office type field is required';
+            break;
+          case 'any.empty':
+            err.message = 'office type should not be empty!';
+            break;
           case 'string.regex.base':
-            err.message = 'HQ Address should contain only number, letters and spaces';
+            err.message = 'office type should contain only letters and spaces';
             break;
           default:
             break;
@@ -420,19 +384,32 @@ export const editPartySchema = joi.object().keys({
       });
       return errors;
     }),
-  logoUrl: joi.string().trim().uri().allow('')
-    .error(
-      (errors) => {
-        errors.forEach((err) => {
-          switch (err.type) {
-            case 'string.uri':
-              err.message = 'Logo must be a url';
-              break;
-            default:
-              break;
-          }
-        });
-        return errors;
-      },
-    ),
+  name:joi.string().invalid('').trim().regex(/^[a-z A-Z ]+$/)
+  .required()
+  .error((errors) => {
+    errors.forEach((err) => {
+      switch (err.type) {
+        case 'any.required':
+          err.message = 'office name field is required';
+          break;
+        case 'any.empty':
+          err.message = 'office name should not be empty!';
+          break;
+        case 'string.regex.base':
+          err.message = 'office name should contain only letters and spaces';
+          break;
+        default:
+          break;
+      }
+    });
+    return errors;
+  }),
+});
+
+export const editOfficeSchema = joi.object().keys({
+  type: joi.string().allow('').trim().regex(/^[a-z A-Z ]+$/)
+    .error(() => 'office type should contain only letters and spaces'),
+  name:joi.string().allow('').trim().regex(/^[a-z A-Z ]+$/)
+  .error(() =>'office name should contain only letters and spaces')
+          
 });
