@@ -178,5 +178,44 @@ class validation {
 
   }
 
+
+  static createOffice(req, res, next) {
+    joi.validate(req.body, schema.createOfficeSchema, { abortEarly: false, stripUnknown: true }, (err) => {
+
+      if (err) {
+        const errMsg = [];
+        for (let i = 0; i < err.details.length; i++) {
+          errMsg.push(`${err.details[i].message} `);
+        }
+        return res.status(400).json({
+          status: 400,
+          error: errMsg,
+        });
+
+      }
+      next();
+    });
+
+  }
+
+  static editOffice(req, res, next) {
+    joi.validate(req.body, schema.editOfficeSchema, { abortEarly: false, stripUnknown: true }, (err) => {
+
+      if (err) {
+        const errMsg = [];
+        for (let i = 0; i < err.details.length; i++) {
+          errMsg.push(`${err.details[i].message} `);
+        }
+        return res.status(400).json({
+          status: 400,
+          error: errMsg,
+        });
+
+      }
+      next();
+    });
+
+  }
+
 }
 export default validation;
