@@ -160,7 +160,7 @@ class validation {
   }
 
   static checkId(req, res, next) {
-    joi.validate(req.body, schema.id, { abortEarly: false, stripUnknown: true }, (err) => {
+    joi.validate(req.params.id, schema.id, { abortEarly: false, stripUnknown: true }, (err) => {
 
       if (err) {
         const errMsg = [];
