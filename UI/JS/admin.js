@@ -304,3 +304,28 @@ document.getElementById('editParty').addEventListener('submit', (e) => {
       }
     });
 });
+
+document.getElementById('deleteParty').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const id = Number(selectList[1].value)
+  fetch(`https://cea-politico-gres.herokuapp.com/api/v1/parties/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+      'Access-Control-Allow-Origin': '*',
+    },
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === 200) {
+        snackbar[2].innerHTML = data.data.message;
+        window.location = 'home.html';
+      }
+      else {
+        snackbar[2].innerHTML = data.error;
+      }
+      
+  })
+})
