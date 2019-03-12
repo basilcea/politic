@@ -79,7 +79,6 @@ export const createPartyTable = async function () {
       `CREATE TABLE IF NOT EXISTS parties(
           id Serial PRIMARY KEY,
           name VARCHAR(50) not null,
-          AKA VARCHAR(50),
           hqAddress VARCHAR(400) not null,
           logoUrl TEXT not null
         )`

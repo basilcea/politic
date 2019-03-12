@@ -31,22 +31,22 @@ router.get('/users/me', auth.checkToken, userActivityController.getProfile);
 router.patch('/users/me/edit', validation.editProfile, auth.checkToken, userActivityController.editProfile);
 router.patch('/users/me/password', validation.changePassword, auth.checkToken, userActivityController.changePassword);
 router.delete('/users/me', auth.checkToken, userActivityController.deleteProfile);
-router.patch('/admin/user/:id', auth.checkToken, userActivityController.makeAdmin);
+router.patch('/admin/user/:id',validation.id, validation.status , auth.checkToken, userActivityController.makeAdmin);
 
 
 router.post('/votes', auth.checkToken, votesController.vote);
-router.get('/office/:id/result', auth.checkToken, votesController.getOfficeResults);
+router.get('/offices/:id/result', auth.checkToken, votesController.getOfficeResults);
 // route for get all user voting activities
 
 
-router.post('/offices', auth.checkToken, officeController.createOffice);
+router.post('/offices', validation.createOffice, auth.checkToken, officeController.createOffice);
 router.get('/offices', auth.checkToken, officeController.getAllOffices);
-router.get('/offices/:id', auth.checkToken, officeController.getOffice);
-router.patch('/offices/:id', auth.checkToken, officeController.editOffice);
-router.delete('/offices/:id', auth.checkToken, officeController.deleteOffice);
+router.get('/offices/:id', validation.id, auth.checkToken, officeController.getOffice);
+router.patch('/offices/:id', validation.id, validation.editOffice, auth.checkToken, officeController.editOffice);
+router.delete('/offices/:id', validation.id, auth.checkToken, officeController.deleteOffice);
 
-router.post('/office/:id/register', auth.checkToken, candidateController.makeCandidate);
-router.get('/office/:id/candidates', auth.checkToken, candidateController.searchCandidate);
+router.post('/offices/:id/register', auth.checkToken, candidateController.makeCandidate);
+router.get('/offices/:id/candidates', auth.checkToken, candidateController.searchCandidate);
 router.put('/candidates/:id', auth.checkToken, candidateController.editCandidate);
 router.delete('/candidates/:id', auth.checkToken, candidateController.deleteCandidate);
 
