@@ -15,9 +15,11 @@ window.onload = () => {
         if (selectList[0]) {
           const options = document.createElement('option');
           options.value = 0;
+          options.selected = true;
           options.text = '-- Select Party--';
-          selectList[0].add(options);
           options.disabled = true;
+          selectList[0].add(options);
+          
           for (let j = 1; j <= data.data.length; j++) {
             const options = document.createElement('option');
             options.value = data.data[j - 1].id;

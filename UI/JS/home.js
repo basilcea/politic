@@ -5,7 +5,6 @@
 const viewParties = 'https://cea-politico-gres.herokuapp.com/api/v1/parties';
 const token = localStorage.getItem('token');
 window.onload = () => {
-  decrypt();
   fetch(viewParties, {
     method: 'GET',
     headers: {

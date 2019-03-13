@@ -196,9 +196,9 @@ const info = [
 ];
 
 const token = localStorage.getItem('token');
+const snackbar = document.getElementsByClassName('snackbar');
 
 window.onload = () => {
-  decrypt();
   const informat = {
     firstname: document.getElementById('firstname'),
     lastname: document.getElementById('lastname'),
@@ -282,7 +282,13 @@ document.getElementById('editProfileForm').addEventListener('submit', (e) => {
     .then((data) => {
       if (data.status === 200) {
         snackbar[0].innerHTML = 'Profile Edited successfully';
-        window.location = 'profile.html';
+        if (data.data.info.registeras === 'politician' && data.data.info.isadmin === true) {
+          localStorage.clear();
+          window.location.replace('index.html');
+        }
+        else {
+          window.location = 'profile.html';
+        }
       }
       else {
         snackbar[0].innerHTML = data.error;
@@ -323,12 +329,11 @@ document.getElementById('changeForm').addEventListener('submit', (e) => {
 
 
 const choice = document.getElementById('agreement');
-const storedFirstname = info.firstname;
-console.log();
+const storedFirstname = localStorage.getItem('firstname');
 let val;
 document.getElementById('deletefirstname').oninput = () => {
   val = document.getElementById('deletefirstname').value.toLowerCase();
-  if (val === storedFirstname) { document.getElementById('deleteButton').disabled = false; }
+  if (val === storedFirstname.toLowerCase()) { document.getElementById('deleteButton').disabled = false; }
   else { document.getElementById('deleteButton').disabled = true; }
 };
 document.getElementById('deleteForm').addEventListener('submit', (e) => {
