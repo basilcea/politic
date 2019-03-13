@@ -57,13 +57,13 @@ class userActivityController {
         });
       }
       if (req.user.isAdmin === true && registerAs === 'politician') {
-        const response = await pool.query(updateUser,
-          [
-            firstname || rows[0].firstname, lastname || rows[0].lastname,
-            othername || rows[0].othername, email || rows[0].email,
-            phoneNumber || rows[0].phonenumber, registerAs || rows[0].registeras,
-            passportUrl || rows[0].passporturl, false, req.user.id,
-          ]);
+        const response = await pool.query(updateUser, [
+          firstname || rows[0].firstname, lastname || rows[0].lastname,
+          othername || rows[0].othername, email || rows[0].email,
+          phoneNumber || rows[0].phonenumber,
+          registerAs || rows[0].registeras,
+          passportUrl || rows[0].passporturl, false, req.user.id,
+        ]);
         redisClient.LPUSH('token', token);
         authHelper.generateToken(response.rows[0].id, false);
         res.status(200).json({
