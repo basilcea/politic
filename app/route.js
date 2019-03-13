@@ -36,7 +36,7 @@ router.patch('/admin/user/:id', auth.checkToken, userActivityController.makeAdmi
 
 router.post('/votes', auth.checkToken, votesController.vote);
 router.get('/offices/:id/result', auth.checkToken, votesController.getOfficeResults);
-// route for get all user voting activities
+router.get('/users/me/votes')
 
 
 router.post('/offices', validation.createOffice, auth.checkToken, officeController.createOffice);
