@@ -6,7 +6,6 @@ import 'dotenv';
 import '@babel/polyfill';
 import jwt from 'jsonwebtoken';
 import authHelper from '../helpers/auth';
-import { isNull } from 'util';
 
 /**
   * Represents a controller  class for all user specific acitvities
@@ -243,7 +242,7 @@ class userController {
     }
   }
 
-  static async resetPassword(req, res) {
+  static async resetPassword(req, res){
     try {
       const { newPassword } = req.body;
       const id = Number(req.body.id);

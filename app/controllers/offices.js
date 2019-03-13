@@ -165,7 +165,6 @@ class officeController {
       });
     }
     const id = Number(req.params.id);
-    validation.check(id, validation.id, res);
     try {
       const getParty = 'Select * from offices where id =$1';
       const { rows } = await pool.query(getParty, [id]);
