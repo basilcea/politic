@@ -69,7 +69,7 @@ class userActivityController {
         res.status(200).json({
           status: 200,
           data: {
-            '': response.rows,
+            info: response.rows,
             message: 'You are no longer an admin as admin cannot be a politician',
           },
         });
@@ -91,7 +91,7 @@ class userActivityController {
         res.status(200).json({
           status: 200,
           data: {
-            '': newResponse.rows,
+            info: newResponse.rows,
             message: 'All political interest removed',
           },
         });
@@ -110,7 +110,7 @@ class userActivityController {
         res.status(401), json({
           status: 401,
           data: {
-            '': anotherResponse.rows,
+            info: anotherResponse.rows,
             message: 'You are already a candidate. You cannot be a voter',
           },
         });
@@ -216,7 +216,7 @@ class userActivityController {
       return res.status(200).json({
         status: 200,
         data: {
-          '': response.rows[0],
+          info: response.rows[0],
           token: admintoken,
         },
       });
