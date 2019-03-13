@@ -13,7 +13,8 @@
 		<link rel="stylesheet" type="text/css" href ="./CSS/form.css">
 		<link rel="stylesheet" type="text/css" href ="./CSS/others.css">
     <link rel="stylesheet" type="text/css" href ="./CSS/nav.css">
-    <link rel="stylesheet" type="text/css" href ="./CSS/fadeIn.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/fadeIn.css">
+		<script src="./JS/decrypt.js"></script>
 	</head>
 	<body>
 		<div class="layout_large background_body">
@@ -129,45 +130,64 @@
 				</div>
 			</div>
 			<div class="layout_centered1 card_party" id='officeDiv'>
-					<button type="button" href="admin.html#create">Create Office</button>
-					<button type="button" href="admin.html#edit">Edit Office</button>
-					<button type="button" href="admin.html#delete">Delete Office</button>
+					<button type="button">Create Office</button>
+					<button type="button">Edit Office</button>
+					<button type="button">Delete Office</button>
 					<div id="createOff">
 						<form id="createOffice">
-								<p>Create Political Office</p>
-								<select id="offices">
-										<option value="" disabled selected>-- Select Type Of Office --</option>
-										<option value="Federal">Federal</option>
-										<option value="Legislative">Legislative</option>
-										<option value="State">State</option>
-										<option value="Local Government">Local Government </option>
-									</select>
-								<input type="text" name="officeName" placeholder="Name of Office">
+								<p class='text_centered'>Create Political Office</p>
+								<select id ='officeType'>
+									<option value='' selected disabled>--Select Type of Office--</option>
+									<option value ='Federal'>Federal</option>
+									<option value ='Legislative'>Legislative</option>
+									<option value ='State'>State</option>
+									<option value ='Local Government'>Local Government</option>
+								</select>
+								<input type="text" id="officeName" placeholder="Name of Office" required>
+								<p>Input Election Date</p>
+								<input type='date' id='electionDate'>
 								<input type="submit" value="Submit">
 						</form>
 					</div>
 					<div id="editOff">
 						<form id="editOffice">
 							<p>Edit Political Office</p>
-							<select id="offices">
-									<option value="" disabled selected>-- Select Type Of Office --</option>
-									<option value="Federal">Federal</option>
-									<option value="Legislative">Legislative</option>
-									<option value="State">State</option>
-									<option value="Local Government">Local Government </option>
-								</select>
-							<select id="candidateParty" name="party" form="editParty">
+							<select id="editOfficeType">
+									<option value='' selected disabled>-- Select Type of Office --</option>
+									<option value ='Federal'>Federal</option>
+									<option value ='Legislative'>Legislative</option>
+									<option value ='State'>State</option>
+									<option value ='Local Government'>Local Government</option>
 							</select>
+							<select id ="editOfficeName" form="editParty">
+							</select>
+							<div id='hiddenOffice' class='layout_none'>
 							<p> New details</p>
-							<input type="text"  placeholder="Type of Office">
-							<input type="text"  placeholder="Name of Office">
+							<select id="newOfficeType">
+									<option value='' disabled>-- Select Type of Office --</option>
+									<option value ='Federal'>Federal</option>
+									<option value ='Legislative'>Legislative</option>
+									<option value ='State'>State</option>
+									<option value ='Local Government'>Local Government</option>
+							</select>
+							<input type="text" id ='newOfficeName'  placeholder="Name of Office">
+							<p>Input Election Date</p>
+							<input type='date' id='editElectionDate'>
 							<input type="submit" value="Submit">
+							</div>
 						</form>
 					</div>
 					<div id="deleteOff">
 						<form id="deleteOffice">
 								<p>Delete Political Office</p>
-								<select id="candidatePart" name="office" form="deleteOffice" class="others_fix">
+								<select id="deleteOfficeType" class="others_fix">
+										<option value='' selected disabled>-- Select Type of Office --</option>
+										<option value ='Federal'>Federal</option>
+										<option value ='Legislative'>Legislative</option>
+										<option value ='State'>State</option>
+										<option value ='Local Government'>Local Government</option>
+									</select>
+								<select id="deleteOfficeName" class="others_fix">
 								</select>
 								<p>Deleting the political office is irrevocable as it is completely off our database.</p>
 							<input type="checkbox" name="Agreement" value="delete" required> Yes, I want to delete this political office
@@ -180,10 +200,10 @@
 		</div>
 		<footer class="background_footer">All rights Reserved &copy 2019 .<br> Your right to choose</footer>
 		<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script> 
-		<script src="./JS/decrypt.js"></script>
 		<script src='./JS/uploadPix.js'></script> 
-		<script src="./JS/getParties.js"></script>
 		<script src="./JS/admin.js"></script>
+		<script src="./JS/getParties.js"></script>
+		<script src='./JS/getOffices.js'></script>
 		<script src="./JS/logout.js"></script>
 		
 	</body>

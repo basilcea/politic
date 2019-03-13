@@ -242,7 +242,6 @@ if (small.matches) {
     buttin[j].className = 'layout_none';
   }
 }
-
 const token = localStorage.getItem('token');
 const snackbar = document.getElementsByClassName('snackbar');
 document.getElementById('createParty').addEventListener('submit', (e) => {
@@ -296,7 +295,7 @@ document.getElementById('editParty').addEventListener('submit', (e) => {
     .then((data) => {
       if (data.status === 201) {
         snackbar[0].innerHTML = 'Party Edited successfully';
-        location.reload()
+        location.reload();
         window.location = 'home.html';
       }
       else {
@@ -307,7 +306,7 @@ document.getElementById('editParty').addEventListener('submit', (e) => {
 
 document.getElementById('deleteParty').addEventListener('submit', (e) => {
   e.preventDefault();
-  const id = Number(selectList[1].value)
+  const id = Number(selectList[1].value);
   fetch(`https://cea-politico-gres.herokuapp.com/api/v1/parties/${id}`, {
     method: 'DELETE',
     headers: {
@@ -318,7 +317,7 @@ document.getElementById('deleteParty').addEventListener('submit', (e) => {
     },
   })
     .then(res => res.json())
-    .then(data => {
+    .then((data) => {
       if (data.status === 200) {
         snackbar[2].innerHTML = data.data.message;
         window.location = 'home.html';
@@ -326,6 +325,91 @@ document.getElementById('deleteParty').addEventListener('submit', (e) => {
       else {
         snackbar[2].innerHTML = data.error;
       }
-      
+
+    });
+});
+
+document.getElementById('createOffice').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formData = {
+    type: document.getElementById('officeType').value,
+    name: document.getElementById('officeName').value,
+    electDate: document.getElementById('electionDate').value,
+  };
+  fetch('https://cea-politico-gres.herokuapp.com/api/v1/offices', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(formData),
   })
-})
+    .then(res => res.json())
+    .then((res) => {
+      if (res.status === 201) {
+        snackbar[0].innerHTML = 'Office created';
+        location.reload();
+      } else {
+        // eslint-disable-next-line prefer-destructuring
+        snackbar[0].innerHTML = res.error;
+      }
+    });
+});
+
+document.getElementById('editOffice').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const id = Number(selectOfficeName.value);
+  const editPart = {
+    type: document.getElementById('newOfficeType').value,
+    name: document.getElementById('newOfficeName').value,
+    electDate: document.getElementById('editElectionDate').value,
+  };
+  fetch(`https://cea-politico-gres.herokuapp.com/api/v1/offices/${id}`, {
+    method: 'PATCH',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+      'Access-Control-Allow-Origin': '*',
+    },
+    body: JSON.stringify(editPart),
+
+  })
+    .then(res => res.json())
+    .then((data) => {
+      if (data.status === 201) {
+        snackbar[0].innerHTML = 'Office Edited successfully';
+        location.reload();
+        window.location = 'home.html';
+      }
+      else {
+        snackbar[3].innerHTML = data.error;
+      }
+    });
+});
+
+document.getElementById('deleteOffice').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const id = Number(deleteOfficeName.value);
+  fetch(`https://cea-politico-gres.herokuapp.com/api/v1/offices/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+      'Access-Control-Allow-Origin': '*',
+    },
+  })
+    .then(res => res.json())
+    .then((data) => {
+      if (data.status === 200) {
+        location.reload();
+      }
+      else {
+        snackbar[2].innerHTML = data.error;
+      }
+
+    });
+});
+

@@ -17,13 +17,15 @@ const mywidget = cloudinary.createUploadWidget({
   }
   return [previewed.src, edit.src];
 });
-
-uploadButton[0].addEventListener('click', () => {
-  // trigger the click of the file upload input
-  mywidget.open();
-});
-
-uploadButton[1].addEventListener('click', () => {
-  // trigger the click of the file upload input
-  mywidget.open();
-});
+if (uploadButton[0]) {
+  uploadButton[0].addEventListener('click', () => {
+    // trigger the click of the file upload input
+    mywidget.open();
+  });
+}
+if (uploadButton[1]) {
+  uploadButton[1].addEventListener('click', () => {
+    // trigger the click of the file upload input
+    mywidget.open();
+  });
+}

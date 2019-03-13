@@ -18,8 +18,8 @@ const decrypt = () => {
       if (data.Message === 'Invalid Token') {
         window.location.replace('index.html');
       }
+      infot = data.data;
       if (data.status === 200) {
-        infot = data.data;
         /** get hamburger icon */
         const icon = document.getElementsByClassName('background_icon')[0];
         /** get nav list  */
@@ -65,12 +65,13 @@ const decrypt = () => {
               smallLink[i].className = 'nav_horizontal_small layout_none';
             }
           }
-
+          
         };
-
+        console.log(infot)
       }
-      return infot;
-    });
+     
+    })
+  
+}
 
-
-};
+window.onload = decrypt()
