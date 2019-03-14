@@ -70,6 +70,25 @@ export const id = joi.number().invalid('').required()
     });
     return errors;
   });
+
+export const lessId = joi.number()
+  .integer()
+  .positive()
+  .error((errors) => {
+    errors.forEach((err) => {
+      switch (err.type) {
+        case 'number.integer':
+          err.message = 'id must be an integer';
+          break;
+        case 'number.positive':
+          err.message = 'id must be a positive number';
+          break;
+        default:
+          break;
+      }
+    });
+    return errors;
+  });
 export const signupSchema = joi.object().keys({
   firstname: joi.string().trim().invalid('').regex(/^[a-zA-Z]+$/)
     .min(2)
@@ -459,4 +478,14 @@ export const editOfficeSchema = joi.object().keys({
       return errors;
     }),
 
+});
+
+export const createInterestSchema = joi.object().keys({
+  office: id,
+  party: id,
+});
+
+export const editInterestSchema = joi.object().keys({
+  office: lessId.allow(''),
+  party: lessId.allow(''),
 });

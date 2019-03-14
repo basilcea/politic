@@ -1,6 +1,5 @@
 /* eslint-disable quote-props */
 import pool from '../migrate';
-import * as validation from '../helpers/schema';
 
 class interestController {
   static async createInterest(req, res) {
@@ -13,7 +12,6 @@ class interestController {
         'error': 'User is not a politician',
       });
     }
-    validation.check(req.body, validation.createInterestSchema, res);
     const sendInterest = `INSERT INTO interests (office, party, interest)
     VALUES($1, $2 ,$3 )`;
     const selectInterest = 'Select * from interests';
@@ -44,30 +42,40 @@ class interestController {
 
     const id = Number(req.params.id);
     // eslint-disable-next-line prefer-destructuring
-    validation.check(id, validation.id, res);
-    const getUserInterests = 'Select * from interests where interest=$1 and id =$2';
-    const { rows } = await pool.query(getUserInterests, [req.user.id, id]);
-    if (!rows[0]) {
-      return res.status(401).json({
-        'status': 401,
-        'error ': 'Interest not found',
-      });
-    }
     const {
       office, party,
     } = req.body;
-    validation.check(req.body, validation.editInterestSchema, res);
-    const updateInterest = `Update interests
-        SET office = $1 , party =$2 where id = $3 returning *`;
-    const values = [
-      office || rows[0].office,
-      party || rows[0].party,
-      id];
+
     try {
-      const updatedInterest = await pool.query(updateInterest, values);
+      const Interests = 'Select * from interests';
+      const updateInterest = 'Update interests SET office = $1 , party =$2 where id = $3 returning *';
+      const { rows } = await pool.query(Interests);
+      if (req.user.isAdmin === true) {
+        if (!rows[0]) {
+          return res.status(401).json({
+            'status': 401,
+            'error ': 'Interest not found',
+          });
+        }
+        const values = [office || rows[0].office, party || rows[0].party, id];
+        const updatedInterest = await pool.query(updateInterest, values);
+        return res.status(201).json({
+          'status': 201,
+          'data': updatedInterest.rows[0],
+        });
+
+      }
+      const getUserInterests = 'Select * from interests where interest=$1 and id =$2';
+      const newRows = await pool.query(getUserInterests, [req.user.id, id]);
+      if (!rows[0]) {
+        return res.status(401).json({
+          'status': 401,
+          'error ': 'Interest not found',
+        });
+      }
       return res.status(201).json({
         'status': 201,
-        'data': updatedInterest.rows[0],
+        'data': newRows.rows[0],
       });
     } catch (err) {
       return res.status(501).json({
@@ -79,17 +87,24 @@ class interestController {
 
   static async getInterest(req, res) {
     try {
+      const getAllUsers = 'SELECT * from users where id = $1';
       const getallinterests = 'SELECT * from interests';
       const getuserinterests = 'SELECT * from interests where interest =$1';
       if (req.user.isAdmin === true) {
         const { rows } = await pool.query(getallinterests);
+        const users = await pool.query(getAllUsers,[rows.interest]);
         return res.status(200).json({
           'status': 200,
-          'data': rows,
+          'data': {
+            'name': users.firstname,
+            'passport': users.passporturl,
+            'office': rows.office,
+            'party': rows.party,
+          },
         });
       }
-      const { rows } = await pool.query(getuserinterests, [req.user.id]);
-      if (!rows[0]) {
+      const newRows = await pool.query(getuserinterests, [req.user.id]);
+      if (!newRows.rows[0]) {
         return res.status(401).json({
           'status': 401,
           'error': 'Unauthorized',
@@ -97,7 +112,7 @@ class interestController {
       }
       return res.status(200).json({
         'status': 200,
-        'data': rows,
+        'data': newRows.rows,
       });
     } catch (err) {
       return res.status(500).json({
@@ -106,10 +121,9 @@ class interestController {
       });
     }
   }
-  
+
   static async deleteInterest(req, res) {
     const id = Number(req.params.id);
-    validation.check(id, validation.id, res);
     const getInterests = 'Select * from interests where id =$1 and interest=$2';
     const { rows } = await pool.query(getInterests, [id, req.user.id]);
     if (!rows[0]) {

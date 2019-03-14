@@ -31,12 +31,12 @@ router.get('/users/me', auth.checkToken, userActivityController.getProfile);
 router.patch('/users/me/edit', validation.editProfile, auth.checkToken, userActivityController.editProfile);
 router.patch('/users/me/password', validation.changePassword, auth.checkToken, userActivityController.changePassword);
 router.delete('/users/me', auth.checkToken, userActivityController.deleteProfile);
-router.patch('/admin/user/:id', auth.checkToken, userActivityController.makeAdmin);
+router.patch('/admin/user/:id', validation.checkId, auth.checkToken, userActivityController.makeAdmin);
 
 
 router.post('/votes', auth.checkToken, votesController.vote);
 router.get('/offices/:id/result', auth.checkToken, votesController.getOfficeResults);
-router.get('/users/me/votes', auth.checkToken , votesController.votingActivites);
+router.get('/users/me/votes', auth.checkToken, votesController.votingActivites);
 
 
 router.post('/offices', validation.createOffice, auth.checkToken, officeController.createOffice);
@@ -63,7 +63,7 @@ router.patch('/petitions/:id', auth.checkToken, petitionController.editPetition)
 router.delete('/petitions/:id', auth.checkToken, petitionController.deletePetition);
 
 router.get('/interests', auth.checkToken, interestController.getInterest);
-router.post('/interests', auth.checkToken, interestController.createInterest);
-router.put('/interests/:id', auth.checkToken, interestController.editInterest);
-router.delete('/interests/:id', auth.checkToken, interestController.deleteInterest);
+router.post('/interests', validation.createInterest, auth.checkToken, interestController.createInterest);
+router.patch('/interests/:id', validation.checkId, validation.editInterest, auth.checkToken, interestController.editInterest);
+router.delete('/interests/:id', validation.checkId, auth.checkToken, interestController.deleteInterest);
 export default router;
