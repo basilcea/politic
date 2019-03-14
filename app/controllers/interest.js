@@ -47,35 +47,21 @@ class interestController {
     } = req.body;
 
     try {
-      const Interests = 'Select * from interests';
-      const updateInterest = 'Update interests SET office = $1 , party =$2 where id = $3 returning *';
-      const { rows } = await pool.query(Interests);
-      if (req.user.isAdmin === true) {
-        if (!rows[0]) {
-          return res.status(401).json({
-            'status': 401,
-            'error ': 'Interest not found',
-          });
-        }
-        const values = [office || rows[0].office, party || rows[0].party, id];
-        const updatedInterest = await pool.query(updateInterest, values);
-        return res.status(201).json({
-          'status': 201,
-          'data': updatedInterest.rows[0],
-        });
 
-      }
       const getUserInterests = 'Select * from interests where interest=$1 and id =$2';
-      const newRows = await pool.query(getUserInterests, [req.user.id, id]);
+      const { rows } = await pool.query(getUserInterests, [req.user.id, id]);
       if (!rows[0]) {
         return res.status(401).json({
           'status': 401,
           'error ': 'Interest not found',
         });
       }
+      const updateInterest = 'Update interests SET office = $1 , party =$2 where id = $3 returning *';
+      const values = [office || rows[0].office, party || rows[0].party, id];
+      const updatedInterest = await pool.query(updateInterest, values);
       return res.status(201).json({
         'status': 201,
-        'data': newRows.rows[0],
+        'data': updatedInterest.rows[0],
       });
     } catch (err) {
       return res.status(501).json({
@@ -92,15 +78,15 @@ class interestController {
       const getuserinterests = 'SELECT * from interests where interest =$1';
       if (req.user.isAdmin === true) {
         const { rows } = await pool.query(getAllInterests);
-        const data = []
+        const data = [];
         for (let i = 0; i < rows.length; i++) {
           const users = await pool.query(getAllUsers, [rows[i].interest]);
-          data.push({ userInfo: users.rows, interestInfo: rows[i] })
+          data.push({ userInfo: users.rows, interestInfo: rows[i] });
         }
         return res.status(200).json({
           'status': 200,
           data,
-        })
+        });
       }
       const newRows = await pool.query(getuserinterests, [req.user.id]);
       if (!newRows.rows[0]) {
