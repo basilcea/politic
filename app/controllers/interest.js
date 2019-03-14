@@ -88,7 +88,7 @@ class interestController {
   static async getInterest(req, res) {
     try {
       const getAllInterests = 'Select * from interests';
-      const getAllUsers = 'SELECT firstname ,passporturl from users where id = $1';
+      const getAllUsers = 'SELECT * from users where id = $1';
       const getuserinterests = 'SELECT * from interests where interest =$1';
       if (req.user.isAdmin === true) {
         const { rows } = await pool.query(getAllInterests);
