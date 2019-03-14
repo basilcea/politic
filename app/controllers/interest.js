@@ -87,21 +87,20 @@ class interestController {
 
   static async getInterest(req, res) {
     try {
-      const getAllUsers = 'SELECT * from users where id = $1';
-      const getallinterests = 'SELECT * from interests';
+      const getAllInterests = 'Select * from interests';
+      const getAllUsers = 'SELECT firstname ,passporturl from users where id = $1';
       const getuserinterests = 'SELECT * from interests where interest =$1';
       if (req.user.isAdmin === true) {
-        const { rows } = await pool.query(getallinterests);
-        const users = await pool.query(getAllUsers,[rows.interest]);
+        const { rows } = await pool.query(getAllInterests);
+        const data = []
+        for (let i = 0; i < rows.length; i++) {
+          const users = await pool.query(getAllUsers, [rows[i].interest]);
+          data.push({ userInfo: users.rows, interestInfo: rows[i] })
+        }
         return res.status(200).json({
           'status': 200,
-          'data': {
-            'name': users.firstname,
-            'passport': users.passporturl,
-            'office': rows.office,
-            'party': rows.party,
-          },
-        });
+          data,
+        })
       }
       const newRows = await pool.query(getuserinterests, [req.user.id]);
       if (!newRows.rows[0]) {
