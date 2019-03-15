@@ -1,8 +1,8 @@
 const selectOfficeName = document.getElementById('editOfficeName');
 const selectOfficeType = document.getElementById('editOfficeType');
-const deleteOfficeType = document.getElementById('deleteOfficeType')
-const deleteOfficeName = document.getElementById('deleteOfficeName')
-  const fetchOffice = (officeType,officeName) => { 
+const deleteOfficeType = document.getElementById('deleteOfficeType');
+const deleteOfficeName = document.getElementById('deleteOfficeName');
+const fetchOffice = (officeType, officeName) => {
   fetch('https://cea-politico-gres.herokuapp.com/api/v1/offices', {
     method: 'GET',
     headers: {
@@ -16,7 +16,7 @@ const deleteOfficeName = document.getElementById('deleteOfficeName')
     .then((data) => {
       if (data.status === 200) {
         const options = document.createElement('option');
-      officeName.options.length = 0;
+        officeName.options.length = 0;
         options.value = 0;
         options.text = '-- Select Name of Office--';
         options.selected = true;
@@ -35,11 +35,19 @@ const deleteOfficeName = document.getElementById('deleteOfficeName')
     });
 };
 
-selectOfficeType.onchange = () => { fetchOffice(selectOfficeType, selectOfficeName) }
+if (selectOfficeType) {
+  selectOfficeType.onchange = () => {
+    fetchOffice(selectOfficeType, selectOfficeName);
+  };
+}
 
-deleteOfficeType.onchange = () => { fetchOffice(deleteOfficeType, deleteOfficeName) }
-  
-  
+if (deleteOfficeType) {
+  deleteOfficeType.onchange = () => {
+    fetchOffice(deleteOfficeType, deleteOfficeName);
+  };
+}
+const newtype = document.getElementById('newOfficeType');
+
 selectOfficeName.onchange = () => {
   const id = Number(selectOfficeName.value);
   fetch(`https://cea-politico-gres.herokuapp.com/api/v1/offices/${id}`, {
@@ -55,14 +63,17 @@ selectOfficeName.onchange = () => {
     .then((data) => {
       if (data.status === 200) {
         document.getElementById('hiddenOffice').className = '';
-        const newtype = document.getElementById('newOfficeType');
-        for (let i = 0; i < newtype.length; i++) {
-          if (newtype.options[i].value === selectOfficeType.value) {
-            newtype.options[i].selected = true;
+        if (newtype) {
+          for (let i = 0; i < newtype.length; i++) {
+            if (newtype.options[i].value === selectOfficeType.value) {
+              newtype.options[i].selected = true;
+            }
           }
         }
-        document.getElementById('newOfficeName').placeholder = data.data.name;
-        document.getElementById('editElectionDate').innerHTML = data.data.electdate;
+        if (document.getElementById('newOfficeName')) {
+          document.getElementById('newOfficeName').placeholder = data.data.name;
+          document.getElementById('editElectionDate').innerHTML = data.data.electdate;
+        }
       }
       else {
         return data.error;
