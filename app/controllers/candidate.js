@@ -43,7 +43,6 @@ class candidateController {
       const candidateId = Number(req.body.user);
       const partyId = Number(req.body.party);
 
-      validation.check(userId, validation.id, res);
       // check if  user exists
       const { rows } = await pool.query(checkUser, [userId]);
       if (!rows[0]) {
@@ -61,7 +60,6 @@ class candidateController {
         });
       }
       // check if office exist
-      validation.check(officeId, validation.id, res);
       const office = await pool.query(checkOffice, [officeId]);
       if (!office.rows[0]) {
         return res.status(404).json({
@@ -69,7 +67,6 @@ class candidateController {
           'error': 'office not found',
         });
       }
-      validation.check(candidateId, validation.id, res);
       const candidate = await pool.query(checkCandidate, [candidateId]);
       if (candidate.rows[0]) {
         return res.status(404).json({
@@ -78,7 +75,6 @@ class candidateController {
         });
       }
 
-      validation.check(partyId, validation.id, res);
       await pool.query(insertCandidate, [officeId, candidateId, partyId]);
       const inserted = await pool.query('SELECT * from candidates');
       return res.status(201).json({
@@ -95,7 +91,6 @@ class candidateController {
 
   static async searchCandidate(req, res) {
     const id = Number(req.params.id);
-    validation.check(id, validation.id, res);
     try {
       const candidate = 'Select candidate from candidates where office= $1';
       const { rows } = await pool.query(candidate, [id]);
@@ -122,7 +117,6 @@ class candidateController {
   static async editCandidate(req, res) {
     try {
       const id = Number(req.params.id);
-      validation.check(id, validation.id, res);
       if (req.user.isAdmin !== true) {
         return res.status(401).json({
           'status': 401,
@@ -141,7 +135,6 @@ class candidateController {
         office, party,
       } = req.body;
 
-      validation.check(req.body, validation.editInterestSchema, res);
       const updateCandidate = 'Update candidates SET office = $1 , party =$2  where id = $3 returning *';
       const values = [
         office || rows[0].office,
@@ -163,8 +156,6 @@ class candidateController {
 
   static async deleteCandidate(req, res) {
     const id = Number(req.params.id);
-    validation.check(id, validation.id, res);
-    console.log(req.user.isAdmin)
     if (req.user.isAdmin !== true) {
       return res.status(401).json({
         'status': 401,

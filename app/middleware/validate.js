@@ -255,6 +255,78 @@ static createInterest(req, res, next) {
   
   }
 
+  static createPetition(req, res, next) {
+    joi.validate(req.body, schema.createPetitionSchema, { abortEarly: false, stripUnknown: true }, (err) => {
+  
+      if (err) {
+        const errMsg = [];
+        for (let i = 0; i < err.details.length; i++) {
+          errMsg.push(`${err.details[i].message} `);
+        }
+        return res.status(400).json({
+          status: 400,
+          error: errMsg,
+        });
+  
+      }
+      next();
+    });
+  
+  }
+  static editPetition(req, res, next) {
+    joi.validate(req.body, schema.editPetitionSchema, { abortEarly: false, stripUnknown: true }, (err) => {
+  
+      if (err) {
+        const errMsg = [];
+        for (let i = 0; i < err.details.length; i++) {
+          errMsg.push(`${err.details[i].message} `);
+        }
+        return res.status(400).json({
+          status: 400,
+          error: errMsg,
+        });
+  
+      }
+      next();
+    });
+  
+  }
+  static createVote(req, res, next) {
+    joi.validate(req.body, schema.createVoteSchema, { abortEarly: false, stripUnknown: true }, (err) => {
+  
+      if (err) {
+        const errMsg = [];
+        for (let i = 0; i < err.details.length; i++) {
+          errMsg.push(`${err.details[i].message} `);
+        }
+        return res.status(400).json({
+          status: 400,
+          error: errMsg,
+        });
+  
+      }
+      next();
+    });
+  
+  }
+  static createCandidate(req, res, next) {
+    joi.validate(req.body, schema.createCandidateSchema, { abortEarly: false, stripUnknown: true }, (err) => {
+  
+      if (err) {
+        const errMsg = [];
+        for (let i = 0; i < err.details.length; i++) {
+          errMsg.push(`${err.details[i].message} `);
+        }
+        return res.status(400).json({
+          status: 400,
+          error: errMsg,
+        });
+  
+      }
+      next();
+    });
+  
+  }
 }
 export default validation;
 

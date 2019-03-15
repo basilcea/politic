@@ -34,8 +34,8 @@ router.delete('/users/me', auth.checkToken, userActivityController.deleteProfile
 router.patch('/admin/user/:id', validation.checkId, auth.checkToken, userActivityController.makeAdmin);
 
 
-router.post('/votes', auth.checkToken, votesController.vote);
-router.get('/offices/:id/result', auth.checkToken, votesController.getOfficeResults);
+router.post('/votes', validation.createVote , auth.checkToken, votesController.vote);
+router.get('/offices/:id/result', validation.checkId, auth.checkToken, votesController.getOfficeResults);
 router.get('/users/me/votes', auth.checkToken, votesController.votingActivites);
 
 
@@ -45,10 +45,10 @@ router.get('/offices/:id', validation.checkId, auth.checkToken, officeController
 router.patch('/offices/:id', validation.checkId, validation.editOffice, auth.checkToken, officeController.editOffice);
 router.delete('/offices/:id', validation.checkId, auth.checkToken, officeController.deleteOffice);
 
-router.post('/offices/:id/register', auth.checkToken, candidateController.makeCandidate);
-router.get('/offices/:id/candidates', auth.checkToken, candidateController.searchCandidate);
-router.put('/candidates/:id', auth.checkToken, candidateController.editCandidate);
-router.delete('/candidates/:id', auth.checkToken, candidateController.deleteCandidate);
+router.post('/offices/:id/register', validation.checkId, validation.createCandidate, auth.checkToken, candidateController.makeCandidate);
+//router.get('/offices/:id/candidates', validation.checkId, auth.checkToken, candidateController.searchCandidate);
+//router.put('/candidates/:id', validation.checkId, auth.checkToken, candidateController.editCandidate);
+router.delete('/candidates/:id', validation.checkId, auth.checkToken, candidateController.deleteCandidate);
 
 router.post('/parties', validation.createParty, auth.checkToken, partyController.createParty);
 router.get('/parties', auth.checkToken, partyController.getAllParties);
@@ -58,9 +58,9 @@ router.delete('/parties/:id', validation.checkId, auth.checkToken, partyControll
 
 router.get('/petitions', auth.checkToken, petitionController.getUserPetition);
 router.get('/petitions/:id', validation.checkId, auth.checkToken, petitionController.getAPetition);
-router.post('/petitions', auth.checkToken, petitionController.createPetition);
-router.patch('/petitions/:id', auth.checkToken, petitionController.editPetition);
-router.delete('/petitions/:id', auth.checkToken, petitionController.deletePetition);
+router.post('/petitions', validation.createPetition, auth.checkToken, petitionController.createPetition);
+//router.patch('/petitions/:id',validation.checkId, validation.editPetition, auth.checkToken, petitionController.editPetition);
+router.delete('/petitions/:id', validation.checkId , auth.checkToken, petitionController.deletePetition);
 
 router.get('/interests', auth.checkToken, interestController.getInterest);
 router.post('/interests', validation.createInterest, auth.checkToken, interestController.createInterest);
