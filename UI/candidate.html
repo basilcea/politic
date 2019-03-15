@@ -3,8 +3,6 @@
 	<head>
 		<title>Politico- Your right to choose</title>
 		<meta charset="UTF-8">
-		<meta name="description" content="Question and Answer Forum">
-		<meta name="keywords" content="ask, question, answer">
 		<meta name="author" content="Cea">
 		<meta name="viewport" content ="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href ="./CSS/card.css">
@@ -13,94 +11,128 @@
 		<link rel="stylesheet" type="text/css" href ="./CSS/button.css">
 		<link rel="stylesheet" type="text/css" href ="./CSS/text.css">
 		<link rel="stylesheet" type="text/css" href ="./CSS/form.css">
-		<link rel="stylesheet" type="text/css" href ="./CSS/nav.css">
 		<link rel="stylesheet" type="text/css" href ="./CSS/others.css">
+    <link rel="stylesheet" type="text/css" href ="./CSS/nav.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/fadeIn.css">
+		<script src="./JS/decrypt.js"></script>
 	</head>
 	<body>
 		<div class="layout_large background_body">
-
-			<!-- Navigation Bar for  small screen sizes-->
-			<div class="layout_smallNav">
+      <div class="layout_smallNav">
           <ul class="nav_tabs_small">
-              <li class="nav_horizontal_small">
+              <li class="nav_horizontal_small layout_none">
                 <a class="others_full" href="home.html">Home</a>
               </li>
               <a  class="background_icon" href="javascript:void(0)" ></a>
-              <li class="nav_horizontal_small">
+              <li class="nav_horizontal_small layout_none">
                 <a class="others_full" href="profile.html">Profile</a>
 							</li>
-							<li class="nav_horizontal_small">
+							<li class="nav_horizontal_small layout_none">
 									<a class="others_full" href="vote.html">Vote</a>
 								</li>
-              <li class="nav_horizontal_small">
+              <li class="nav_horizontal_small layout_none" id='smallAdmin'>
                 <a class="others_full" href="admin.html">Admin</a>
               </li>
-              <li class="nav_horizontal_small">
+              <li class="nav_horizontal_small layout_none" id='smallPolitician'> 
                 <a class="others_full" href="candidate.html">Candidacy</a>
               </li>
-              <li class="nav_horizontal_small">
-                  <a class="others_full" href="index.html">Log out</a>
+              <li class="nav_horizontal_small layout_none">
+                  <a class="others_full" id='logout_small'>Log out</a>
                 </li>
             </ul>
       </div>
-      <!--Navigation Bar for large screen sizes-->
-
-			<!--Logo-->
 			<div class="layout_header">
 				<a href='home.html'><img class="others_logo" src="STATIC/logo.png" alt="logo"/></a>
-			</div>
-			<!--Menu Buttons-->
+      </div>
+			<!--Navigation tabs-->
+
 			<div class="layout_nav">
-					<ul class="nav_tabs">
-						<li class="nav_horizontal">
-							<a class="nav_menuButton" href="home.html">Home</a>
-						</li>
-						<li class="nav_horizontal">
-							<a class="nav_menuButton" href="profile.html">Profile</a>
-						</li>
-					</li>
+				<ul class="nav_tabs">
 					<li class="nav_horizontal">
-							<a class="nav_menuButton" href="vote.html">Vote</a>
+						<a class="nav_menuButton" href="home.html">Home</a>
+          </li>
+					<li class="nav_horizontal">
+						<a class="nav_menuButton" href="profile.html">Profile</a>
+					</li>
+				</li>
+				<li class="nav_horizontal">
+						<a class="nav_menuButton" href="vote.html">Vote</a>
+					</li>
+					<li class="nav_horizontal layout_none" id ='fullAdmin'>
+						<a class="nav_menuButton" href="admin.html">Admin</a>
+					</li>
+					<li class="nav_horizontal layout_none" id='fullPolitician'>
+						<a class="nav_active" href="candidate.html">Candidacy</a>
+					<li class="nav_horizontal">
+							<a class="nav_menuButton " id='logout_full'>Logout</a>
 						</li>
-						<li class="nav_horizontal">
-							<a class="nav_menuButton" href="admin.html">Admin</a>
-						</li>
-						<li class="nav_horizontal">
-							<a class="nav_active" href="candidate.html">Candidacy</a>
-						<li class="nav_horizontal">
-								<a class="nav_menuButton" href="index.html">Logout</a>
-							</li>
-					</ul>
-				</div>
+        </ul>
+			</div>
 			<!--tabs button-->
 			<div class="layout_side">
 					<button type="button">Express Interest</button>
+					<button type ='button'>View Interests</button>
 					<button type="button">Create Petition</button>
-					<button type="button">Make Candidate</button>
-					
+					<button type ='button'>View Petitions</button>
+
 			</div>
 			<div class='layout_small'>
 				<button type ='button'>Express Interest</button>
+				<button type ='button'>View Interests</button>
 				<button type="button">Create Petition</button>
-				<button type="button">Make Candidate</button>
+				<button type ='button'>View Petition</button>
+		
 			</div>
 			<div class="layout_centered1 card_party">
 				<div id="run">
 					<form id="searchForm">
 						<p>Run for an Office</p>
-						<select id="searchList" name="office" form="searchForm">
+						<select id ='editOfficeType'>
+							<option value='' selected disabled>--Select Type of Office--</option>
+							<option value ='Federal'>Federal</option>
+							<option value ='Legislative'>Legislative</option>
+							<option value ='State'>State</option>
+							<option value ='Local Government'>Local Government</option>
+						</select>
+						<select id="editOfficeName" form="searchForm">
 							<!--input names of political offices from database.js-->
 						</select>
-						<select id="candidatePart1" name="party" form="searchForm">
+						<div id='hiddenOffice' class='layout_none'>
+						<select class="candidateParty"  id="party" form="searchForm">
 						</select>
 						<input type =submit value="submit">
+					</div>
 					</form>
+				</div>
+				<div id='viewInterest'>
+					<div id ='viewInterests'>
+					<p>All Interests</p>
+					<div id='allInterests'></div>
+				</div>
+					<div id="editInterest" class='layout_none'>
+						<form id="editInterestForm">
+							<p>Edit interest</p>
+							<select id ='deleteOfficeType'>
+								<option value='' selected disabled>--Select Type of Office--</option>
+								<option value ='Federal'>Federal</option>
+								<option value ='Legislative'>Legislative</option>
+								<option value ='State'>State</option>
+								<option value ='Local Government'>Local Government</option>
+							</select>
+							<select id="deleteOfficeName" form="searchForm">
+								<!--input names of political offices from database.js-->
+							</select>
+							<select class="candidateParty"  id="party" form="searchForm">
+							</select>
+							<input type =submit value="Edit">
+						</form>
+				</div>
 				</div>
 				<div id="petition">
 					<form>
 						<p>Electoral Petition</p>
             <br><br>
-            <select id="pList" name="office" form="searchForm">
+            <select id="deleteOfficeName" name="office" form="searchForm">
 							<!--input names of political offices from database.js-->
 						</select>
 						<input type="text" name="complaintSubject" placeholder="Subject of Complaint">
@@ -108,35 +140,15 @@
 						<input type="submit" value="submit">
 					</form>
 				</div>
-				<div id ='candidate'>
-					<form>
-						<p>Make A politician Candidate</p>
-							<select id="offices">
-								<option value="" disabled selected>-- Select Type Of Office --</option>
-								<option value="Federal">Federal</option>
-								<option value="Legislative">Legislative</option>
-								<option value="State">State</option>
-								<option value="Local Government">Local Government </option>
-							</select>
-							<select id="candidateOffice" name="party" form="editParty">
-							</select>
-							<select id="candidateDetails" name="party" form="editParty">
-							</select>
-							<p> Edit Details</p>
-							<input type ='text' placeholder ='Candidate Name'>
-							<select id="candidateParty" name="party" form="editParty">
-								</select>
-							<select id="candidateDetails" name="party" form="editParty">
-							</select>
-							<select id="candidateDetails" name="party" form="editParty">
-							</select>
-							<input type ='submit' value ='Approve'>
-					</form>
+				<div id='viewPetitions'>
 				</div>
 			</div>
 		</div>
 		<footer class="background_footer">All rights Reserved &copy 2019 .<br> Your right to choose</footer>
 		<script src="./JS/candidate.js"></script>
-    <script src="./JS/data.js"></script>
+		<script src="./JS/getOffices.js"></script>
+		<script src="./JS/getParties.js"></script>
+		<script src="./JS/getInterests.js"></script>
+		<script src="./JS/logout.js"></script>
 	</body>
 </html>

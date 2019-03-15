@@ -139,10 +139,10 @@ const createUser = (url, formData, errorDiv, statusCode, message) => {
     .then(res => res.json())
     .then((res) => {
       if (res.status === statusCode) {
-        const { token , user } = res.data[0];
+        const { token, user } = res.data[0];
         localStorage.clear();
         localStorage.setItem('token', token);
-        localStorage.setItem('firstname' , user.firstname)
+        localStorage.setItem('firstname', user.firstname);
         errorDiv.innerHTML = message;
         window.location.replace(`${home}`);
       } else {

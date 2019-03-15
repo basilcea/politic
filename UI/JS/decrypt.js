@@ -4,6 +4,9 @@ const decrypt = () => {
   if (!token) {
     window.location = 'index.html';
   }
+  if (token !== null && window.location === 'index.html') {
+    window.location = 'home.html';
+  }
   fetch('https://cea-politico-gres.herokuapp.com/api/v1/auth/decrypt', {
     method: 'GET',
     headers: {
@@ -25,12 +28,11 @@ const decrypt = () => {
         /** get nav list  */
         const smallLink = document.getElementsByClassName('nav_horizontal_small');
         if (infot.admin === true) {
-          document.getElementById('fullAdmin').className += ' layout_block';
-          document.getElementById('fullPolitician').className = 'layout_none';
-
+          document.getElementById('fullAdmin').className = 'nav_horizontal layout_block';
+          document.getElementById('fullPolitician').className = 'nav_horizontal layout_block';
         }
         else if (infot.status === 'politician') {
-          document.getElementById('fullPolitician').className = 'layout_block';
+          document.getElementById('fullPolitician').className = 'nav_horizontal layout_block';
           document.getElementById('fullAdmin').className = 'layout_none';
         }
         else {
@@ -45,11 +47,11 @@ const decrypt = () => {
             for (let i = 0; i < smallLink.length; i++) {
               smallLink[i].className = 'nav_horizontal_small layout_block';
               if (infot.admin === true) {
-                document.getElementById('smallAdmin').className += ' layout_block';
-                document.getElementById('smallPolitician').className = 'layout_none';
+                document.getElementById('smallAdmin').className = 'nav_horizontal_small layout_block';
+                document.getElementById('smallPolitician').className = 'nav_horizontal_small layout_block';
               }
               else if (infot.status === 'politician') {
-                document.getElementById('smallPolitician').className = 'layout_block';
+                document.getElementById('smallPolitician').className = 'nav_horizontal_small layout_block';
                 document.getElementById('smallAdmin').className = 'layout_none';
               }
               else {
@@ -65,13 +67,13 @@ const decrypt = () => {
               smallLink[i].className = 'nav_horizontal_small layout_none';
             }
           }
-          
-        };
-        console.log(infot)
-      }
-     
-    })
-  
-}
 
-window.onload = decrypt()
+        };
+        console.log(infot);
+      }
+
+    });
+
+};
+
+window.onload = decrypt();
