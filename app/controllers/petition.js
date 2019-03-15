@@ -20,7 +20,6 @@ class petitionController {
     const {
       office, subject, body, evidence,
     } = req.body;
-    console.log(req.body);
     const getUser = 'Select * from users where id= $1 AND registeras =$2';
     const checkPolitician = await pool.query(getUser, [req.user.id, 'politician']);
     if (!checkPolitician.rows[0]) {
@@ -69,7 +68,6 @@ class petitionController {
     const getUserPetition = 'Select * from petitions where createdBy=$1 AND id=$2';
     const id = Number(req.params.id);
     // eslint-disable-next-line prefer-destructuring
-    validation.check(id, validation.id, res);
     const { rows } = await pool.query(getUserPetition, [req.user.id, id]);
     if (!rows[0]) {
       return res.status(401).json({
@@ -80,7 +78,6 @@ class petitionController {
     const {
       office, subject, body, evidence,
     } = req.body;
-    validation.check(req.body, validation.editPetitionSchema, res);
     let evidenceInput;
     if (evidence === '' || evidence === undefined) {
       evidenceInput = rows[0].evidence;
@@ -151,7 +148,6 @@ class petitionController {
   static async getAPetition(req, res) {
     try {
       const id = Number(req.params.id);
-      validation.check(id, validation.id, res);
       const petition = 'Select * from petitions where id =$1';
       const { rows } = await pool.query(petition, [id]);
       if (!rows[0]) {
@@ -194,7 +190,6 @@ class petitionController {
   */
   static async deletePetition(req, res) {
     const id = Number(req.params.id);
-    validation.check(id, validation.id, res);
     const getPetition = 'Select * from petitions where id =$1';
     const { rows } = await pool.query(getPetition, [id]);
     if (!rows[0]) {
