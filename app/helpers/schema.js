@@ -490,7 +490,7 @@ export const editInterestSchema = joi.object().keys({
   party: lessId.allow(''),
 });
 
-export const string = joi.string().error(() =>'value must be a string');
+export const string = joi.string().error(() => 'value must be a string');
 
 export const createPetitionSchema = joi.object().keys({
   office: id,
@@ -509,12 +509,11 @@ export const editPetitionSchema = joi.object().keys({
 export const createVoteSchema = joi.object().keys({
   office: id,
   candidate: id,
-  voter: id,
 });
 
 export const createCandidateSchema = joi.object().keys({
-  officeId: id,
-  candidateId: id,
-  partyId: id,
+  office: id,
+  user: id,
+  party: id,
 
 });
