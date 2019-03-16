@@ -1,6 +1,6 @@
 const allInterests = document.getElementById('allInterests');
 
-const fetching = (newDiv, par2, par3, par4, button12, button13, office, party, message, message2) => {
+const fetching = (newDiv, par2, par3, par4, button12, button13, office, party, message, message2, par5) => {
   fetch(`https://cea-politico-gres.herokuapp.com/api/v1/offices/${office}`, {
     method: 'GET',
     headers: {
@@ -36,8 +36,10 @@ const fetching = (newDiv, par2, par3, par4, button12, button13, office, party, m
               button12.className = `${message}`;
               newDiv.appendChild(button12);
               button13.innerHTML = message2;
-              button13.className = `${message2}`;
+              button13.value = message2;
+              button13.className = message2;
               newDiv.appendChild(button13);
+              newDiv.insertBefore(par5, button13)
             }
 
           });
@@ -66,7 +68,7 @@ const editInterest = (id, formData) => {
     });
 };
 
-const deleteInterest = (id) =>{
+const deleteInterest = (id) => {
   fetch(`https://cea-politico-gres.herokuapp.com/api/v1/interests/${id}`, {
     method: 'DELETE',
     headers: {
@@ -76,15 +78,88 @@ const deleteInterest = (id) =>{
       'Access-Control-Allow-Origin': '*',
     },
   })
-  .then(res => res.json())
-  .then((data) => {
+    .then(res => res.json())
+    .then((data) => {
       if (data.status === 200) {
+        location.reload();
+      }
+    });
+};
+
+const approveCandidate = (formData, id, par5, newDiv, button13) => {
+  fetch(`https://cea-politico-gres.herokuapp.com/api/v1/offices/${id}/register`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(formData),
+  })
+    .then(res => res.json())
+    .then((data) => {
+      if (data.status === 201) {
+        par5.innerHTML = 'Status: Flag Bearer';
+        newDiv.insertBefore(par5, button13);
+        button13.innerHTML = 'Unapprove';
         location.reload()
       }
-    })
-  }
+    });
+};
+
+const deleteCandidate = (button13,id) => {
+  fetch(`https://cea-politico-gres.herokuapp.com/api/v1/candidates/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+      'Access-Control-Allow-Origin': '*',
+    },
+  })
+    .then(res => res.json())
+    .then((data) => {
+      if (data.status === 200) {
+        location.reload();
+        button13.innerHTML = 'Approve';
+      }
+      else {
+        return data.error;
+      }
+    });
+}
+const fetchCandidate = (newDiv, par2, par3, par4, button12, button13, office, party, id , par5) => {
+  fetch(`https://cea-politico-gres.herokuapp.com/api/v1/candidates/${id}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+      'Access-Control-Allow-Origin': '*',
+    },
+  })
+    .then(res => res.json())
+    .then((data) => {
+      if (data.status === 200) {
+        let newId = data.data[0].id
+        fetching(newDiv, par2, par3, par4, button12, button13, office, party, 'layout_none', 'Unapprove' , par5);
+        par5.innerHTML = 'Status: Flag Bearer';
+        button13.onclick = () => {
+          deleteCandidate(button13,newId)
+        }
+      }
+      else if (data.status === 404) {
+        fetching(newDiv, par2, par3, par4, button12, button13, office, party, 'layout_none', 'Approve');
+      }
+      else {
+        return data.error;
+      }
+    });
+
+};
 
 const fetchAllInterests = () => {
+
   fetch('https://cea-politico-gres.herokuapp.com/api/v1/interests', {
     method: 'GET',
     headers: {
@@ -113,12 +188,18 @@ const fetchAllInterests = () => {
             const button13 = document.createElement('button');
             const office = data.data[i].interestInfo.office;
             const party = (data.data[i].interestInfo.party);
-            fetching(newDiv, par2, par3, par4, button12, button13, office, party, 'layout_none', 'Approve');
+            const id = data.data[i].userInfo[0].id;
+            const par5 = document.createElement('p');
+            fetchCandidate(newDiv, par2, par3, par4, button12, button13, office, party, id ,par5);
             allInterests.appendChild(newDiv);
+            console.log(button13.innerHTML)
             button13.onclick = () => {
-              const par5 = document.createElement('p');
-              const id = data.data[i].userInfo[0].id;
-              // aproval(office,id,)
+              const formData = {
+                office,
+                party,
+                user: id,
+              };
+              approveCandidate(formData, id, par5, newDiv, button13);
             };
           }
           else {
@@ -146,11 +227,11 @@ const fetchAllInterests = () => {
               });
 
             };
-            button13.onclick = (e)=>{
-              const id = Number(data.data[i].id)
+            button13.onclick = (e) => {
+              const id = Number(data.data[i].id);
               e.preventDefault();
               deleteInterest(id);
-            }
+            };
           }
         }
       }
