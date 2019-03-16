@@ -118,7 +118,7 @@ class candidateController {
     const candidateId = Number(req.params.id)
     try {
       const candidate = 'Select * from candidates where candidate = $1';
-      const { rows } = await pool.query(candidate , candidateId);
+      const { rows } = await pool.query(candidate , [candidateId]);
       if (!rows[0]) {
         return res.status(404).json({
           'status': 404,
