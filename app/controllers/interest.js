@@ -12,10 +12,17 @@ class interestController {
         'error': 'User is not a politician',
       });
     }
+    const values = [office, party, req.user.id];
     const sendInterest = `INSERT INTO interests (office, party, interest)
     VALUES($1, $2 ,$3 )`;
-    const selectInterest = 'Select * from interests';
-    const values = [office, party, req.user.id];
+    const selectUserInterest = 'Select * from interests where interest = $1 , office = $2';
+    const AllUserInterest = await pool.query(selectUserInterest, [req.user.id, office]);
+    if (AllUserInterest.rows[0] !== null) {
+      return res.status(400).json({
+        'status': 400,
+        'error': 'You have already expressed Interest to run fot this office',
+      });
+    }
     try {
       /**
           * Add the interest to  the database
@@ -23,9 +30,8 @@ class interestController {
           * @return {object} - The interest object
             */
       await pool.query(sendInterest, values);
-
+      const selectInterest = 'Select * from interests';
       const AllInterests = await pool.query(selectInterest);
-
       return res.status(201).json({
         'status': 201,
         'data': AllInterests.rows[AllInterests.rowCount - 1],
@@ -49,7 +55,7 @@ class interestController {
     try {
 
       const getUserInterests = 'Select * from interests where interest=$1 and id =$2';
-      const {rows} = await pool.query(getUserInterests, [req.user.id, id]);
+      const { rows } = await pool.query(getUserInterests, [req.user.id, id]);
       if (!rows[0]) {
         return res.status(401).json({
           'status': 401,

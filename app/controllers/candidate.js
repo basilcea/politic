@@ -114,6 +114,30 @@ class candidateController {
 
   }
 
+  static async getCandidates(req, res) {
+    try {
+      const candidate = 'Select candidate from candidates';
+      const { rows } = await pool.query(candidate);
+      if (!rows) {
+        return res.status(404).json({
+          'status': 404,
+          'error': 'No candidate found',
+        });
+      }
+      return res.status(200).json({
+        'status': 200,
+        'data': rows,
+      });
+
+    } catch (err) {
+      return res.status(500).json({
+        'status': 500,
+        'error': err.toString(),
+      });
+    }
+
+  }
+
   static async editCandidate(req, res) {
     try {
       const id = Number(req.params.id);
