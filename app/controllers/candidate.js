@@ -92,7 +92,7 @@ class candidateController {
   static async searchCandidate(req, res) {
     const id = Number(req.params.id);
     try {
-      const candidate = 'Select candidate from candidates where office= $1';
+      const candidate = 'Select * from candidates where office= $1';
       const { rows } = await pool.query(candidate, [id]);
       if (!rows) {
         return res.status(404).json({
