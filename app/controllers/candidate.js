@@ -114,11 +114,12 @@ class candidateController {
 
   }
 
-  static async getCandidates(req, res) {
+  static async getCandidate(req, res) {
+    const candidateId = Number(req.params.id)
     try {
-      const candidate = 'Select candidate from candidates';
-      const { rows } = await pool.query(candidate);
-      if (!rows) {
+      const candidate = 'Select * from candidates where candidate = $1';
+      const { rows } = await pool.query(candidate , candidateId);
+      if (!rows[0]) {
         return res.status(404).json({
           'status': 404,
           'error': 'No candidate found',

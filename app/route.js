@@ -47,7 +47,7 @@ router.delete('/offices/:id', validation.checkId, auth.checkToken, officeControl
 
 router.post('/offices/:id/register', validation.checkId, validation.createCandidate, auth.checkToken, candidateController.makeCandidate);
 router.get('/offices/:id/candidates', validation.checkId, auth.checkToken, candidateController.searchCandidate);
-router.get('/candidates', auth.checkToken, candidateController.getCandidates);
+router.get('/candidates/:id', validation.checkId, auth.checkToken, candidateController.getCandidate);
 //router.put('/candidates/:id', validation.checkId, auth.checkToken, candidateController.editCandidate);
 router.delete('/candidates/:id', validation.checkId, auth.checkToken, candidateController.deleteCandidate);
 
