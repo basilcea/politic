@@ -93,6 +93,8 @@ class candidateController {
     const id = Number(req.params.id);
     try {
       const candidate = 'Select * from candidates where office= $1';
+      const AllUsers ='Select firstname , lastname, othername, passporturl from users where id =$1';
+      const parties = 'Select name , logourl from parties where id = $1';
       const { rows } = await pool.query(candidate, [id]);
       if (!rows) {
         return res.status(404).json({
@@ -100,9 +102,15 @@ class candidateController {
           'error': 'No candidate found for this office',
         });
       }
+      const data = [];
+      for (let i = 0; i < rows.length; i++){
+        const getusers = await pool.query(AllUsers, [rows[i].candidate]);
+        const getparty = await pool.query(parties , [rows[i].party])
+          data.push({ userInfo: getusers.rows, partyInfo: getparty.rows });
+      }
       return res.status(200).json({
         'status': 200,
-        'data': rows,
+        data,
       });
 
     } catch (err) {
