@@ -93,8 +93,8 @@ class candidateController {
     const id = Number(req.params.id);
     try {
       const candidate = 'Select * from candidates where office= $1';
-      const AllUsers ='Select firstname , lastname, othername, passporturl from users where id =$1';
-      const parties = 'Select name , logourl from parties where id = $1';
+      const AllUsers = 'Select id , firstname , lastname, othername, passporturl from users where id =$1';
+      const parties = 'Select *  from parties where id = $1';
       const { rows } = await pool.query(candidate, [id]);
       if (!rows) {
         return res.status(404).json({
@@ -103,10 +103,18 @@ class candidateController {
         });
       }
       const data = [];
-      for (let i = 0; i < rows.length; i++){
+      for (let i = 0; i < rows.length; i++) {
         const getusers = await pool.query(AllUsers, [rows[i].candidate]);
-        const getparty = await pool.query(parties , [rows[i].party])
-          data.push({ userInfo: getusers.rows, partyInfo: getparty.rows });
+        const getparty = await pool.query(parties, [rows[i].party]);
+        data.push({
+          office: id,
+          user: getusers.rows[0].id,
+          username: `${getusers.rows[0].firstname  } ${  getusers.rows[0].lastname  } ${  getusers.rows[0].othername}`,
+          passport: getusers.rows[0].passporturl,
+          party: getparty.rows[0].id,
+          partyname: getparty.rows[0].name,
+          logo: getparty.rows[0].logourl,
+        });
       }
       return res.status(200).json({
         'status': 200,
@@ -123,10 +131,10 @@ class candidateController {
   }
 
   static async getCandidate(req, res) {
-    const candidateId = Number(req.params.id)
+    const candidateId = Number(req.params.id);
     try {
       const candidate = 'Select * from candidates where candidate = $1';
-      const { rows } = await pool.query(candidate , [candidateId]);
+      const { rows } = await pool.query(candidate, [candidateId]);
       if (!rows[0]) {
         return res.status(404).json({
           'status': 404,

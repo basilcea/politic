@@ -87,7 +87,13 @@ class interestController {
         const data = [];
         for (let i = 0; i < rows.length; i++) {
           const users = await pool.query(getAllUsers, [rows[i].interest]);
-          data.push({ userInfo: users.rows, interestInfo: rows[i] });
+          data.push({
+            user: getusers.rows[0].id,
+            username: `${getusers.rows[0].firstname} ${getusers.rows[0].lastname } ${ getusers.rows[0].othername}`,
+            interestId: rows[i].id,
+            office: rows[i].office,
+            party: rows[i].party,
+          });
         }
         return res.status(200).json({
           'status': 200,
