@@ -88,8 +88,8 @@ class interestController {
         for (let i = 0; i < rows.length; i++) {
           const users = await pool.query(getAllUsers, [rows[i].interest]);
           data.push({
-            user: getusers.rows[0].id,
-            username: `${getusers.rows[0].firstname} ${getusers.rows[0].lastname } ${ getusers.rows[0].othername}`,
+            user: users.rows[0].id,
+            username: `${users.rows[0].firstname} ${users.rows[0].lastname } ${ users.rows[0].othername}`,
             interestId: rows[i].id,
             office: rows[i].office,
             party: rows[i].party,
