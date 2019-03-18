@@ -133,12 +133,30 @@ class candidateController {
   static async getCandidatebyId(req, res) {
     const candidateId = Number(req.params.id);
     try {
+      const AllUsers = 'Select id , firstname , lastname, othername, passporturl from users where id =$1';
+      const parties = 'Select *  from parties where id = $1';
       const candidate = 'Select * from candidates where id = $1';
+      const offices = 'Select * from offices where id= $1';
       const { rows } = await pool.query(candidate, [candidateId]);
       if (!rows[0]) {
         return res.status(404).json({
           'status': 404,
           'error': 'No candidate found',
+        });
+      }
+      const data = [];
+      for (let i = 0; i < rows.length; i++) {
+        const getusers = await pool.query(AllUsers, [rows[i].candidate]);
+        const getparty = await pool.query(parties, [rows[i].party]);
+        const getOffice = await pool.query(offices, [rows[i].office]);
+        data.push({
+          id,
+          username: `${getusers.rows[0].firstname} ${getusers.rows[0].lastname} ${getusers.rows[0].othername}`,
+          passport: getusers.rows[0].passporturl,
+          party: getparty.rows[0].id,
+          partyname: getparty.rows[0].name,
+          logo: getparty.rows[0].logourl,
+          officeName: getOffice.rows[0].name,
         });
       }
       return res.status(200).json({
@@ -156,7 +174,7 @@ class candidateController {
   }
 
   static async getCandidate(req, res) {
-    const candidateId = Number(req.params.id);
+    const candidateId = Number(req.params.candidate);
     try {
       const candidate = 'Select * from candidates where candidate = $1';
       const { rows } = await pool.query(candidate, [candidateId]);
