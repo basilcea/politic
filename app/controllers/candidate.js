@@ -109,7 +109,7 @@ class candidateController {
         data.push({
           office: id,
           user: getusers.rows[0].id,
-          username: `${getusers.rows[0].firstname } ${ getusers.rows[0].lastname } ${ getusers.rows[0].othername}`,
+          username: `${getusers.rows[0].firstname} ${getusers.rows[0].lastname} ${getusers.rows[0].othername}`,
           passport: getusers.rows[0].passporturl,
           party: getparty.rows[0].id,
           partyname: getparty.rows[0].name,
@@ -130,10 +130,35 @@ class candidateController {
 
   }
 
-  static async getCandidate(req, res) {
+  static async getCandidatebyId(req, res) {
     const candidateId = Number(req.params.id);
     try {
       const candidate = 'Select * from candidates where id = $1';
+      const { rows } = await pool.query(candidate, [candidateId]);
+      if (!rows[0]) {
+        return res.status(404).json({
+          'status': 404,
+          'error': 'No candidate found',
+        });
+      }
+      return res.status(200).json({
+        'status': 200,
+        'data': rows,
+      });
+
+    } catch (err) {
+      return res.status(500).json({
+        'status': 500,
+        'error': err.toString(),
+      });
+    }
+
+  }
+
+  static async getCandidate(req, res) {
+    const candidateId = Number(req.params.candidate);
+    try {
+      const candidate = 'Select * from candidates where candidate = $1';
       const { rows } = await pool.query(candidate, [candidateId]);
       if (!rows[0]) {
         return res.status(404).json({
