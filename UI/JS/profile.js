@@ -166,35 +166,6 @@ Button9.onclick = () => {
   changePassword.className = 'layout_none';
 };
 
-/** Seed data structure for front end */
-const info = [
-  {
-    Candidate: 'Prosper Umeytinwa-PDP',
-    Type: 'Federal',
-    Office: 'President-Nigeria',
-  },
-  {
-    Candidate: 'Chris Nwanba-APC',
-    Type: 'State',
-    Office: 'Governor-Anambara',
-  },
-  {
-    Candidate: 'Celestine Omin-PDP',
-    Type: 'Legislative',
-    Office: 'Senator-Anambara-Central',
-  },
-  {
-    Candidate: 'Ire Aderikon-FDP',
-    Type: 'Legislative',
-    Office: 'Representative-Anambara-Federal-Constituency-IV',
-  },
-  {
-    Candidate: 'Adaku Nyom-KOWA',
-    Type: 'Local Government',
-    Office: 'Chairman-Nnewi-North',
-  },
-];
-
 const token = localStorage.getItem('token');
 const snackbar = document.getElementsByClassName('snackbar');
 
@@ -360,18 +331,80 @@ document.getElementById('deleteForm').addEventListener('submit', (e) => {
       }
     });
 });
-/** Input seed database into table */
-const values = Object.values(info);
-const valuesArray = Object.values(values);
-const table = document.getElementById('voteActivity');
-for (let i = 0; i < info.length; i++) {
-  const tr = document.createElement('tr');
-  table.appendChild(tr);
-  for (let j = 0; j < 3; j++) {
-    const td = document.createElement('td');
-    td.setAttribute('class', 'layout_td');
-    table.lastChild.appendChild(td);
-    const val = Object.values(valuesArray[i])[j];
-    tr.cells[j].innerHTML = val;
-  }
-}
+
+
+const fetchCandidatebyId = (id) => {
+  fetch(`https://cea-politico-gres.herokuapp.com/api/v1/candidates/${id}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+      'Access-Control-Allow-Origin': '*',
+    },
+  }).then(res => res.json())
+    .then((data) => {
+      if (data.status === 200) {
+
+      }
+    });
+
+};
+const fetchActivities = () => {
+  fetch('https://cea-politico-gres.herokuapp.com/api/v1/users/me/votes', {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+      'Access-Control-Allow-Origin': '*',
+    },
+  })
+    .then(res => res.json())
+    .then((data) => {
+      console.log(data.data);
+      if (data.status === 200) {
+        const date = new Date(data.data[0].createdon).toLocaleString();
+        console.log(date);
+        const candidateId = data.data[0].candidate;
+        fetch(`https://cea-politico-gres.herokuapp.com/api/v1/candidates/user/${candidateId}`, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${token}`,
+            'Access-Control-Allow-Origin': '*',
+          },
+        })
+          .then(res => res.json())
+          .then((info) => {
+            if (info.status === 200) {
+              console.log(info.data);
+              const officeName = info.data[0].officeName;
+              const partyname = info.data[0].partyname;
+              const candidateName = info.data[0].username;
+              const tableObj = {
+                officeName,
+                partyname,
+                candidateName,
+                date,
+              };
+              const table = document.getElementById('voteActivity');
+              for (let i = 0; i < data.data.length; i++) {
+                const tr = document.createElement('tr');
+                const array = Object.values(tableObj);
+                table.appendChild(tr);
+                for (let j = 0; j < 4; j++) {
+                  const td = document.createElement('td');
+                  td.setAttribute('class', 'layout_td');
+                  table.lastChild.appendChild(td);
+                  tr.cells[j].innerHTML = array[j];
+                }
+              }
+            }
+          });
+      }
+    });
+};
+
+addEventListener('load', window, fetchActivities());

@@ -39,7 +39,7 @@ const fetching = (newDiv, par2, par3, par4, button12, button13, office, party, m
               button13.value = message2;
               button13.className = message2;
               newDiv.appendChild(button13);
-              newDiv.insertBefore(par5, button13)
+              newDiv.insertBefore(par5, button13);
             }
 
           });
@@ -102,12 +102,12 @@ const approveCandidate = (formData, id, par5, newDiv, button13) => {
         par5.innerHTML = 'Status: Flag Bearer';
         newDiv.insertBefore(par5, button13);
         button13.innerHTML = 'Unapprove';
-        location.reload()
+        location.reload();
       }
     });
 };
 
-const deleteCandidate = (button13,id) => {
+const deleteCandidate = (button13, id) => {
   fetch(`https://cea-politico-gres.herokuapp.com/api/v1/candidates/${id}`, {
     method: 'DELETE',
     headers: {
@@ -127,8 +127,8 @@ const deleteCandidate = (button13,id) => {
         return data.error;
       }
     });
-}
-const fetchCandidate = (newDiv, par2, par3, par4, button12, button13, office, party, id , par5) => {
+};
+const fetchCandidate = (newDiv, par2, par3, par4, button12, button13, office, party, id, par5) => {
   fetch(`https://cea-politico-gres.herokuapp.com/api/v1/candidates/${id}`, {
     method: 'GET',
     headers: {
@@ -141,12 +141,12 @@ const fetchCandidate = (newDiv, par2, par3, par4, button12, button13, office, pa
     .then(res => res.json())
     .then((data) => {
       if (data.status === 200) {
-        let newId = data.data[0].id
-        fetching(newDiv, par2, par3, par4, button12, button13, office, party, 'layout_none', 'Unapprove' , par5);
+        const newId = data.data[0].id;
+        fetching(newDiv, par2, par3, par4, button12, button13, office, party, 'layout_none', 'Unapprove', par5);
         par5.innerHTML = 'Status: Flag Bearer';
         button13.onclick = () => {
-          deleteCandidate(button13,newId)
-        }
+          deleteCandidate(button13, newId);
+        };
       }
       else if (data.status === 404) {
         fetching(newDiv, par2, par3, par4, button12, button13, office, party, 'layout_none', 'Approve');
@@ -172,13 +172,14 @@ const fetchAllInterests = () => {
     .then(res => res.json())
     .then((data) => {
       if (data.status === 200) {
+        console.log(data.data);
         for (let i = 0; i < data.data.length; i++) {
-          if (data.data[0].userInfo) {
+          if (data.data[0].username) {
             const newDiv = document.createElement('div');
             const img = document.createElement('img');
             const par1 = document.createElement('p');
-            img.src = data.data[i].userInfo[0].passporturl;
-            par1.innerHTML = `Name :  ${data.data[i].userInfo[0].firstname} ${data.data[i].userInfo[0].lastname} ${data.data[i].userInfo[0].othername}  `;
+            img.src = data.data[i].passport;
+            par1.innerHTML = `Name : ${data.data[i].username}`;
             newDiv.appendChild(img);
             newDiv.appendChild(par1);
             const par2 = document.createElement('p');
@@ -186,13 +187,13 @@ const fetchAllInterests = () => {
             const par4 = document.createElement('p');
             const button12 = document.createElement('button');
             const button13 = document.createElement('button');
-            const office = data.data[i].interestInfo.office;
-            const party = (data.data[i].interestInfo.party);
-            const id = data.data[i].userInfo[0].id;
+            const office = data.data[i].office;
+            const party = (data.data[i].party);
+            const id = data.data[i].user;
             const par5 = document.createElement('p');
-            fetchCandidate(newDiv, par2, par3, par4, button12, button13, office, party, id ,par5);
+            fetchCandidate(newDiv, par2, par3, par4, button12, button13, office, party, id, par5);
             allInterests.appendChild(newDiv);
-            console.log(button13.innerHTML)
+            console.log(button13.innerHTML);
             button13.onclick = () => {
               const formData = {
                 office,
