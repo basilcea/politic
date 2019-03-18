@@ -150,7 +150,7 @@ class candidateController {
         const getparty = await pool.query(parties, [rows[i].party]);
         const getOffice = await pool.query(offices, [rows[i].office]);
         data.push({
-          id,
+          id: rows[i].id,
           username: `${getusers.rows[0].firstname} ${getusers.rows[0].lastname} ${getusers.rows[0].othername}`,
           passport: getusers.rows[0].passporturl,
           party: getparty.rows[0].id,
