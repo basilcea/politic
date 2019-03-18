@@ -36,6 +36,7 @@ Button4.className = 'button_login3';
 Button5.className = 'button_login3';
 Button6.className = 'button_active4';
 Button7.className = 'button_login4';
+run.className = 'layout_block';
 petition.className = 'layout_none';
 viewInterests.className = 'layout_none';
 viewPetitions.className = 'layout_none';

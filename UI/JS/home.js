@@ -4,6 +4,7 @@
 
 const viewParties = 'https://cea-politico-gres.herokuapp.com/api/v1/parties';
 const token = localStorage.getItem('token');
+const viewOffices = 'https://cea-politico-gres.herokuapp.com/api/v1/offices';
 window.onload = () => {
   fetch(viewParties, {
     method: 'GET',

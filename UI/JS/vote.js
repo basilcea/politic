@@ -26,6 +26,7 @@ Button2.className = 'button_login3';
 Button3.className = 'button_active4';
 Button4.className = 'button_login4';
 Button5.className = 'button_login4';
+castVote.className = 'layout_block';
 checkResults.className = 'layout_none';
 searchPoliticians.className = 'layout_none';
 
@@ -80,7 +81,7 @@ Button5.onclick = () => {
   castVote.className = 'layout_none';
   searchPoliticians.className = 'layout_none';
   checkResults.className = 'layout_block';
-}
+};
 
 /** get hamburger and nav bar for small screen sizes */
 const icon = document.getElementsByClassName('background_icon')[0];
@@ -103,7 +104,7 @@ icon.onclick = () => {
 
 /* eslint-disable no-undef */
 /** implement toast for vote */
-const vote = document.getElementById('vote');
+/* const vote = document.getElementById('vote');
 vote.onclick = () => {
   const x = document.getElementById('snackbar');
 
@@ -115,5 +116,6 @@ vote.onclick = () => {
     x.className = x.className.replace('show', '');
   }, 3000);
 };
-
+*/
 // courtesy w3schools
+const token = localStorage.getItem('token');

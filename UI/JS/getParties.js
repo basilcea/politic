@@ -1,3 +1,4 @@
+
 const selectList = document.getElementsByClassName('candidateParty');
 window.onload = () => {
   fetch('https://cea-politico-gres.herokuapp.com/api/v1/parties', {
