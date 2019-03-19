@@ -125,26 +125,58 @@
 							<select class="candidateParty"  id="party" form="searchForm">
 							</select>
 							<input type =submit value="Edit">
-						</form>
+						</form>	
+						<button id='interestBacklink'>Go back</button>
 				</div>
 				</div>
 				<div id="petition">
-					<form>
+					<form id ='petitionForm'>
 						<p>Electoral Petition</p>
-            <br><br>
-            <select id="deleteOfficeName" name="office" form="searchForm">
+						<br><br>
+						<select id ='petitionOfficeType'>
+							<option value='' selected disabled>--Select Type of Office--</option>
+							<option value ='Federal'>Federal</option>
+							<option value ='Legislative'>Legislative</option>
+							<option value ='State'>State</option>
+							<option value ='Local Government'>Local Government</option>
+						</select>
+            <select id="petitionOfficeName" name="office" form="searchForm" required>
 							<!--input names of political offices from database.js-->
 						</select>
-						<input type="text" name="complaintSubject" placeholder="Subject of Complaint">
-						<textarea class="others_textArea2" name="complaint" placeholder="Type your complains here..." rows=15 cols=12 required></textarea>
+						<input type="text" id="complaintSubject" placeholder="Subject of Complaint" required>
+						<textarea class="others_textArea2" id="complaint" placeholder="Type your complains here..." rows=15 cols=12 required></textarea>
+						<img  id ="uploadedPassport" class="others_img layout_none" src=''>
+						<button type="button" class="button_btn">Add Evidence</button>
 						<input type="submit" value="submit">
 					</form>
 				</div>
 				<div id='viewPetitions'>
 				</div>
+				<div id ='editPetitions' class='layout_none'>
+					<form id="editPetitionForm">
+						<p>Edit Petition</p>
+								<select id ='editPetitionType'>
+							<option value='' selected disabled>--Select Type of Office--</option>
+							<option value ='Federal'>Federal</option>
+							<option value ='Legislative'>Legislative</option>
+							<option value ='State'>State</option>
+							<option value ='Local Government'>Local Government</option>
+						</select>
+            <select id="editPetitionOffice" name="office" form="searchForm" >
+							<!--input names of political offices from database.js-->
+						</select>
+						<input type="text" id="editComplaintSubject" placeholder="Subject of Complaint" >
+						<textarea class="others_textArea2" id="editComplaint" placeholder="Type your complains here..." rows=15 cols=12></textarea>
+						<input type =submit value="Edit"> 
+					</form>	
+					<button id='petitionBacklink'>Go back</button>
+				</div>
 			</div>
 		</div>
 		<footer class="background_footer">All rights Reserved &copy 2019 .<br> Your right to choose</footer>
+		<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script> 
+		<script src='./JS/uploadPix.js'></script>
+		<script src="./JS/getPetitions.js"></script>
 		<script src="./JS/candidate.js"></script>
 		<script src="./JS/getOffices.js"></script>
 		<script src="./JS/getParties.js"></script>

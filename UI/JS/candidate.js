@@ -88,11 +88,12 @@ Button3.onclick = () => {
   viewPetitions.className = 'layout_block';
 
 };
-
-
-
-
-
+document.getElementById('interestBacklink').onclick = () => {
+  location.reload();
+};
+document.getElementById('petitionBacklink').onclick = () => {
+  location.reload();
+};
 /** Center all paragragphs */
 const par = document.querySelectorAll('p');
 for (let i = 0; i < par.length; i++) {

@@ -1,11 +1,11 @@
 let infot;
-const host = 'http://127.0.0.1:8080/' || 'https://basilcea.github.io/politico/';
+const host = 'http://127.0.0.1:8080' || 'https://basilcea.github.io/politico';
 const decrypt = () => {
   const token = localStorage.getItem('token');
   if (!token) {
     window.location = 'index.html';
   }
-  if (token !== null && window.location === 'index.html') {
+  if (token !== null && window.location === `${host}/UI/`) {
     window.location = 'home.html';
   }
   fetch('https://cea-politico-gres.herokuapp.com/api/v1/auth/decrypt', {
@@ -40,12 +40,7 @@ const decrypt = () => {
             Button2.className = 'layout_none';
             Button3.className = 'layout_none';
             Button1.className = 'button_active3';
-            Button1.onclick = () => {
-              Button0.className = 'layout_none';
-              Button2.className = 'layout_none';
-              Button3.className = 'layout_none';
-
-            };
+            Button1.disabled = true
           }
         }
           else if (infot.status === 'politician') {

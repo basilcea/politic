@@ -362,7 +362,6 @@ const fetchActivities = () => {
   })
     .then(res => res.json())
     .then((data) => {
-      console.log(data.data);
       if (data.status === 200) {
         const date = new Date(data.data[0].createdon).toLocaleString();
         console.log(date);
