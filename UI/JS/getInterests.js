@@ -39,7 +39,9 @@ const fetching = (newDiv, par2, par3, par4, button12, button13, office, party, m
               button13.value = message2;
               button13.className = message2;
               newDiv.appendChild(button13);
+              if(par5){
               newDiv.insertBefore(par5, button13);
+              }
             }
 
           });
