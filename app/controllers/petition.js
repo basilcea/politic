@@ -28,7 +28,6 @@ class petitionController {
         'error': 'User is not a politician',
       });
     }
-    validation.check(req.body, validation.createPetitionSchema, res);
     const sendPetition = `INSERT INTO petitions (office, createdBy, subject, body ,evidence)
     VALUES($1, $2 ,$3 ,$4 ,$5 )`;
     const selectPetition = 'Select * from petitions';
