@@ -31,7 +31,7 @@ router.get('/users/me', auth.checkToken, userActivityController.getProfile);
 router.patch('/users/me/edit', validation.editProfile, auth.checkToken, userActivityController.editProfile);
 router.patch('/users/me/password', validation.changePassword, auth.checkToken, userActivityController.changePassword);
 router.delete('/users/me', auth.checkToken, userActivityController.deleteProfile);
-router.patch('/admin/user/:id', validation.checkId, auth.checkToken, userActivityController.makeAdmin);
+//router.patch('/admin/user/:id', validation.checkId, auth.checkToken, userActivityController.makeAdmin);
 
 
 router.post('/votes', validation.createVote, auth.checkToken, votesController.vote);
@@ -61,7 +61,7 @@ router.delete('/parties/:id', validation.checkId, auth.checkToken, partyControll
 router.get('/petitions', auth.checkToken, petitionController.getUserPetition);
 router.get('/petitions/:id', validation.checkId, auth.checkToken, petitionController.getAPetition);
 router.post('/petitions', validation.createPetition, auth.checkToken, petitionController.createPetition);
-// router.patch('/petitions/:id',validation.checkId, validation.editPetition, auth.checkToken, petitionController.editPetition);
+router.patch('/petitions/:id',validation.checkId, validation.editPetition, auth.checkToken, petitionController.editPetition);
 router.delete('/petitions/:id', validation.checkId, auth.checkToken, petitionController.deletePetition);
 
 router.get('/interests', auth.checkToken, interestController.getInterest);
