@@ -211,6 +211,7 @@ export const signupSchema = joi.object().keys({
     .error(() => 'Password does not match'),
   registerAs: joi.string().valid('voter', 'politician').trim().required()
     .error(() => 'RegisterAs value must be either voter or politician'),
+  isAdmin: joi.boolean().allow('').falsy('').insensitive(false),
 });
 
 export const loginSchema = joi.object().keys({
@@ -424,13 +425,9 @@ export const createOfficeSchema = joi.object().keys({
       return errors;
     }),
   electDate: joi.date().iso().greater('now').allow('')
-    .required()
     .error((errors) => {
       errors.forEach((err) => {
         switch (err.type) {
-          case 'any.required':
-            err.message = 'Date field is required';
-            break;
           case 'date.greater':
             err.message = 'Date must be greater than today';
             break;
@@ -455,13 +452,9 @@ export const editOfficeSchema = joi.object().keys({
   name: joi.string().allow('').trim().regex(/^[a-z A-Z ]+$/)
     .error(() => 'office name should contain only letters and spaces'),
   electDate: joi.date().iso().greater('now').allow('')
-    .required()
     .error((errors) => {
       errors.forEach((err) => {
         switch (err.type) {
-          case 'any.required':
-            err.message = 'Date field is required';
-            break;
           case 'date.greater':
             err.message = 'Date must be greater than today';
             break;

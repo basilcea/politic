@@ -25,7 +25,7 @@ class userController {
    */
   static async signup(req, res) {
     const {
-      firstname, lastname, othername, password, email, phoneNumber, registerAs, passportUrl,
+      firstname, lastname, othername, password, email, phoneNumber, registerAs, passportUrl, isAdmin
     } = req.body;
     /** try and catch async block */
     try {
@@ -50,7 +50,7 @@ class userController {
       
       VALUES($1, $2, $3,$4, $5, $6 ,$7 ,$8 ,$9)`;
       const values = [
-        firstname.trim(), lastname, othername, email, phoneNumber, hashPassword, passportUrl, registerAs.trim(), false,
+        firstname.trim(), lastname, othername, email, phoneNumber, hashPassword, passportUrl, registerAs.trim(), isAdmin,
       ];
       await pool.query(createUser, values);
 
@@ -202,7 +202,8 @@ class userController {
                   <p><i> kindly ignore this mail if you did not request for a password reset </i> </p>
                   <p><img src='../UI/STATIC/logo.png'>`,
       };
-      mailer.sendMail(data).then(info => res.status(200).json({
+      mailer.sendMail(data)
+        .then(info => res.status(200).json({
         'status': 200,
         'data': mailer.getTestMessageUrl(info) || info,
       }))

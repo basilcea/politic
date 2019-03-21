@@ -45,7 +45,7 @@ export const createUserTable = async function () {
         passportUrl TEXT,
         password VARCHAR(255) UNIQUE not null,
         registerAs text not null,
-        isAdmin BOOLEAN
+        isAdmin BOOLEAN Default false
       )`);
     console.log('User table created');
     seed('users', users);
@@ -177,7 +177,7 @@ export const createOfficeTable = async function () {
 
 export const dropInterestTable = async function () {
   try {
-    await pool.query('DROP TABLE IF EXISTS interest CASCADE');
+    await pool.query('DROP TABLE IF EXISTS interests CASCADE');
     console.log('interest table deleted');
   } catch (err) {
     console.log(err);

@@ -27,10 +27,11 @@ class officeController {
     }
 
     const { type, name, electDate } = req.body;
+    const newName = name.trim().toLowerCase()
     const sendoffice = `INSERT INTO offices (type ,name ,electDate)
     VALUES($1,$2 ,$3)`;
-    const selectOffice = 'Select * from offices';
-    const values = [type.trim(), name.trim().toLowerCase(), electDate];
+    const selectOffice = 'Select * from offices where name = $1';
+    const values = [type.trim(), newName, electDate];
 
     try {
       /**
@@ -38,16 +39,17 @@ class officeController {
     * create an  unique id
     * @return {object} - The office object
     */
-      const AllOffices = await pool.query(selectOffice);
-      if (authHelper.isUniqueName(name, AllOffices) !== null) {
+      const AllOffices = await pool.query(selectOffice, [newName]);
+      if (AllOffices.rows[0]) {
         return res.status(422).json({
           'status': 422,
           'error': 'Office already exists',
         });
       }
       await pool.query(sendoffice, values);
-
-      const createdOffice = AllOffices.rows[AllOffices.rowCount - 1];
+      const selectOffices = 'Select * from offices' 
+      const newOffices = await pool.query(selectOffices);
+      const createdOffice = newOffices.rows[newOffices.rowCount - 1];
       return res.status(201).json({
         'status': 201,
         'data': createdOffice,
@@ -129,13 +131,6 @@ class officeController {
     const { type, name, electDate } = req.body;
     const getOffice = 'Select * from offices where id=$1';
     const { rows } = await pool.query(getOffice, [id]);
-    const updateOffice = 'update offices set type=$1, name=$2 , electDate =$3 where id=$4 returning *';
-    const values = [
-      type || rows[0].type,
-      name || rows[0].name,
-      electDate || rows[0].electDate,
-      id,
-    ];
     try {
       if (!rows[0]) {
         return res.status(404).json({
@@ -143,6 +138,13 @@ class officeController {
           'error': 'Party not found',
         });
       }
+      const updateOffice = 'update offices set type=$1, name=$2 , electDate =$3 where id=$4 returning *';
+      const values = [
+        type || rows[0].type,
+        name || rows[0].name,
+        electDate || rows[0].electDate,
+        id,
+      ];
       const updatedOffice = await pool.query(updateOffice, values);
       return res.status(201).json({
         'status': 201,

@@ -21,7 +21,7 @@ const auth = {
       if (result.indexOf(token) > -1){
         return res.status(400).json({
           status: 400,
-          Message: 'Invalid Token',
+          error: 'Invalid Token',
         });
       }
 

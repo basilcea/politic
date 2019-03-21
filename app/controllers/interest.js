@@ -7,8 +7,8 @@ class interestController {
     const getUser = 'Select * from users where id= $1 AND registeras =$2';
     const checkPolitician = await pool.query(getUser, [req.user.id, 'politician']);
     if (!checkPolitician.rows[0]) {
-      return res.status(404).json({
-        'status': 404,
+      return res.status(401).json({
+        'status': 401,
         'error': 'User is not a politician',
       });
     }
@@ -17,10 +17,11 @@ class interestController {
     VALUES($1, $2 ,$3 )`;
     const selectUserInterest = 'Select * from interests where interest = $1 , office = $2';
     const AllUserInterest = await pool.query(selectUserInterest, [req.user.id, office]);
-    if (AllUserInterest.rows[0] !== null) {
+    console.log(AllUserInterest.rows[0])
+    if (AllUserInterest.rows[0]) {
       return res.status(400).json({
         'status': 400,
-        'error': 'You have already expressed Interest to run fot this office',
+        'error': 'You have already expressed Interest to run for this office',
       });
     }
     try {
