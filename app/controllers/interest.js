@@ -12,12 +12,11 @@ class interestController {
         'error': 'User is not a politician',
       });
     }
-    const values = [office, party, req.user.id];
     const sendInterest = `INSERT INTO interests (office, party, interest)
-    VALUES($1, $2 ,$3 )`;
-    const selectUserInterest = 'Select * from interests where interest = $1 , office = $2';
+    VALUES($1, $2 , $3 )`;
+    const values = [office, party, req.user.id];
+    const selectUserInterest = 'Select * from interests where interest = $1 and office = $2';
     const AllUserInterest = await pool.query(selectUserInterest, [req.user.id, office]);
-    console.log(AllUserInterest.rows[0])
     if (AllUserInterest.rows[0]) {
       return res.status(400).json({
         'status': 400,
@@ -58,9 +57,9 @@ class interestController {
       const getUserInterests = 'Select * from interests where interest=$1 and id =$2';
       const { rows } = await pool.query(getUserInterests, [req.user.id, id]);
       if (!rows[0]) {
-        return res.status(401).json({
-          'status': 401,
-          'error ': 'Interest not found',
+        return res.status(404).json({
+          'status': 404,
+          'error': 'Interest not found',
         });
       }
       const updateInterest = 'Update interests SET office = $1 , party =$2 where id = $3 returning *';

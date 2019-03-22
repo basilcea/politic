@@ -3,7 +3,6 @@
 import pool from '../migrate';
 import 'dotenv';
 import '@babel/polyfill';
-import * as validation from '../helpers/schema';
 
 /**
   * Represents a controller  class for all candidate specific acitvities
@@ -24,7 +23,7 @@ class candidateController {
   static async makeCandidate(req, res) {
     // check if candidates exists
     const checkInterest = 'SELECT * from interests where interest = $1';
-    const checkCandidate = 'SELECT * from candidates where id = $1';
+    const checkCandidate = 'SELECT * from candidates where candidate = $1';
     const checkOffice = 'SELECT * from offices where id= $1';
     const checkUser = 'SELECT * from users where id = $1';
     const insertCandidate = `Insert into candidates (office , candidate ,party)
@@ -40,7 +39,6 @@ class candidateController {
       // force all number string to integer
       const userId = Number(req.params.id);
       const officeId = Number(req.body.office);
-      const candidateId = Number(req.body.user);
       const partyId = Number(req.body.party);
 
       // check if  user exists
@@ -51,14 +49,6 @@ class candidateController {
           'error': 'User not found',
         });
       }
-      // check if the user has expressed interest
-      const politician = await pool.query(checkInterest, [userId]);
-      if (!politician.rows[0]) {
-        return res.status(404).json({
-          'status': 404,
-          'error': 'User has not expressed interest',
-        });
-      }
       // check if office exist
       const office = await pool.query(checkOffice, [officeId]);
       if (!office.rows[0]) {
@@ -67,15 +57,23 @@ class candidateController {
           'error': 'office not found',
         });
       }
-      const candidate = await pool.query(checkCandidate, [candidateId]);
-      if (candidate.rows[0]) {
+      // check if the user has expressed interest
+      const politician = await pool.query(checkInterest, [userId]);
+      if (!politician.rows[0]) {
         return res.status(404).json({
           'status': 404,
+          'error': 'User has not expressed interest',
+        });
+      }
+      const candidate = await pool.query(checkCandidate, [userId]);
+      if (candidate.rows[0]) {
+        return res.status(422).json({
+          'status': 422,
           'error': 'Candidate already exists',
         });
       }
 
-      await pool.query(insertCandidate, [officeId, candidateId, partyId]);
+      await pool.query(insertCandidate, [officeId, userId, partyId]);
       const inserted = await pool.query('SELECT * from candidates');
       return res.status(201).json({
         'status': 201,

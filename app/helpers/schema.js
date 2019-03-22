@@ -506,7 +506,6 @@ export const createVoteSchema = joi.object().keys({
 
 export const createCandidateSchema = joi.object().keys({
   office: id,
-  user: id,
   party: id,
 
 });
