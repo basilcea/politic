@@ -12,7 +12,7 @@ class partyController {
   * @param {string} - name of office
   * @param {string} - type of office
   * @method createParty
-  * @return
+  * @return {object}
   */
   static async createParty(req, res) {
     const {
@@ -37,7 +37,7 @@ class partyController {
     * @return {object} - The party object
     */
       const AllParties = await pool.query(selectParty, [newName]);
-      
+
       if (AllParties.rows[0]) {
         return res.status(422).json({
           'status': 422,
@@ -120,7 +120,7 @@ class partyController {
   /**
   * Patch a partyname
   * @param {integer} - id of the party
-  * @return {object} - The party that has the specified id with new name
+  * @returns {object} - The party that has the specified id with new name
   */
   static async editParty(req, res) {
     if (req.user.isAdmin !== true) {
@@ -165,7 +165,7 @@ class partyController {
   /**
   * Delete a party
   * @param {integer} - id of the party
-  * @return {object} - The satus code and message to show delte action completed
+  * @return {object} - The satus code and message to show delete action completed
   */
   static async deleteParty(req, res) {
     if (req.user.isAdmin !== true) {

@@ -47,7 +47,7 @@ class officeController {
         });
       }
       await pool.query(sendoffice, values);
-      const selectOffices = 'Select * from offices' 
+      const selectOffices = 'Select * from offices'
       const newOffices = await pool.query(selectOffices);
       const createdOffice = newOffices.rows[newOffices.rowCount - 1];
       return res.status(201).json({
@@ -90,8 +90,8 @@ class officeController {
 
   /**
   * Get an office
-  * @param {integer} - id of the office
-  * @return {object} -An office with the id
+  * @param {integer} ID - id of the office as request parameter
+  * @return {object}  response-An office with the id
   */
 
   static async getOffice(req, res) {
@@ -120,6 +120,16 @@ class officeController {
     }
   }
 
+  /**
+  * Edit office info
+  * @async
+  * @method editOffice
+  * @params {number} Id - The ID of the ofice as a request parameter.
+  * @params {object} formData - The input data
+  * @returns {object} updatedOffice - The status code and data to be outputted
+  * @returns {object} response - The status code and error message to be outputted if error.
+  *
+  */
   static async editOffice(req, res) {
     if (req.user.isAdmin !== true) {
       return res.status(401).json({
@@ -159,6 +169,13 @@ class officeController {
     }
   }
 
+   /**
+  * Delete the office
+  * @async
+  * @method deleteOffice
+  * @param {number} id - The ID of the office as request parameter
+  * @returns {Promise <object>} status code and data or error message
+  */
   static async deleteOffice(req, res) {
     if (req.user.isAdmin !== true) {
       return res.status(401).json({

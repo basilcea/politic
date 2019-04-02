@@ -1,332 +1,57 @@
 import joi from 'joi';
 import * as schema from '../helpers/schema';
+const validate = (value, scheme , res) => {
+    joi.validate(value, scheme , { abortEarly: false, stripUnknown: true }, (err) => {
+        if (err) {
+          const errMsg = [];
+          for (let i = 0; i < err.details.length; i++) {
+            errMsg.push(err.details[i].message);
+          }
+          return res.status(400).json({
+            status: 400,
+            error: errMsg,
+          });
 
-class validation {
-  static signup(req, res, next) {
-    joi.validate(req.body, schema.signupSchema, { abortEarly: false, stripUnknown: true }, (err) => {
-      if (err) {
-        const errMsg = [];
-        for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(err.details[i].message);
         }
-        return res.status(400).json({
-          status: 400,
-          error: errMsg,
-        });
 
-      }
-      next();
-
-    });
-  }
-
-  static login(req, res, next) {
-    joi.validate(req.body, schema.loginSchema, { abortEarly: false, stripUnknown: true }, (err) => {
-
-      if (err) {
-        const errMsg = [];
-        for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(err.details[i].message);
-        }
-        return res.status(400).json({
-          status: 400,
-          error: errMsg,
-        });
-
-      }
-      next();
-    });
-
-
-  }
-
-  static forgotPassword(req, res, next) {
-    joi.validate(req.body, schema.forgotpasswordSchema, { abortEarly: false, stripUnknown: true }, (err) => {
-      if (err) {
-        const errMsg = [];
-        for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(err.details[i].message);
-        }
-        return res.status(400).json({
-          status: 400,
-          error: errMsg,
-        });
-
-      }
-      next();
-    });
-
-
-  }
-
-  static changePassword(req, res, next) {
-    joi.validate(req.body, schema.changePasswordSchema, { abortEarly: false, stripUnknown: true }, (err) => {
-
-      if (err) {
-        const errMsg = [];
-        for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(err.details[i].message);
-        }
-        return res.status(400).json({
-          status: 400,
-          error: errMsg,
-        });
-
-      }
-      next();
-    });
-
-
-  }
-
-  static resetPassword(req, res, next) {
-    joi.validate(req.body, schema.resetPasswordSchema, { abortEarly: false, stripUnknown: true }, (err) => {
-
-      if (err) {
-        const errMsg = [];
-        for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(`${err.details[i].message} `);
-        }
-        return res.status(400).json({
-          status: 400,
-          error: errMsg,
-        });
-
-      }
-      next();
-    });
-
-
-  }
-
-
-  static editProfile(req, res, next) {
-    joi.validate(req.body, schema.editProfileSchema, { abortEarly: false, stripUnknown: true }, (err) => {
-
-      if (err) {
-        const errMsg = [];
-        for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(`${err.details[i].message} `);
-        }
-        return res.status(400).json({
-          status: 400,
-          error: errMsg,
-        });
-
-      }
-      next();
-    });
-
-
-  }
-
-  static createParty(req, res, next) {
-    joi.validate(req.body, schema.createPartySchema, { abortEarly: false, stripUnknown: true }, (err) => {
-
-      if (err) {
-        const errMsg = [];
-        for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(`${err.details[i].message} `);
-        }
-        return res.status(400).json({
-          status: 400,
-          error: errMsg,
-        });
-
-      }
-      next();
-    });
-
-
-  }
-
-  static editParty(req, res, next) {
-    joi.validate(req.body, schema.editPartySchema, { abortEarly: false, stripUnknown: true }, (err) => {
-
-      if (err) {
-        const errMsg = [];
-        for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(`${err.details[i].message} `);
-        }
-        return res.status(400).json({
-          status: 400,
-          error: errMsg,
-        });
-
-      }
-      next();
-    });
-
-  }
-
-  static checkId(req, res, next) {
-    joi.validate(req.params.id, schema.id, { abortEarly: false, stripUnknown: true }, (err) => {
-
-      if (err) {
-        const errMsg = [];
-        for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(`${err.details[i].message} `);
-        }
-        return res.status(400).json({
-          status: 400,
-          error: errMsg,
-        });
-
-      }
-      next();
-    });
-
-  }
-
-
-  static createOffice(req, res, next) {
-    joi.validate(req.body, schema.createOfficeSchema, { abortEarly: false, stripUnknown: true }, (err) => {
-
-      if (err) {
-        const errMsg = [];
-        for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(`${err.details[i].message} `);
-        }
-        return res.status(400).json({
-          status: 400,
-          error: errMsg,
-        });
-
-      }
-      next();
-    });
-
-  }
-
-  static editOffice(req, res, next) {
-    joi.validate(req.body, schema.editOfficeSchema, { abortEarly: false, stripUnknown: true }, (err) => {
-
-      if (err) {
-        const errMsg = [];
-        for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(`${err.details[i].message} `);
-        }
-        return res.status(400).json({
-          status: 400,
-          error: errMsg,
-        });
-
-      }
-      next();
-    });
-
-  }
-
-static createInterest(req, res, next) {
-  joi.validate(req.body, schema.createInterestSchema, { abortEarly: false, stripUnknown: true }, (err) => {
-
-    if (err) {
-      const errMsg = [];
-      for (let i = 0; i < err.details.length; i++) {
-        errMsg.push(`${err.details[i].message} `);
-      }
-      return res.status(400).json({
-        status: 400,
-        error: errMsg,
+      next()
       });
+  }
+class validation {
+  static signup(req, res, next){validate (req.body, schema.signupSchema , res)}
 
-    }
-    next();
-  });
+  static login(req, res, next) { validate (req.body , schema.loginSchema , res) }
 
-  }
-  
-  static editInterest(req, res, next) {
-    joi.validate(req.body, schema.editInterestSchema, { abortEarly: false, stripUnknown: true }, (err) => {
-  
-      if (err) {
-        const errMsg = [];
-        for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(`${err.details[i].message} `);
-        }
-        return res.status(400).json({
-          status: 400,
-          error: errMsg,
-        });
-  
-      }
-      next();
-    });
-  
-  }
+  static forgotPassword(req, res, next) { validate (req.body , schema.forgotpasswordSchema , res)  }
 
-  static createPetition(req, res, next) {
-    joi.validate(req.body, schema.createPetitionSchema, { abortEarly: false, stripUnknown: true }, (err) => {
-  
-      if (err) {
-        const errMsg = [];
-        for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(`${err.details[i].message} `);
-        }
-        return res.status(400).json({
-          status: 400,
-          error: errMsg,
-        });
-  
-      }
-      next();
-    });
-  
-  }
-  static editPetition(req, res, next) {
-    joi.validate(req.body, schema.editPetitionSchema, { abortEarly: false, stripUnknown: true }, (err) => {
-  
-      if (err) {
-        const errMsg = [];
-        for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(`${err.details[i].message} `);
-        }
-        return res.status(400).json({
-          status: 400,
-          error: errMsg,
-        });
-  
-      }
-      next();
-    });
-  
-  }
-  static createVote(req, res, next) {
-    joi.validate(req.body, schema.createVoteSchema, { abortEarly: false, stripUnknown: true }, (err) => {
-  
-      if (err) {
-        const errMsg = [];
-        for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(`${err.details[i].message} `);
-        }
-        return res.status(400).json({
-          status: 400,
-          error: errMsg,
-        });
-  
-      }
-      next();
-    });
-  
-  }
-  static createCandidate(req, res, next) {
-    joi.validate(req.body, schema.createCandidateSchema, { abortEarly: false, stripUnknown: true }, (err) => {
-  
-      if (err) {
-        const errMsg = [];
-        for (let i = 0; i < err.details.length; i++) {
-          errMsg.push(`${err.details[i].message} `);
-        }
-        return res.status(400).json({
-          status: 400,
-          error: errMsg,
-        });
-  
-      }
-      next();
-    });
-  
-  }
+  static changePassword(req, res, next) { validate (req.body , schema.changePasswordSchema , res) }
+
+  static resetPassword(req, res, next) { validate (req.body , schema.resetPasswordSchema , res) }
+
+  static editProfile(req, res, next) { validate (req.body , schema.editProfileSchema , res) }
+
+  static createParty(req, res, next) { validate (req.body , schema.createPartySchema , res) }
+
+  static editParty(req, res, next) { validate (req.body , schema.editPartySchema , res) }
+
+  static checkId(req, res, next) { validate (req.params.id , schema.id, res) }
+
+  static createOffice(req, res, next) { validate (req.body , schema.createOfficeSchema, res)}
+
+  static editOffice(req, res, next) { validate (req.body , schema.editOfficeSchema, res )}
+
+  static createInterest(req, res, next) { validate (req.body , schema.createInterestSchema, res)};
+
+  static editInterest(req, res, next)  { validate (req.body , schema.editInterestSchema, res )};
+
+  static createPetition(req, res, next) { validate (req.body , schema.createPetitionSchema, res)}
+
+  static editPetition(req, res, next) { validate (req.body , schema.editPetitionSchema, res )}
+
+  static createVote(req, res, next) { validate (req.body , schema.createVoteSchema, res )}
+
+  static createCandidate(req, res, next) { validate (req.body , schema.createCandidateSchema, res)}
+
 }
 export default validation;
 

@@ -1,8 +1,6 @@
 /* eslint-disable quote-props */
 /* eslint-disable max-len */
 import pool from '../migrate';
-import 'dotenv';
-import '@babel/polyfill';
 
 /**
   * Represents a controller  class for all candidate specific acitvities
@@ -12,11 +10,14 @@ import '@babel/polyfill';
 class candidateController {
   /**
     * Create  a candidate
-    * @async requestPromises
+    * @async
     * @method makeCandidate
-    * @params {object} id - The user id to be inputted
-    * @return {object} response - The 'status' code and data to be outputted if input passes validation
-    * @return {object} response - The 'status' code and 'error' message to be outputted fails validation.
+    * @params {number} id - The ID of the user to be made a candidate as a request parameter
+    * @typedef {object} formData - The input of the admin
+    * @property {number} office - The Id of the office
+    * @property {number} party - The Id of the party
+    * @returns {object} response - The status code and data to be outputted if input passes validation
+    * @returns {object} response - The status code and error message to be outputted fails validation.
     *
    */
 
@@ -66,6 +67,7 @@ class candidateController {
         });
       }
       const candidate = await pool.query(checkCandidate, [userId]);
+      // checki if user is a candidate
       if (candidate.rows[0]) {
         return res.status(422).json({
           'status': 422,
@@ -87,6 +89,15 @@ class candidateController {
     }
   }
 
+    /**
+    * Search for a candidate
+    * @async
+    * @method searchCandidate
+    * @params {number} id - The ID of the office being searched as a request parameter
+    * @returns {object} response - The status code and data to be outputted if input passes validation
+    * @returns {object} response - The status code and error message to be outputted fails validation.
+    *
+   */
   static async searchCandidate(req, res) {
     const id = Number(req.params.id);
     try {
@@ -127,7 +138,15 @@ class candidateController {
     }
 
   }
-
+   /**
+    * Get candidate by the candidate Id
+    * @async
+    * @method getCandidateById
+    * @params {number} Id - The ID of the candidate on the candidate table as a request parameter
+    * @returns {object} response - The status code and data to be outputted.
+    * @returns {object} response - The status code and error message to be outputted if there is an error.
+    *
+   */
   static async getCandidatebyId(req, res) {
     const candidateId = Number(req.params.id);
     try {
@@ -170,6 +189,15 @@ class candidateController {
     }
 
   }
+    /**
+    * Get candidate by the user Id
+    * @async
+    * @method getCandidate
+    * @params {number} Id - The ID of the candidate on the user table as a request parameter
+    * @returns {object} response - The status code and data to be outputted
+    * @returns {object} response - The status code and error message to be outputted if there is an error.
+    *
+    */
 
   static async getCandidate(req, res) {
     const candidateId = Number(req.params.id);
@@ -196,9 +224,19 @@ class candidateController {
 
   }
 
+/**
+  * Edit candidate info
+  * @async
+  * @method editCandidate
+  * @params {number} Id - The ID of the candidate on the candidate table as a request parameter.
+  * @returns {object} response - The status code and data to be outputted if input passes validation
+  * @returns {object} response - The status code and error message to be outputted fails validation.
+  *
+  */
   static async editCandidate(req, res) {
     try {
       const id = Number(req.params.id);
+      // check if user is an admin
       if (req.user.isAdmin !== true) {
         return res.status(401).json({
           'status': 401,
@@ -207,6 +245,7 @@ class candidateController {
       }
       const getCandidates = 'Select * from candidates where id =$1';
       const { rows } = await pool.query(getCandidates, [id]);
+      // check if the candidate exists.
       if (!rows[0]) {
         return res.status(404).json({
           'status': 404,
@@ -235,7 +274,13 @@ class candidateController {
       });
     }
   }
-
+  /**
+  * Delete the candidate
+  * @async
+  * @method deleteCandidate
+  * @param {number} id - The ID of the user as request parameter
+  * @returns {Promise <object>} status code and data or error message
+  */
   static async deleteCandidate(req, res) {
     const id = Number(req.params.id);
     if (req.user.isAdmin !== true) {

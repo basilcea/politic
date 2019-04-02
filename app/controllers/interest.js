@@ -1,11 +1,29 @@
 /* eslint-disable quote-props */
 import pool from '../migrate';
 
+/**
+  * Represents a controller  class for all candidate specific acitvities
+  * @class candidateController
+ */
+
 class interestController {
+  /**
+    * Create an interest
+    * @async
+    * @method createInterest
+    * @typedef {object} formData - The input of the user
+    * @property {number} office - The ID of the office
+    * @property {number} party - The ID of the party
+    * @property {number} id - The ID of the user expressing interest
+    * @returns {object} response - The status code and data to be outputted if input passes validation
+    * @returns {object} response - The status code and error message to be outputted fails validation.
+    *
+   */
   static async createInterest(req, res) {
     const { office, party } = req.body;
     const getUser = 'Select * from users where id= $1 AND registeras =$2';
     const checkPolitician = await pool.query(getUser, [req.user.id, 'politician']);
+    // check if user is a politician
     if (!checkPolitician.rows[0]) {
       return res.status(401).json({
         'status': 401,
@@ -17,6 +35,7 @@ class interestController {
     const values = [office, party, req.user.id];
     const selectUserInterest = 'Select * from interests where interest = $1 and office = $2';
     const AllUserInterest = await pool.query(selectUserInterest, [req.user.id, office]);
+    // check if the interest already exists
     if (AllUserInterest.rows[0]) {
       return res.status(400).json({
         'status': 400,
@@ -24,11 +43,7 @@ class interestController {
       });
     }
     try {
-      /**
-          * Add the interest to  the database
-          * create a unique Id
-          * @return {object} - The interest object
-            */
+      // create an interest
       await pool.query(sendInterest, values);
       const selectInterest = 'Select * from interests';
       const AllInterests = await pool.query(selectInterest);
@@ -44,8 +59,18 @@ class interestController {
     }
   }
 
-  static async editInterest(req, res) {
+  /**
+  * Edit Interest info
+  * @async
+  * @method editInterest
+  * @params {number} Id - The ID of the interest  as a request parameter.
+  * @params {object} formData - The input data
+  * @returns {object} updatedInterest - The status code and data to be outputted
+  * @returns {object} response - The status code and error message to be outputted if error.
+  *
+  */
 
+  static async editInterest(req, res) {
     const id = Number(req.params.id);
     // eslint-disable-next-line prefer-destructuring
     const {
@@ -56,6 +81,7 @@ class interestController {
 
       const getUserInterests = 'Select * from interests where interest=$1 and id =$2';
       const { rows } = await pool.query(getUserInterests, [req.user.id, id]);
+      // check if interest exist
       if (!rows[0]) {
         return res.status(404).json({
           'status': 404,
@@ -76,12 +102,22 @@ class interestController {
       });
     }
   }
+   /**
+    * Get interest by the interest Id
+    * @async
+    * @method getInterest
+    * @params {number} Id - The ID of the interest on the interest table as a request parameter
+    * @returns {object} response - The status code and data to be outputted
+    * @returns {object} response - The status code and error message to be outputted if there is an error.
+    *
+    */
 
   static async getInterest(req, res) {
     try {
       const getAllInterests = 'Select * from interests';
       const getAllUsers = 'SELECT * from users where id = $1';
       const getuserinterests = 'SELECT * from interests where interest =$1';
+      // Get all interests if user is admin
       if (req.user.isAdmin === true) {
         const { rows } = await pool.query(getAllInterests);
         const data = [];
@@ -102,6 +138,9 @@ class interestController {
         });
       }
       const newRows = await pool.query(getuserinterests, [req.user.id]);
+
+      /* Get all user interest if user is not an admin */
+      // check if user has expressed interest
       if (!newRows.rows[0]) {
         return res.status(401).json({
           'status': 401,
@@ -120,6 +159,13 @@ class interestController {
     }
   }
 
+   /**
+  * Delete the interest
+  * @async
+  * @method deleteInterest
+  * @param {number} id - The ID of the interest as request parameter
+  * @returns {Promise <object>} status code and data or error message
+  */
   static async deleteInterest(req, res) {
     const id = Number(req.params.id);
     const getInterests = 'Select * from interests where id =$1 and interest=$2';

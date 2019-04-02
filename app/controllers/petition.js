@@ -5,16 +5,19 @@ import pool from '../migrate';
 import * as validation from '../helpers/schema';
 
 /**
-  * Represents a controller  class for all candidate specific acitvities
+  * Represents a controller  class for all petition specific acitvities
   * @class petitionController
  */
 class petitionController {
   /**
-  * Create an office
-  * @param {string} - name of office
-  * @param {string} - type of office
+  * Create a petition
+  * @param {Number} ID - ID of office
+  * @typedef {object} Petition - The input of the petition
+  * @property {string} subject - Subject of petition
+  * @property {string} subject - body of petition
+  * @property {array} evidences - pictorial evidences of petition
   * @method createPetition
-  * @return
+  * @returns {object} response - The petition along with evidences
   */
   static async createPetition(req, res) {
     const {
@@ -34,11 +37,6 @@ class petitionController {
     const values = [office, req.user.id, subject.trim(), body.trim(), [evidence]];
 
     try {
-      /**
-    * Add the petition to  the database
-    * create an  unique id
-    * @return {object} - The party object
-      */
       await pool.query(sendPetition, values);
 
       const AllPetitions = await pool.query(selectPetition);
@@ -63,15 +61,27 @@ class petitionController {
     }
   }
 
+
+  /**
+  * Edit Petition info
+  * @async
+  * @method editPetition
+  * @params {number} Id - The ID of the petition as a request parameter.
+  * @params {object} formData - The input data
+  * @returns {object} response - The status code and data to be outputted
+  * @returns {object} response - The status code and error message to be outputted if error.
+  *
+  */
+
   static async editPetition(req, res) {
     const getUserPetition = 'Select * from petitions where createdBy=$1 AND id=$2';
     const id = Number(req.params.id);
     // eslint-disable-next-line prefer-destructuring
     const { rows } = await pool.query(getUserPetition, [req.user.id, id]);
     if (!rows[0]) {
-      return res.status(401).json({
-        'status': 401,
-        'Error': 'Petition',
+      return res.status(404).json({
+        'status': 404,
+        'Error': 'No Petition found',
       });
     }
     const {
@@ -113,11 +123,20 @@ class petitionController {
     }
   }
 
+  /**
+  * Get all users Petition info
+  * @async
+  * @method getUserPetition
+  * @returns {object} response - The status code and data containing all petitions to be outputted
+  * @returns {object} response - The status code and error message to be outputted if error.
+  *
+  */
   static async getUserPetition(req, res) {
     try {
       const getallpetitions = 'SELECT * from petitions';
 
       const getuserpetitions = 'SELECT * from petitions where createdBy =$1';
+        // get all users petitions if user is an admin
       if (req.user.isAdmin === true) {
         const { rows } = await pool.query(getallpetitions);
         return res.status(200).json({
@@ -125,6 +144,7 @@ class petitionController {
           'data': rows,
         });
       }
+      // get all petition for a single user if user is not an admin
       const { rows } = await pool.query(getuserpetitions, [req.user.id]);
       if (!rows[0]) {
         return res.status(401).json({
@@ -144,6 +164,15 @@ class petitionController {
     }
   }
 
+  /**
+  * Get a user Petition info
+  * @async
+  * @method getAPetition
+  * @params {number} ID - The ID of the petition
+  * @returns {object} response - The status code and data containing all petitions to be outputted
+  * @returns {object} response - The status code and error message to be outputted if error.
+  *
+  */
   static async getAPetition(req, res) {
     try {
       const id = Number(req.params.id);
@@ -184,7 +213,7 @@ class petitionController {
 
   /**
   * Delete a petition
-  * @param {integer} - id of the party
+  * @param {integer} - id of the petition
   * @return {object} - The status code and message to show delete action completed
   */
   static async deletePetition(req, res) {
