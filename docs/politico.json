@@ -1,0 +1,777 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "This is a sample API modelling the voting system in Nigeria.  This API powers the Politico App.",
+    "version": "1.0.0",
+    "title": "Politico API"
+  },
+  "servers": [
+    {
+      "url": "cea-politico-gres.herokuapp.com/api/v1",
+      "description": "Main production server"
+    },
+    {
+      "url": "localhost:3000/api/vi",
+      "description": "Local development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "Users",
+      "description": "Activities by user"
+    },
+    {
+      "name": "Parties",
+      "description": "Actions on parties"
+    },
+    {
+      "name": "Offices",
+      "description": "Actions on offices"
+    },
+    {
+      "name": "Interests",
+      "description": "Everyting about expressing  political interest"
+    },
+    {
+      "name": "Candidates",
+      "description": "Actions on candidates"
+    },
+    {
+      "name": "Petitions",
+      "description": "Actions on politician petitions"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "userToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "response_body": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "writeOnly": true,
+            "example": "degtnhky77yjngfgfdxcse23e2&%w"
+          },
+          "user": {
+            "allOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "isAdmin": {
+                    "type": "boolean"
+                  },
+                  "example": {
+                    "id": 1,
+                    "isAdmin": false
+                  }
+                }
+              },
+              {
+                "$ref": "#/components/schemas/signup_Request"
+              }
+            ]
+          }
+        }
+      },
+      "signup_Request": {
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 30,
+            "pattern": "^[a-zA-Z]+$"
+          },
+          "lastname": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 30,
+            "pattern": "^[a-zA-Z]+$"
+          },
+          "othername": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 30,
+            "pattern": "^[a-zA-Z]+$"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "description": "Should be 6 to 15 digits and contain both number and letters",
+            "pattern": "(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$"
+          },
+          "confirmPassword": {
+            "type": "string",
+            "format": "password",
+            "pattern": "(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$",
+            "description": "Value should equal password field",
+            "writeOnly": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "pattern": "^[0]\\d{10}$",
+            "description": "should start with a zero and be 11 digits long"
+          },
+          "passportUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "registerAs": {
+            "type": "string",
+            "description": "value must be voter or politician"
+          }
+        },
+        "required": [
+          "firstname",
+          "confirmPassword",
+          "phoneNumber",
+          "passportUrl",
+          "registerAs"
+        ],
+        "example": {
+          "firstname": "user",
+          "lastname": "new",
+          "phoneNumber": "090000000001",
+          "passportUrl": "http:3000/v1",
+          "email": "user101@gmail.com",
+          "password": "user101",
+          "confirmPassword": "user101",
+          "registerAs": "voter"
+        }
+      },
+      "signup_Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 201
+          },
+          "data": {
+            "$ref": "#/components/schemas/response_body"
+          }
+        }
+      },
+      "login_Request": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "description": "Should be 6 to 15 digits and contain both number and letters",
+            "pattern": "(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$"
+          }
+        },
+        "example": {
+          "email": "user101@gmail.com",
+          "password": "user101"
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "login_Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 200
+          },
+          "data": {
+            "$ref": "#/components/schemas/response_body"
+          }
+        }
+      },
+      "logout_Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 200
+          },
+          "data": {
+            "type": "string",
+            "example": "You are logged out"
+          }
+        }
+      },
+      "Error422": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "error": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "email": {
+            "value": {
+              "status": 422,
+              "error": "email already exists"
+            }
+          },
+          "phoneNumber": {
+            "value": {
+              "status": 422,
+              "error": "phoneNumber already exists"
+            }
+          },
+          "default": {
+            "value": {
+              "status": 422,
+              "error": "unprocessable entity"
+            }
+          }
+        }
+      },
+      "Error500": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "error": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "status": 500,
+          "error": "something went wrong"
+        }
+      },
+      "Error400": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "error": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "status": 400,
+          "error": "user defined error"
+        }
+      },
+      "Error401": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "error": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "status": 401,
+          "error": "No authorization"
+        }
+      },
+      "Error404": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "error": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "email": {
+            "value": {
+              "status": 404,
+              "error": "Email does not exist"
+            }
+          },
+          "password": {
+            "value": {
+              "status": 404,
+              "error": "Incorrect Password"
+            }
+          },
+          "default": {
+            "value": {
+              "status": 404,
+              "error": "Not found"
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Add a new user account",
+        "description": "To access any part the Politico App, a user has to create an account by signing up. On signup, user is automatically logged in.",
+        "requestBody": {
+          "description": "user object that is used to create account",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/signup_Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User account created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/signup_Response"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Value already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login a user",
+        "description": "Logged out user should be able to login",
+        "requestBody": {
+          "description": "user object that is used to log in",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/login_Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/login_Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Already logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Expired Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error401"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Value does not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "security": [
+          {
+            "userToken": []
+          }
+        ],
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Blacklist token on logout",
+        "description": "Add token to redis database when user logs out until token expires",
+        "responses": {
+          "200": {
+            "description": "User logged out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/logout_Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Already logged out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error400"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/decrypt": {
+      "get": {
+        "security": [
+          {
+            "userToken": []
+          }
+        ],
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Decrypt Token",
+        "description": "Decrypt user token for role based authentication",
+        "responses": {
+          "200": {
+            "description": "Token decrypted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "firstname": {
+                          "type": "string",
+                          "example": "user"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "voter"
+                        },
+                        "admin": {
+                          "type": "boolean",
+                          "example": false
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/forgot": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Forgot password",
+        "description": "Send a link to user email to reset forgotten password where email exists",
+        "requestBody": {
+          "description": "An email string",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "user101@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reset Link sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "from": {
+                          "type": "string",
+                          "format": "email",
+                          "example": "info@ceaPolitico.com"
+                        },
+                        "to": {
+                          "type": "string",
+                          "format": "email",
+                          "example": "user101@gmail.com"
+                        },
+                        "subject": {
+                          "type": "string",
+                          "example": "Password Reset Link"
+                        },
+                        "body": {
+                          "type": "string",
+                          "example": "You have asked for a password reset on Politico. To reset password click on this Reset Password link. kindly ignore this mail if you did not request for a password reset"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User defined error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error400"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Email does not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/reset": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Reset forgotten password",
+        "description": "Input new password to be used on login",
+        "requestBody": {
+          "description": "An password object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "user10123"
+                  },
+                  "confirmPassword": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "user10123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password Changed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "password": {
+                          "type": "string",
+                          "format": "password",
+                          "example": "user10123"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "password change succesful."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "security": [
+          {
+            "userToken": []
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get a user Profile",
+        "description": "View a user profile",
+        "responses": {
+          "200": null
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/users/me/edit": {
+      "patch": {
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/users/me/password": {
+      "patch": {
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/users/me/votes": {
+      "get": {
+        "tags": [
+          "Users"
+        ]
+      }
+    }
+  }
+}

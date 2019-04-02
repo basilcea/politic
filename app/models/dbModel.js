@@ -45,7 +45,7 @@ export const createUserTable = async function () {
         passportUrl TEXT,
         password VARCHAR(255) UNIQUE not null,
         registerAs text not null,
-        isAdmin BOOLEAN
+        isAdmin BOOLEAN Default false
       )`);
     console.log('User table created');
     seed('users', users);
@@ -172,12 +172,12 @@ export const createOfficeTable = async function () {
 * Delete interest table
 * @async
 * @function dropInterestTable
-* @return {Promise<string>} candidates table deleted
+* @return {Promise<string>} interests table deleted
 */
 
 export const dropInterestTable = async function () {
   try {
-    await pool.query('DROP TABLE IF EXISTS interest CASCADE');
+    await pool.query('DROP TABLE IF EXISTS interests CASCADE');
     console.log('interest table deleted');
   } catch (err) {
     console.log(err);
@@ -189,7 +189,7 @@ export const dropInterestTable = async function () {
 * Create interest table
 * @async
 * @function createInterestTable
-* @return {Promise<string>} party table created
+* @return {Promise<string>} interests table created
 */
 
 export const createInterestTable = async function () {
@@ -280,7 +280,7 @@ export const createPetitionTable = async function () {
         office Integer references offices(id) On DELETE CASCADE not null,
         subject text not null,
         body text not null,
-        evidence text [] 
+        evidence text []
       )`);
     console.log('petitions table created');
     seed('petitions', petitions);
@@ -305,8 +305,6 @@ export const dropAllTables = async function () {
     await dropPartyTable();
     await dropOfficeTable();
     await dropUserTable();
-
-
     console.log('All Tables deleted');
   } catch (err) {
     console.log(err);

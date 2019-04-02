@@ -11,12 +11,12 @@ import * as validation from '../helpers/schema';
 
 class votesController {
 /**
-    * Create  a vote
-    * @async requestPromises
-    * @method vote
-    * @return {object} response - The status code and data.
-    *
-   */
+  * Create  a vote
+  * @async requestPromises
+  * @method vote
+  * @return {object} response - The status code and data.
+  *
+  */
   static async vote(req, res) {
     const user = req.user.id;
     try {
@@ -40,8 +40,6 @@ class votesController {
           'error': 'Not a candidate',
         });
       }
-
-
       const postVote = `INSERT INTO votes(office,candidate ,createdBy)
     VALUES($1, $2 ,$3)`;
       const values = [officeId, candidateId, user];
@@ -62,6 +60,14 @@ class votesController {
       });
     }
   }
+  /**
+  * Get all results for an office
+  * @async
+  * @method getOfficeResults
+  * @params {Number} Id - The Id of the office as request parameter
+  * @return {object} response - The status code and data.
+  *
+  */
 
   static async getOfficeResults(req, res) {
     const officeId = Number(req.params.id);
@@ -83,29 +89,6 @@ class votesController {
     } catch (err) {
       return res.status(501).json({
         'status': 501,
-        'error': err.toString(),
-      });
-    }
-  }
-
-  static async votingActivites(req, res) {
-    const selectVotes = 'Select * from votes where createdBy = $1';
-    try {
-      const getVoting = await pool.query(selectVotes, [req.user.id]);
-      if (!getVoting.rows[0]) {
-        return res.status(404).json({
-          'status': 404,
-          'error': 'No activity found',
-        });
-      }
-      return res.status(200).json({
-        'status': 200,
-        'data': getVoting.rows,
-      });
-    }
-    catch (err) {
-      return res.status(500).json({
-        'status': 500,
         'error': err.toString(),
       });
     }

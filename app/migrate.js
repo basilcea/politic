@@ -6,6 +6,7 @@ import nodemailer from 'nodemailer';
 
 dotenv.config();
 
+// if in development mode use redis file attached
 if (process.env.NODE_ENV === 'development') {
   execFile('redis/redis-server.exe', (error, stdout) => {
     if (error) {
@@ -38,6 +39,7 @@ if (process.env.NODE_ENV === 'production') {
   };
 }
 export const mailer = nodemailer.createTransport(mailConfig);
+// use ssl only in production mode
 const pool = new Pool({
   connectionString: process.env.NODE_ENV === 'test' ? process.env.TEST_URL : process.env.DATABASE_URL,
   ssl: process.env.NODE_ENV === 'production',
@@ -51,7 +53,9 @@ pool.query('SELECT NOW()')
     console.log('Database Connection Failed.', error);
   });
 
+// use redis from token blacklisting until token expires
 export const redisClient = redis.createClient(process.env.REDIS_URL);
+
 redisClient.on('connect', () => {
   redisClient.LPUSH('token', 'null');
   console.log('Token blacklisting activated.');

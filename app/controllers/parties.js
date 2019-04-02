@@ -1,7 +1,6 @@
 /* eslint-disable quote-props */
 import pool from '../migrate';
 import authHelper from '../helpers/auth';
-import * as validation from '../helpers/schema';
 
 /**
   * Represents a controller  class for all candidate specific acitvities
@@ -13,7 +12,7 @@ class partyController {
   * @param {string} - name of office
   * @param {string} - type of office
   * @method createParty
-  * @return
+  * @return {object}
   */
   static async createParty(req, res) {
     const {
@@ -25,10 +24,11 @@ class partyController {
         error: 'Unauthorized',
       });
     }
+    const newName = name.trim().toLowerCase()
     const sendParty = `INSERT INTO parties (name, hqAddress, logoUrl)
     VALUES($1, $2 ,$3 )`;
-    const selectParty = 'Select * from parties';
-    const values = [name.trim().toLowerCase(), hqAddress.trim(), logoUrl.trim()];
+    const selectParty = 'Select * from parties where name =$1';
+    const values = [newName, hqAddress.trim(), logoUrl.trim()];
 
     try {
       /**
@@ -36,16 +36,18 @@ class partyController {
     * create an  unique id
     * @return {object} - The party object
     */
-      const AllParties = await pool.query(selectParty);
+      const AllParties = await pool.query(selectParty, [newName]);
 
-      if (authHelper.isUniqueName(name, AllParties) !== null) {
+      if (AllParties.rows[0]) {
         return res.status(422).json({
           'status': 422,
           'error': 'Party already exists',
         });
       }
       await pool.query(sendParty, values);
-      const createdParty = AllParties.rows[AllParties.rowCount - 1];
+      const selectParties = 'Select * from parties'
+      const newParty = await pool.query(selectParties);
+      const createdParty = newParty.rows[newParty.rowCount - 1];
       return res.status(201).json({
         'status': 201,
         'data': createdParty,
@@ -118,7 +120,7 @@ class partyController {
   /**
   * Patch a partyname
   * @param {integer} - id of the party
-  * @return {object} - The party that has the specified id with new name
+  * @returns {object} - The party that has the specified id with new name
   */
   static async editParty(req, res) {
     if (req.user.isAdmin !== true) {
@@ -132,13 +134,6 @@ class partyController {
     const { name, hqAddress, logoUrl } = req.body;
     const party = 'SELECT * from parties where id=$1';
     const { rows } = await pool.query(party, [id]);
-    const updateName = `Update parties SET name = $1 , hqaddress =$2 , logourl = $3  where id = $4 returning *`;
-    const values = [
-      name || rows[0].name,
-      hqAddress || rows[0].hqaddress,
-      logoUrl || rows[0].logourl,
-      id,
-    ];
     try {
       // check if name inputted is a string
       if (!rows[0]) {
@@ -147,6 +142,13 @@ class partyController {
           'error': 'Party not found',
         });
       }
+      const updateName = `Update parties SET name = $1 , hqaddress =$2 , logourl = $3  where id = $4 returning *`;
+      const values = [
+        name || rows[0].name,
+        hqAddress || rows[0].hqaddress,
+        logoUrl || rows[0].logourl,
+        id,
+      ];
       const updatedParty = await pool.query(updateName, values);
       return res.status(201).json({
         'status': 201,
@@ -163,7 +165,7 @@ class partyController {
   /**
   * Delete a party
   * @param {integer} - id of the party
-  * @return {object} - The satus code and message to show delte action completed
+  * @return {object} - The satus code and message to show delete action completed
   */
   static async deleteParty(req, res) {
     if (req.user.isAdmin !== true) {

@@ -8,6 +8,7 @@ const auth = {
   // eslint-disable-next-line consistent-return
   async checkToken(req, res, next) {
     const token = req.headers.authorization.split(' ')[1] || req.params.token;
+    // check if token exists
     if (!token) {
       return res.status(401).send({
         status: 401,
@@ -18,10 +19,11 @@ const auth = {
       redisClient.lrange('token', 0, 100, (err, result) => callback(result));
     };
     invalid((result) => {
+      // check if token has been blacklisted
       if (result.indexOf(token) > -1){
         return res.status(400).json({
           status: 400,
-          Message: 'Invalid Token',
+          error: 'Invalid Token',
         });
       }
 
@@ -30,6 +32,7 @@ const auth = {
       const decrypt = await jwt.verify(token, process.env.SECRET);
       const getUser = 'SELECT * FROM users WHERE id= $1';
       const { rows } = await pool.query(getUser, [decrypt.id]);
+      // check if token has expired
       if (!rows[0]) {
         return res.status(403).json({
           status: 403,
