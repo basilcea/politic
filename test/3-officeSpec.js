@@ -28,28 +28,28 @@ describe('Test office endpoints', () => {
   let admintoken;
   let usertoken;
   before((done) => {
-        chai.request(app)
-          .post('/api/v1/auth/login')
-          .set('Authorization', 'Bearer null')
-          .send(data)
-          .end((err, res) => {
-            admintoken = res.body.data[0].token;
-          });
-  
-        chai.request(app)
-          .post('/api/v1/auth/login')
-          .set('Authorization', 'Bearer null')
-          .send(data2)
-          .end((err, res) => {
-            usertoken = res.body.data[0].token;
-            done()
-          });
-      } 
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .set('Authorization', 'Bearer null')
+      .send(data)
+      .end((err, res) => {
+        admintoken = res.body.data[0].token;
+      });
+
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .set('Authorization', 'Bearer null')
+      .send(data2)
+      .end((err, res) => {
+        usertoken = res.body.data[0].token;
+        done();
+      });
+  },
   );
   const testOffice = {
     name: 'officename',
     type: 'officetype',
-    electDate: '2019-03-30'
+    electDate: '2020-03-30',
   };
 
   /**
@@ -67,6 +67,7 @@ describe('Test office endpoints', () => {
         .set('Authorization', `Bearer ${usertoken}`)
         .send(testOffice)
         .end((err, res) => {
+          console.log(res.body);
           expect(res).to.have.status(401);
           expect(res.body).to.have.property('status');
           expect(res.body.status).to.equal(401);
@@ -90,7 +91,6 @@ describe('Test office endpoints', () => {
           expect(res.body.data).to.have.keys('id', 'type', 'name', 'electdate');
           done();
         });
-     
     });
     it('should fail if office already exists', (done) => {
       chai
@@ -114,7 +114,7 @@ describe('Test office endpoints', () => {
   * @param resp
   * @method get
   * @route api/vi/parties
-  
+
   */
 
   describe('Get /offices', () => {
@@ -148,9 +148,7 @@ describe('Test office endpoints', () => {
           }
           done();
         });
-    
-    })
-  
+    });
   });
 
   /**
@@ -160,7 +158,7 @@ describe('Test office endpoints', () => {
   * @param id{integer} - The id value
   * @method get
   * @route api/vi/parties/1
-  
+
   */
 
   describe('Get /offices/<office-id>', () => {
@@ -170,7 +168,7 @@ describe('Test office endpoints', () => {
         .get('/api/v1/offices/2')
         .set('Authorization', `Bearer ${usertoken}`)
         .end((err, res) => {
-          expect(res.status).to.equal(200)
+          expect(res.status).to.equal(200);
           expect(res.body).to.have.property('status').which.is.a('number');
           expect(res.body.status).to.equal(200);
           expect(res.body).to.have.property('data');
@@ -179,7 +177,7 @@ describe('Test office endpoints', () => {
           done();
         });
     });
- 
+
     it('should have fail if there is no office', (done) => {
       chai
         .request(app)
@@ -204,7 +202,7 @@ describe('Test office endpoints', () => {
   * @param id{integer} - The id value
   * @method get
   * @route api/vi/parties/1/name
-  
+
   */
   describe('Patch /offices/<office-id>', () => {
     const testOffice1 = {
@@ -235,7 +233,7 @@ describe('Test office endpoints', () => {
         .send(testOffice1)
         .set('Authorization', `Bearer ${admintoken}`)
         .end((err, res) => {
-          console.log(res.body)
+          console.log(res.body);
           expect(res.body).to.have.status(404);
           expect(res.body)
             .to.have.property('status')
@@ -254,13 +252,13 @@ describe('Test office endpoints', () => {
         .send(testOffice1)
         .set('Authorization', `Bearer ${admintoken}`)
         .end((err, res) => {
-          expect(res).to.have.status(201)
+          expect(res).to.have.status(201);
           expect(res.body).to.have.property('status').which.is.equal(201);
           expect(res.body).to.have.property('data');
           expect(res.body.data).to.be.an('object');
           expect(res.body.data).to.have.keys('id', 'name', 'type', 'electdate');
-          expect(res.body.data.name).to.equal('newOfficeName')
-          
+          expect(res.body.data.name).to.equal('newOfficeName');
+
           done();
         });
     });
@@ -272,7 +270,7 @@ describe('Test office endpoints', () => {
   * @param id{integer} - The id value
   * @method get
   * @route api/vi/parties/1
-  
+
   */
 
   describe('Delete /offices/<office-id>', () => {
@@ -315,7 +313,7 @@ describe('Test office endpoints', () => {
         .delete('/api/v1/offices/3')
         .set('Authorization', `Bearer ${admintoken}`)
         .end((err, res) => {
-          expect(res).to.have.status(200)
+          expect(res).to.have.status(200);
           expect(res.body).to.have.property('status').which.is.equal(200);
           expect(res.body).to.have.property('data');
           expect(res.body.data).to.be.an('object');
@@ -324,6 +322,5 @@ describe('Test office endpoints', () => {
           done();
         });
     });
-  
   });
-})
+});

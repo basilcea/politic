@@ -61,6 +61,7 @@ describe('Test interest endpoints', () => {
       .send(data3)
       .end((err, res) => {
         anotherusertoken = res.body.data[0].token;
+        done()
       });
   });
 
@@ -149,6 +150,7 @@ describe('Test interest endpoints', () => {
         .send(testInterest2)
         .set('Authorization', `Bearer ${anotherusertoken}`)
         .end((err, res) => {
+          console.log(res.body)
           expect(res).to.have.status(201);
           expect(res.body).to.have.property('status').which.is.equal(201);
           expect(res.body).to.have.property('data');

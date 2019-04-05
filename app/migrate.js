@@ -7,19 +7,18 @@ import nodemailer from 'nodemailer';
 dotenv.config();
 
 // if in development mode use redis file attached
-if (process.env.NODE_ENV === 'development') {
-  execFile('redis/redis-server.exe', (error, stdout) => {
+  execFile('redis/src/redis-server', (error, stdout) => {
     if (error) {
       throw error;
     }
     console.log(stdout);
   });
-}
 
 let mailConfig;
 if (process.env.NODE_ENV === 'production') {
   mailConfig = {
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
     secure: true,
     auth: {
       user: process.env.EMAIL,
