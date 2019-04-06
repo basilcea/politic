@@ -21,8 +21,8 @@ before_script:
 
 script:
   - nyc --reporter=lcov npm test
-  - sudo service redis-server stop
-  - sudo service postgresql stop 9.2
+  - sudo /etc/init.d/redis-server stop
+  - sudo /etc/init.d/postgresql stop 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
   -  nyc report --reporter=text-lcov | coveralls
