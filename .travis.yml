@@ -21,7 +21,6 @@ before_script:
 
 script:
   - nyc --reporter=lcov npm test
-
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
   -  nyc report --reporter=text-lcov | coveralls
