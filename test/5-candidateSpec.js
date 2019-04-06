@@ -180,7 +180,6 @@ describe('Test candidates endpoints', () => {
         .get('/api/v1/candidates/user/2')
         .set('Authorization', `Bearer ${usertoken}`)
         .end((err, res) => {
-          console.log(res.body)
           expect(res).to.have.status(404);
           expect(res.body).to.have.property('status');
           expect(res.body.status).to.equal(404);

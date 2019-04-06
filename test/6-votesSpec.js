@@ -91,6 +91,7 @@ describe('Test votes endpoints', () => {
         .get('/api/v1/offices/1/result')
         .set('Authorization', `Bearer ${usertoken}`)
         .end((err, res) => {
+          console.log(res.body)
           expect(res).to.have.status(200);
           expect(res.body).to.have.property('status').which.is.a('number').equal(200);
           expect(res.body).to.have.property('data').which.is.an('array');
