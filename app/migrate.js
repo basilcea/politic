@@ -1,19 +1,19 @@
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
 import redis from 'redis';
-import { execFile } from 'child_process';
+import { exec} from 'child_process';
 import nodemailer from 'nodemailer';
 
 dotenv.config();
 
 // if in development mode use redis file attached
-if (process.env.NODE_ENV === 'development'){  
-  execFile('redis/src/redis-server', (error, stdout) => {
-    if (error) {
-      throw error;
-    }
-    console.log(stdout);
-  });
+if (process.env.NODE_ENV === 'development') {
+  const puts = (error, stdout) =>{
+    console.log(error)
+    console.log(stdout)
+}
+exec('redis/src/redis-server redis/redis.conf', puts); 
+  
 }
 
 let mailConfig;

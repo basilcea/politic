@@ -73,7 +73,6 @@ describe('Test user endpoints', () => {
         .set('Authorization', 'Bearer null')
         .send({ email: data.email, password: 'basil123' })
         .end((err, res) => {
-          console.log(res.status);
           expect(res.status).to.equal(404);
           expect(res.body).to.have.property('status');
           expect(res.body.status).to.equal(404);
@@ -162,7 +161,6 @@ describe('Test user endpoints', () => {
         });
     });
   });
-
   describe('GET /auth/decrypt', () => {
     it('should fail if no authorization', (done) => {
       chai.request(app)
@@ -193,8 +191,6 @@ describe('Test user endpoints', () => {
         });
     });
   });
-
-
   describe('GET /auth/logout', () => {
     it('should pass if you logout', (done) => {
       chai.request(app)

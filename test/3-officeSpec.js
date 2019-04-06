@@ -67,7 +67,6 @@ describe('Test office endpoints', () => {
         .set('Authorization', `Bearer ${usertoken}`)
         .send(testOffice)
         .end((err, res) => {
-          console.log(res.body);
           expect(res).to.have.status(401);
           expect(res.body).to.have.property('status');
           expect(res.body.status).to.equal(401);
@@ -165,7 +164,7 @@ describe('Test office endpoints', () => {
     it('should pass if office exist', (done) => {
       chai
         .request(app)
-        .get('/api/v1/offices/2')
+        .get('/api/v1/offices/1')
         .set('Authorization', `Bearer ${usertoken}`)
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -212,7 +211,7 @@ describe('Test office endpoints', () => {
     it('should fail if user is not admin', (done) => {
       chai
         .request(app)
-        .patch('/api/v1/offices/3')
+        .patch('/api/v1/offices/1')
         .set('Authorization', `Bearer ${usertoken}`)
         .send(testOffice1)
         .end((err, res) => {
@@ -233,7 +232,6 @@ describe('Test office endpoints', () => {
         .send(testOffice1)
         .set('Authorization', `Bearer ${admintoken}`)
         .end((err, res) => {
-          console.log(res.body);
           expect(res.body).to.have.status(404);
           expect(res.body)
             .to.have.property('status')
@@ -248,7 +246,7 @@ describe('Test office endpoints', () => {
     it('should pass if user is admin and office exist', (done) => {
       chai
         .request(app)
-        .patch('/api/v1/offices/3')
+        .patch('/api/v1/offices/1')
         .send(testOffice1)
         .set('Authorization', `Bearer ${admintoken}`)
         .end((err, res) => {
@@ -273,54 +271,4 @@ describe('Test office endpoints', () => {
 
   */
 
-  describe('Delete /offices/<office-id>', () => {
-    it('should fail if user is not admin', (done) => {
-      chai
-        .request(app)
-        .delete('/api/v1/offices/3')
-        .set('Authorization', `Bearer ${usertoken}`)
-        .end((err, res) => {
-          expect(res).to.have.status(401);
-          expect(res.body).to.have.property('status');
-          expect(res.body.status).to.equal(401);
-          expect(res.body)
-            .to.have.property('error')
-            .which.is.a('string');
-          done();
-        });
-    });
-
-    it('should fail if office does not exist', (done) => {
-      chai
-        .request(app)
-        .delete('/api/v1/offices/8')
-        .set('Authorization', `Bearer ${admintoken}`)
-        .end((err, res) => {
-          expect(res.body).to.have.status(404);
-          expect(res.body)
-            .to.have.property('status')
-            .which.is.a('number');
-          expect(res.body)
-            .to.have.property('error')
-            .which.is.a('string');
-          expect(res.body.status).to.equal(404);
-          done();
-        });
-    });
-    it('should delete if user is admin and office exist', (done) => {
-      chai
-        .request(app)
-        .delete('/api/v1/offices/3')
-        .set('Authorization', `Bearer ${admintoken}`)
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-          expect(res.body).to.have.property('status').which.is.equal(200);
-          expect(res.body).to.have.property('data');
-          expect(res.body.data).to.be.an('object');
-          expect(res.body.data).to.have.keys('message');
-          expect(res.body.data.message).to.equal('office deleted succesfully');
-          done();
-        });
-    });
-  });
 });

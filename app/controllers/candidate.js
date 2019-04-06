@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable quote-props */
 /* eslint-disable max-len */
 import pool from '../migrate';
@@ -89,7 +90,7 @@ class candidateController {
     }
   }
 
-    /**
+  /**
     * Search for a candidate
     * @async
     * @method searchCandidate
@@ -105,13 +106,14 @@ class candidateController {
       const AllUsers = 'Select id , firstname , lastname, othername, passporturl from users where id =$1';
       const parties = 'Select *  from parties where id = $1';
       const { rows } = await pool.query(candidate, [id]);
-      if (!rows) {
+      if (!rows[0]) {
         return res.status(404).json({
           'status': 404,
           'error': 'No candidate found for this office',
         });
       }
       const data = [];
+      // eslint-disable-next-line no-plusplus
       for (let i = 0; i < rows.length; i++) {
         const getusers = await pool.query(AllUsers, [rows[i].candidate]);
         const getparty = await pool.query(parties, [rows[i].party]);
@@ -129,16 +131,15 @@ class candidateController {
         'status': 200,
         data,
       });
-
     } catch (err) {
       return res.status(500).json({
         'status': 500,
         'error': err.toString(),
       });
     }
-
   }
-   /**
+
+  /**
     * Get candidate by the candidate Id
     * @async
     * @method getCandidateById
@@ -162,6 +163,7 @@ class candidateController {
         });
       }
       const data = [];
+      // eslint-disable-next-line no-plusplus
       for (let i = 0; i < rows.length; i++) {
         const getusers = await pool.query(AllUsers, [rows[i].candidate]);
         const getparty = await pool.query(parties, [rows[i].party]);
@@ -180,16 +182,14 @@ class candidateController {
         'status': 200,
         data,
       });
-
     } catch (err) {
       return res.status(500).json({
         'status': 500,
         'error': err.toString(),
       });
     }
-
   }
-    /**
+  /**
     * Get candidate by the user Id
     * @async
     * @method getCandidate
@@ -214,17 +214,15 @@ class candidateController {
         'status': 200,
         'data': rows,
       });
-
     } catch (err) {
       return res.status(500).json({
         'status': 500,
         'error': err.toString(),
       });
     }
-
   }
 
-/**
+  /**
   * Edit candidate info
   * @async
   * @method editCandidate
@@ -266,7 +264,6 @@ class candidateController {
         'status': 201,
         'data': updatedCandidate.rows[0],
       });
-
     } catch (err) {
       return res.status(500).json({
         'status': 500,
@@ -274,6 +271,7 @@ class candidateController {
       });
     }
   }
+
   /**
   * Delete the candidate
   * @async

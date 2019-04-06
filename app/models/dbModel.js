@@ -48,7 +48,7 @@ export const createUserTable = async function () {
         isAdmin BOOLEAN Default false
       )`);
     console.log('User table created');
-    seed('users', users);
+   
   } catch (err) {
     console.log(err);
   }
@@ -84,7 +84,7 @@ export const createPartyTable = async function () {
         )`
     );
     console.log('Party table created');
-    seed('parties', parties);
+  
   } catch (err) {
     console.log(err);
   }
@@ -124,7 +124,7 @@ export const createVoteTable = async function () {
         Constraint votes_id_pkey  PRIMARY KEY (createdBy, office)
       )`);
     console.log('Votes table created');
-    seed('votes', votes);
+ 
   } catch (err) {
     console.log(err);
   }
@@ -161,7 +161,7 @@ export const createOfficeTable = async function () {
         electDate date
       )`);
     console.log('offices table created');
-    seed('offices', offices);
+  
   } catch (err) {
     console.log(err);
   }
@@ -203,7 +203,7 @@ export const createInterestTable = async function () {
         Constraint interest_id_pkey PRIMARY KEY (id , interest)
       )`);
     console.log('interest table created');
-    seed('interests', interests);
+    
   } catch (err) {
     console.log(err);
   }
@@ -242,7 +242,7 @@ export const createCandidateTable = async function () {
         Constraint candidate_id_pkey PRIMARY KEY (office ,candidate)
       )`);
     console.log('candidates table created');
-    seed('candidates', candidates);
+   
   } catch (err) {
     console.log(err);
   }
@@ -283,7 +283,7 @@ export const createPetitionTable = async function () {
         evidence text []
       )`);
     console.log('petitions table created');
-    seed('petitions', petitions);
+    
   } catch (err) {
     console.log(err);
   }
@@ -332,5 +332,14 @@ export const createAllTables = async function () {
     console.log(err);
   }
 };
+export const seedAllTables = async function(){
+  await seed('users', users);
+  await seed('offices', offices);
+  await seed('parties', parties);
+  await seed('interests', interests);
+  await seed('candidates', candidates);
+  await seed('votes', votes);
+  await seed('petitions', petitions);
+}
 // run each function seperately.
 require('make-runnable');
