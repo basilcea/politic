@@ -296,7 +296,7 @@ describe('Test delete endpoints', () => {
           }
           done();
         });
-    });/*
+    });
     it('should pass if admin want to become politician', (done) => {
       chai
         .request(app)
@@ -312,7 +312,7 @@ describe('Test delete endpoints', () => {
             expect(res.body.data.message).to.be.a('string');
           done();
         });
-    });*/
+    });
     it('should pass', (done) => {
       chai
         .request(app)
