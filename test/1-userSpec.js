@@ -7,7 +7,6 @@ chai.use(chaiHttp);
 // eslint-disable-next-line prefer-destructuring
 const expect = chai.expect;
 describe('Test user endpoints', () => {
-
   let usertoken;
   const data = {
     firstname: 'basil',
@@ -48,7 +47,6 @@ describe('Test user endpoints', () => {
           usertoken = res.body.data[0].token;
           done();
         });
-
     });
   });
 
@@ -75,9 +73,9 @@ describe('Test user endpoints', () => {
         .set('Authorization', 'Bearer null')
         .send({ email: data.email, password: 'basil123' })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(404);
           expect(res.body).to.have.property('status');
-          expect(res.body.status).to.equal(400);
+          expect(res.body.status).to.equal(404);
           expect(res.body).to.have.property('error');
           expect(res.body.error).to.be.a('string');
           expect(res.body.error).to.equal('Incorrect password');
@@ -120,9 +118,9 @@ describe('Test user endpoints', () => {
           expect(res.body.error).to.equal('You are already logged in');
           done();
         });
-    });
-
+    }); 
   });
+  
   describe('POST/ auth/reset', () => {
     const passwordData = {
       id: 1,
@@ -163,9 +161,7 @@ describe('Test user endpoints', () => {
           done();
         });
     });
-
   });
-
   describe('GET /auth/decrypt', () => {
     it('should fail if no authorization', (done) => {
       chai.request(app)
@@ -196,8 +192,6 @@ describe('Test user endpoints', () => {
         });
     });
   });
-
-
   describe('GET /auth/logout', () => {
     it('should pass if you logout', (done) => {
       chai.request(app)
@@ -212,7 +206,6 @@ describe('Test user endpoints', () => {
           expect(res.body.data).to.equal('You are logged out');
           done();
         });
-
     });
     it('should fail if your are already logged out', (done) => {
       chai.request(app)
@@ -227,8 +220,8 @@ describe('Test user endpoints', () => {
           expect(res.body.error).to.equal('You are already logged out');
           done();
         });
-
     });
+    
     it(' Login should fail if token is expired', (done) => {
       chai.request(app)
         .post('/api/v1/auth/login')
@@ -262,5 +255,4 @@ describe('Test user endpoints', () => {
         });
     });
   });
-
 });

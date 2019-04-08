@@ -123,7 +123,7 @@ class userController {
       }
       // check if the inputted password is the same password created
       if (!authHelper.comparePassword(rows[0].password, password)) {
-        return res.status(400).json({
+        return res.status(404).json({
           'status': 404,
           'error': 'Incorrect password',
         });

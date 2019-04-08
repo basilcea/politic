@@ -73,7 +73,7 @@ class votesController {
     const officeId = Number(req.params.id);
     // check if input string is valid.
     const selectResult = `SELECT office, candidate , count(candidate) result  from votes
-    where office = $1  Group BY (candidate ,office) `;
+    where office = $1  Group BY (candidate , office) `;
     try {
       const getResult = await pool.query(selectResult, [officeId]);
       if (!getResult.rows[0]) {

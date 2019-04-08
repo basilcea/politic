@@ -8,7 +8,6 @@ import authHelper from '../helpers/auth';
   * @class userActivityController
  */
 class userActivityController {
-
   /**
   * Get the user profile
   * Returns the status code and the information
@@ -69,9 +68,9 @@ class userActivityController {
       const emailing = await pool.query(getEmail);
       let response;
 
-        /* Check if an admin wants to express an interest */
+      /* Check if an admin wants to express an interest */
       if (req.user.isAdmin === true && registerAs === 'politician') {
-         response = await pool.query(updateUser, [
+        response = await pool.query(updateUser, [
           firstname || rows[0].firstname, lastname || rows[0].lastname,
           othername || rows[0].othername, email || rows[0].email,
           phoneNumber || rows[0].phonenumber,
@@ -104,7 +103,7 @@ class userActivityController {
             phoneNumber || rows[0].phonenumber, registerAs || rows[0].registeras,
             passportUrl || rows[0].passporturl, rows[0].isAdmin, req.user.id,
           ]);
-          // Remove all political interest for user
+        // Remove all political interest for user
         res.status(200).json({
           status: 200,
           data: {
@@ -159,7 +158,7 @@ class userActivityController {
     }
   }
 
-   /**
+  /**
   * Change the user password on login
   * Returns the hash of the new password
   * @async
@@ -192,14 +191,14 @@ class userActivityController {
         status: 200,
         data: insertNewPassword.rows,
       });
-    }
-    catch (err) {
+    } catch (err) {
       return res.status(500).json({
         status: 500,
         error: err.toString(),
       });
     }
   }
+
   /**
   * Delete the user profile
   * Returns the status code and success or error message
@@ -215,13 +214,6 @@ class userActivityController {
 
       // check if the user to be deleted exists
       // user can only delete his own profile
-
-      if (!checkUser.rows[0]) {
-        return res.status(404).json({
-          status: 404,
-          error: 'User not found',
-        });
-      }
       const deleting = 'Delete from users where id= $1';
       await pool.query(deleting, [req.user.id]);
       return res.status(200).json({
@@ -237,6 +229,7 @@ class userActivityController {
       });
     }
   }
+
   /**
   * Admin can make another user admin
   * Returns the status code, user info and admintoken
@@ -282,7 +275,7 @@ class userActivityController {
     }
   }
 
-   /**
+  /**
   * Get all votes by a user
   * @async
   * @method votingActivities
@@ -297,22 +290,20 @@ class userActivityController {
       // check if user voted
       if (!getVoting.rows[0]) {
         return res.status(404).json({
-          'status': 404,
-          'error': 'No activity found',
+          status: 404,
+          error: 'No activity found',
         });
       }
       return res.status(200).json({
-        'status': 200,
-        'data': getVoting.rows,
+        status: 200,
+        data: getVoting.rows,
       });
-    }
-    catch (err) {
+    } catch (err) {
       return res.status(500).json({
-        'status': 500,
-        'error': err.toString(),
+        status: 500,
+        error: err.toString(),
       });
     }
   }
-
 }
 export default userActivityController;

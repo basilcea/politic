@@ -4,7 +4,7 @@
   "description": "[![Build Status](https://travis-ci.org/basilcea/politico.svg?branch=develop)](https://travis-ci.org/basilcea/politico)\r [![Maintainability](https://api.codeclimate.com/v1/badges/1ab9d7aac9c48843eac3/maintainability)](https://codeclimate.com/github/basilcea/politico/maintainability)\r [![Coverage Status](https://coveralls.io/repos/github/basilcea/politico/badge.svg?branch=develop)](https://coveralls.io/github/basilcea/politico?branch=develop)\r [![Test Coverage](https://api.codeclimate.com/v1/badges/1ab9d7aac9c48843eac3/test_coverage)](https://codeclimate.com/github/basilcea/politico/test_coverage)",
   "main": "index.js",
   "scripts": {
-    "test": "set NODE_ENV=test&& mocha test --require @babel/register ",
+    "test": "set NODE_ENV=test&& mocha test --require @babel/register --timeout 3000 --exit",
     "localtest": "set NODE_ENV=development&& mocha test --require @babel/register ",
     "babel-node": "babel-node --presets=/*a*/ --ignore='foo|bar|baz'",
     "lint": "eslint **/*.js --fix",

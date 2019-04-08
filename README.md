@@ -16,7 +16,7 @@ Politico API is a REST API that is used for a voting , modelling the current vot
 - [Author/s](#head5)
 - [Acknowledgments](#head6)
 
-### Installation (#head1)
+### [<a id='head1'>Installation</a>
   ** To install this API on your local device **
   - Copy the [Git Clone Link](https://github.com/basilcea/politico.git) the API on your local Git
   - Run npm install on local git
@@ -115,7 +115,7 @@ Politico API is a REST API that is used for a voting , modelling the current vot
     - PATCH </petitions/id> - Edit a petition.
     - DELETE </petitions/:id> - Delete a Petition.
 
-### Deployment (#head4)
+### [Deployment](#head4)
   To deploy the API to Heroku
   - Create heroku account
   - Create an app on heroku
@@ -124,10 +124,10 @@ Politico API is a REST API that is used for a voting , modelling the current vot
   - Deploy manually or automatically by selecting the specifice github branch
   - Run APP on heroku.
 
-### Author/s (#head5)
+### [Author/s](#head5)
   This API was created by [basilcea](https://github.com/basilcea?tab=repositories). API Specification provided by [Andela](https://andela.com/) as part of the bootcamp training process.
 
-### Acknowledgments(#head6)
+### [Acknowledgments](#head6)
 
   I want to acknowledge the inputs from two learning facilitators and a host of fellow bootcampers who contributed in no small way to building my building this API.
 

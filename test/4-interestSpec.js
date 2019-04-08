@@ -61,12 +61,13 @@ describe('Test interest endpoints', () => {
       .send(data3)
       .end((err, res) => {
         anotherusertoken = res.body.data[0].token;
+        done();
       });
   });
 
   const testInterest = {
     office: 1,
-    party: 2,
+    party: 1,
   };
 
 
@@ -94,7 +95,6 @@ describe('Test interest endpoints', () => {
         .set('Authorization', `Bearer ${anotherusertoken}`)
         .send(testInterest)
         .end((err, res) => {
-          console.log(res.body.data);
           expect(res).to.have.status(201);
           expect(res.body).to.have.property('status');
           expect(res.body.status).to.equal(201);
@@ -121,7 +121,7 @@ describe('Test interest endpoints', () => {
 
   describe('Patch /interests/<interest-id>', () => {
     const testInterest2 = {
-      office: '2',
+      office: 1,
     };
 
     it('should fail if interest does not exist', (done) => {
@@ -145,7 +145,7 @@ describe('Test interest endpoints', () => {
     it('should pass if interest exists', (done) => {
       chai
         .request(app)
-        .patch('/api/v1/interests/3')
+        .patch('/api/v1/interests/1')
         .send(testInterest2)
         .set('Authorization', `Bearer ${anotherusertoken}`)
         .end((err, res) => {
@@ -154,15 +154,13 @@ describe('Test interest endpoints', () => {
           expect(res.body).to.have.property('data');
           expect(res.body.data).to.be.an('object');
           expect(res.body.data).to.have.keys('id', 'office', 'party', 'interest');
-          expect(res.body.data.office).to.be.equal(2);
+          expect(res.body.data.office).to.be.equal(1);
           done();
         });
     });
-
   });
 
   describe('GET /interests', () => {
-
     it('should pass if user is an admin', (done) => {
       chai
         .request(app)
@@ -206,42 +204,5 @@ describe('Test interest endpoints', () => {
           done();
         });
     });
-
   });
-
-  describe('Delete /interests/<party-id>', () => {
-    it('should fail if interest does not exist', (done) => {
-      chai
-        .request(app)
-        .delete('/api/v1/interests/10')
-        .set('Authorization', `Bearer ${anotherusertoken}`)
-        .end((err, res) => {
-          expect(res.body).to.have.status(404);
-          expect(res.body)
-            .to.have.property('status')
-            .which.is.a('number');
-          expect(res.body)
-            .to.have.property('error')
-            .which.is.a('string');
-          expect(res.body.status).to.equal(404);
-          done();
-        });
-    });
-    it('should delete if expressed interest exists by user', (done) => {
-      chai
-        .request(app)
-        .delete('/api/v1/interests/3')
-        .set('Authorization', `Bearer ${anotherusertoken}`)
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-          expect(res.body).to.have.property('status').which.is.equal(200);
-          expect(res.body).to.have.property('data');
-          expect(res.body.data).to.be.an('object');
-          expect(res.body.data).to.have.keys('message');
-          expect(res.body.data.message).to.equal('interests deleted succesfully');
-          done();
-        });
-    });
-  });
-
 });

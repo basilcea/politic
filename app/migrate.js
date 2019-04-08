@@ -1,25 +1,26 @@
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
 import redis from 'redis';
-import { execFile } from 'child_process';
+import { exec} from 'child_process';
 import nodemailer from 'nodemailer';
 
 dotenv.config();
 
 // if in development mode use redis file attached
 if (process.env.NODE_ENV === 'development') {
-  execFile('redis/redis-server.exe', (error, stdout) => {
-    if (error) {
-      throw error;
-    }
-    console.log(stdout);
-  });
+  const puts = (error, stdout) =>{
+    console.log(error)
+    console.log(stdout)
+}
+exec('redis/src/redis-server redis/redis.conf', puts); 
+  
 }
 
 let mailConfig;
 if (process.env.NODE_ENV === 'production') {
   mailConfig = {
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
     secure: true,
     auth: {
       user: process.env.EMAIL,

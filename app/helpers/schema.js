@@ -494,8 +494,8 @@ export const createPetitionSchema = joi.object().keys({
 
 export const editPetitionSchema = joi.object().keys({
   office: lessId.allow(''),
-  subject: string.allow('').required(),
-  body: string.allow('').required(),
+  subject: string.allow('').trim(),
+  body: string.allow('').trim(),
   evidence: joi.array().items(joi.string().uri().allow('')).single(),
 });
 

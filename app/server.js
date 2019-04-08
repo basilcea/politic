@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import router from './route';
 import swaggerUi from 'swagger-ui-express';
+import router from './route';
 import swaggerDocs from '../docs/politico.json'
 
 const server = express();
