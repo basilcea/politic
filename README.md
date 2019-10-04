@@ -11,7 +11,7 @@ Politico API is a REST API that is used for a voting , modelling the current vot
 ## Table of Content
 - [Installation](#head1)
 - [Testing with Postman](#head2)
-- [Endpionts](#head3)
+- [Endpoints](#head3)
 - [Deployment](#head4)
 - [Author/s](#head5)
 - [Acknowledgments](#head6)
@@ -51,12 +51,12 @@ Politico API is a REST API that is used for a voting , modelling the current vot
     - For aunthenticated routes input the outputed token.
 
 
-### Endpionts (#head3)
+### Endpoints (#head3)
   The endpoints below are divided into 7 categories.
 
   The endpoint specified below in the format of  METHOD <route>.
 
-  #### Users Endpionts
+  #### Users Endpoints
     Endpoints are accessable without token authentication or immediately after login.
 
   	- POST </auth/signup> - Signup and automatic login.
@@ -66,7 +66,7 @@ Politico API is a REST API that is used for a voting , modelling the current vot
     - GET </auth/decrypt> - Decrypt user token.
     - GET </auth/logout> - Blacklist token on logout using Redis until token expiry.
 
-  #### Activity Endpionts
+  #### Activity Endpoints
     Endpoints for activity carried by user on login
 
     - GET </users/me> - Get user profile.
@@ -75,8 +75,8 @@ Politico API is a REST API that is used for a voting , modelling the current vot
     - GET </users/me/votes> - Get all voting activities.
     - DELETE </users/me> - Delete Profile.
 
-  #### Offices Endpionts
-    Endpionts for offices activities
+  #### Offices Endpoints
+    Endpoints for offices activities
     - POST </offices> - Create Office   - * Admin only *.
     - GET </offices> - Get all offices.
     - GET </offices/:id> - Get a specific office.
@@ -89,26 +89,26 @@ Politico API is a REST API that is used for a voting , modelling the current vot
   #### Vote Endpiont
     - POST </votes> - Vote a user for an office.
 
-  #### Party Endpionts
+  #### Party Endpoints
     - POST </parties> - Create a party - * Admin only *.
     - GET </parties> - Get all parties.
     - GET </parties/:id> - Get a specific party.
     - PATCH </parties/:id> -Edit a party detail - * Admin only *.
     - DELETE </parties/:id> - Delete a party - *Admin only *.
 
-  #### Candidates Endpionts
+  #### Candidates Endpoints
     - GET </candidates/user/:id> - Get all candidates by candidate id.
     - GET </candidates/:id> - Get candidates by user id.
     - PUT </candidates/:id> - Edit candidates by user id.
     - DELETE </candidates/:id> - Delete candidates by user id.
 
-  #### Interests Endpionts
+  #### Interests Endpoints
     - GET </interests> - Get all interests.
     - POST </interests> - Create an interest.
     - PATCH </interests/:id> - Edit an interest.
     - DELETE </interests/:id> - Delete an interest.
 
-  #### Petition Endpionts
+  #### Petition Endpoints
     - GET </petitions> - Get all petitions.
     - GET </petitions/:id> - Get a specific petition.
     - POST </petitions> - Post a petition.
