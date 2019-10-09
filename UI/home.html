@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Politico- Your right to choose</title>
+		<meta charset="UTF-8">
+		<meta name="author" content="Cea">
+		<meta name="viewport" content ="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href ="./CSS/card.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/layout.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/background.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/button.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/text.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/form.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/others.css">
+    <link rel="stylesheet" type="text/css" href ="./CSS/nav.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/fadeIn.css">
+		<script src="./JS/decrypt.js"></script>
+	</head>
+	<body>
+		<div class="layout_large background_body">
+      <div class="layout_smallNav">
+          <ul class="nav_tabs_small">
+              <li class="nav_horizontal_small layout_none">
+                <a class="others_full" href="home.html">Home</a>
+              </li>
+              <a  class="background_icon" href="javascript:void(0)" ></a>
+              <li class="nav_horizontal_small layout_none">
+                <a class="others_full" href="profile.html">Profile</a>
+							</li>
+							<li class="nav_horizontal_small layout_none">
+									<a class="others_full" href="vote.html">Vote</a>
+								</li>
+              <li class="nav_horizontal_small layout_none" id='smallAdmin'>
+                <a class="others_full" href="admin.html">Admin</a>
+              </li>
+              <li class="nav_horizontal_small layout_none" id='smallPolitician'> 
+                <a class="others_full" href="candidate.html">Candidacy</a>
+              </li>
+              <li class="nav_horizontal_small layout_none">
+                  <a class="others_full" id='logout_small'>Log out</a>
+                </li>
+            </ul>
+      </div>
+			<div class="layout_header">
+				<a href='home.html'><img class="others_logo" src="STATIC/logo.png" alt="logo"/></a>
+      </div>
+			<!--Navigation tabs-->
+
+			<div class="layout_nav">
+				<ul class="nav_tabs">
+					<li class="nav_horizontal">
+						<a class="nav_active" href="home.html">Home</a>
+          </li>
+					<li class="nav_horizontal">
+						<a class="nav_menuButton" href="profile.html">Profile</a>
+					</li>
+				</li>
+				<li class="nav_horizontal">
+						<a class="nav_menuButton" href="vote.html">Vote</a>
+					</li>
+					<li class="nav_horizontal layout_none" id ='fullAdmin'>
+						<a class="nav_menuButton" href="admin.html">Admin</a>
+					</li>
+					<li class="nav_horizontal layout_none" id='fullPolitician'>
+						<a class="nav_menuButton" href="candidate.html">Candidacy</a>
+					<li class="nav_horizontal">
+							<a class="nav_menuButton " id='logout_full'>Logout</a>
+						</li>
+        </ul>
+			</div>
+
+
+			<!--Political parties section-->
+			<div class='layout_toast'>
+				<a href='vote.html' class='others_vote'>Click here to vote...</a>
+			</div>
+			<div class="layout_party card_wider" id ='partyPix'>
+				<h2 class='text_centered'>Political Parties in Nigeria</h2>
+			</div>
+		</div>
+		<footer class="background_footer">All rights Reserved &copy 2019 .<br> Your right to choose...</footer>
+		<script src="./JS/home.js"></script>
+		<script src="./JS/logout.js"></script>
+	</body>

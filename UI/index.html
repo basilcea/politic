@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Politico- Your right to choose</title>
+		<meta charset="UTF-8">
+		<meta name="author" content="Cea">
+		<meta name="viewport" content ="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href ="./CSS/card.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/layout.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/background.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/button.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/text.css">
+		<link rel="stylesheet" type="text/css" href ="./CSS/form.css">
+    <link rel="stylesheet" type="text/css" href ="./CSS/nav.css">
+    <link rel="stylesheet" type="text/css" href ="./CSS/others.css">
+  	</head>
+	<body>
+		<div class="background_banner">
+      <div class="layout_smallNav">
+        <ul class="nav_tabs_small">
+          <li class="nav_horizontal_small"><a class="others_full" id="sign" >Sign up</a></li>
+          <a href="javascript:void(0)" class="background_icon" id='hamburger'></a>
+          <li class="nav_horizontal_small"><a class="others_full" id="log">Login</a></li>
+        </ul>
+      </div>
+
+			<div class="layout_header1">
+        <a href ='home.html'>
+          <img class="others_img3" src="STATIC/logo.png" alt="logo">
+        </a>
+      </div>
+      <div class="layout_fix"></div>
+			<div class="card_login">
+				<button type="button" >Sign Up</button>
+				<button type="button">Login</button>
+
+				<!--Sign Up form-->
+
+      <div id="signup">
+        <form id="signupForm">
+          <span class='text_styled text_centered'>Nigerian's e-voting platform</span>
+          <p class='text_centered'>Sign up on Politico</p>
+          <div class="layout_left">
+            <img  id ="uploadedPassport" class="others_img" src='./static/avatar.png'>
+            <br>
+            <button type="button" class="button_btn">Upload Picture</button>
+          </div>
+          <input type="text" placeholder="First Name" required id='signup_firstname'>
+          <input type="text" placeholder="Last Name" id ='signup_lastname' required>
+          <input type="text" placeholder="Other Names" id='signup_othername'>
+          <input type="email" placeholder="Email" required id ='signup_email'>
+          <input type="text" placeholder ="Phone Number" required id ='signup_phonenumber'>
+          <input type="password" placeholder="Password" required id ='signup_password'>
+          <input type ="password" placeholder="Confirm Password"required id='signup_confirmpassword'>
+          <br/>
+          <select id="usertype" name="userType" >
+            <option value ="" disabled selected>-- Register as --</option>
+            <option value="voter"> Voter </option>
+            <option value="politician">Politician  </option>
+          </select>
+          <input type="submit" id="signedin" value="Sign Up">
+          <p class="text_small"><a id="loginLink">Already have an account? Login</a></p>
+          <div class ='snackbar'></div>
+        </form>
+      </div>
+
+				<!--Login Form-->
+
+      <div id="login">
+        <form id="loginForm">
+          <span class='text_styled text_centered'>Nigerian's e-voting platform</span>
+          <p class='text_centered'>Login with Email</p>
+          <input type="email" placeholder="Email" required id='login_email' >
+          <input type="password" placeholder="Password" required id ='login_password' >
+          <p class="text_small"><a id="resetLink">Forgot Password?</a></p>
+          <input type="submit" id="enter" value="Login">
+          <p class="text_small"><a id="signupLink">Don't have an account? Sign up</a></p>
+          <div class ='snackbar'></div>
+        </form>
+      </div>
+      <div id ='reset'>
+				<!--Reset Password Form-->
+        <form id="resetForm">
+          <span class='text_styled text_centered'>Nigerian's e-voting platform</span>
+          <p class='text_centered'>Enter your registered email address and a reset link will be sent</p>
+          <div id='resetErrors'></div>
+          <input type="email" placeholder="email" required id='reset_email'>
+          <input type="submit"  id="reseted" value="Submit" >
+          <div class ='snackbar'></div>
+        </form>
+          <p class="text_small"><a id="backLink" href=''>Go back to Login </a></p>
+      </div>
+			</div>
+    </div>
+        <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script> 
+    <script src="./JS/index.js"></script>
+    <script src="./JS/uploadPix.js"></script> 
+  </body>
+</html>
